@@ -1,0 +1,38 @@
+<!-- INCLUDE overall_header.html -->
+
+<h1>{L_ACP_IMAGE_UPLOAD}</h1>
+
+<p><img src="https://img.shields.io/badge/{{ lang('Version') }}-{{ ACP_IMAGEUPLOAD_VERSION }}-green.svg?style=plastic" /></p>
+
+<form id="acp_imageupload" method="post" action="{U_ACTION}">
+	<fieldset>
+		<legend>{L_ACP_IMAGE_UPLOAD_CONFIGURATION}</legend>
+		<dl>
+			<dt><label for="imageupload_enable">{L_ACP_IMAGEUPLOAD_ENABLE}{L_COLON}</label><br />
+				<span>{L_ACP_IMAGEUPLOAD_ENABLE_EXPLAIN}</span>
+			</dt>
+			<dd>
+				<label><input type="radio" class="radio" name="imageupload_enable" value="1"<!-- IF ACP_IMAGEUPLOAD_ENABLE --> id="imageupload_enable" checked="checked"<!-- ENDIF --> /> {L_YES}</label>
+				<label><input type="radio" class="radio" name="imageupload_enable" value="0"<!-- IF not ACP_IMAGEUPLOAD_ENABLE --> id="imageupload_enable" checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+			</dd>
+		</dl>
+		<dl>
+			<dt>
+				<label for="imageupload_number">{L_ACP_IMAGEUPLOAD_NUMBER}{L_COLON}</label><br />
+				<span>{L_ACP_IMAGEUPLOAD_NUMBER_EXPLAIN}<br />{ACP_IMAGEUPLOAD_ALLOWED_SIZE}</span>
+			</dt>
+			<dd>
+				<input type="number" name="imageupload_number" id="imageupload_number" size="4" maxlength="4" min="1" max="5000" value="{ACP_IMAGEUPLOAD_NUMBER}" />
+			</dd>
+		</dl>
+	</fieldset>
+	<fieldset>
+		<p class="submit-buttons">
+			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+			{S_FORM_TOKEN}
+		</p>
+	</fieldset>
+</form>
+
+<!-- INCLUDE overall_footer.html -->

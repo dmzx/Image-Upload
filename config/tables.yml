@@ -1,0 +1,2 @@
+parameters:
+    dmzx.imageupload.table.image_upload: %core.table_prefix%image_upload

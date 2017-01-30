@@ -1,0 +1,47 @@
+imports:
+    - { resource: tables.yml }
+services:
+    dmzx.imageupload.listener:
+        class: dmzx\imageupload\event\listener
+        arguments:
+            - '@config'
+            - '@user'
+            - '@template'
+            - '@controller.helper'
+            - '@auth'
+            - '%core.php_ext%'
+            - '@?files.factory'
+        tags:
+            - { name: event.listener }
+    dmzx.imageupload.admin.controller:
+        class: dmzx\imageupload\controller\admin_controller
+        arguments:
+            - '@config'
+            - '@template'
+            - '@log'
+            - '@user'
+            - '@request'
+    dmzx.imageupload.controller.upload:
+        class: dmzx\imageupload\controller\imageupload
+        arguments:
+            - '@config'
+            - '@dmzx.imageupload.core.functions'
+            - '@template'
+            - '@user'
+            - '@auth'
+            - '@log'
+            - '@dbal.conn'
+            - '@controller.helper'
+            - '@request'
+            - '@ext.manager'
+            - '@path_helper'
+            - '%core.php_ext%'
+            - '%core.root_path%'
+            - '%dmzx.imageupload.table.image_upload%'
+            - '@?files.factory'
+    dmzx.imageupload.core.functions:
+        class: dmzx\imageupload\core\functions
+        arguments:
+            - '@template'
+            - '@config'
+            - '@ext.manager'

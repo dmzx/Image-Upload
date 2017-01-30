@@ -1,0 +1,48 @@
+<!-- INCLUDE overall_header.html -->
+
+<form method="post" id="add_imageupload" {S_FORM_ENCTYPE}>
+	<div class="panel" id="showdiv">
+		<div class="inner">
+			<h2>{L_IMAGEUPLOAD_UPLOAD_SECTION}</h2>
+			<p>{L_IMAGEUPLOAD_UPLOAD_MESSAGE}</p>
+			<p>{IMAGEUPLOAD_ALLOWED_SIZE}</p>
+			<dl>
+				<dt><label>{L_IMAGEUPLOAD_NEW_FILENAME}{L_COLON}</label> <input class="inputbox autowidth" type="file" name="filename" size="52" /></dt>
+				<dd></dd>
+			</dl>
+		</div>
+	</div>
+	<div class="panel bg2">
+		<div class="inner">
+			<fieldset class="submit-buttons">
+				<input class="button1" id="submit" name="submit" value="{L_SUBMIT}" type="submit" />&nbsp;
+				{S_FORM_TOKEN}
+			</fieldset>
+		</div>
+	</div>
+</form>
+
+<!-- IF FILENAME -->
+<div class="panel bg2">
+	<div class="inner">
+		<fieldset class="fields2">
+			<h4 id="showdiv">{L_IMAGEUPLOAD_SUCCEEDED}</h4>
+			<p id="codes">
+				<label id="codehtml">{L_IMAGEUPLOAD_DIRECT_LINK}{L_COLON}</label><br />
+				<input type="text" value="{FILENAME}" onclick="javascript:this.focus();this.select();" readonly="true" /><br />
+				<label id="codehtml">{L_IMAGEUPLOAD_URL_LINK}{L_COLON}</label><br />
+				<input type="text" value="[url={FILENAME}]{L_IMAGEUPLOAD_BY} {SITENAME}[/url]" onclick="javascript:this.focus();this.select();" readonly="true" /><br />
+				<label id="codehtml">{L_IMAGEUPLOAD_IMG_LINK}{L_COLON}</label><br />
+				<input type="text" value="[img]{FILENAME}[/img]" onclick="javascript:this.focus();this.select();" readonly="true" /><br />
+				<label id="codehtml">{L_IMAGEUPLOAD_HSIMG_LINK}{L_COLON}</label><br />
+				<input type="text" value="[hsimg]{FILENAME}[/hsimg]" onclick="javascript:this.focus();this.select();" readonly="true" /><br /><br />
+				<div id="showdiv">
+					<img id="upload" src="{FILENAME}" title="{L_IMAGEUPLOAD_BY} {SITENAME}" /><br />
+				</div>
+			</p>
+		</fieldset>
+	</div>
+</div>
+<!-- ENDIF -->
+
+<!-- INCLUDE overall_footer.html -->

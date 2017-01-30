@@ -1,0 +1,48 @@
+<?php
+/**
+*
+* @package phpBB Extension - Image Upload
+* @copyright (c) 2017 dmzx - http://www.dmzx-web.net
+* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
+*
+*/
+
+/**
+* DO NOT CHANGE
+*/
+if (!defined('IN_PHPBB'))
+{
+	exit;
+}
+
+if (empty($lang) || !is_array($lang))
+{
+	$lang = array();
+}
+
+// DEVELOPERS PLEASE NOTE
+//
+// All language files should use UTF-8 as their encoding and the files must not contain a BOM.
+//
+// Placeholders can now contain order information, e.g. instead of
+// 'Page %s of %s' you can (and should) write 'Page %1$s of %2$s', this allows
+// translators to re-order the output of data while ensuring it remains correct
+//
+// You do not need this where single placeholders are used, e.g. 'Message %d' is fine
+// equally where a string contains only two placeholders which are used to wrap text
+// in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
+//
+// Some characters you may want to copy&paste:
+// ’ » “ ” …
+//
+
+$lang = array_merge($lang, array(
+	'ACP_IMAGEUPLOAD_SAVED'					=> 'Image Upload settings saved',
+	'ACP_IMAGEUPLOAD_VERSION'				=> 'Version',
+	'ACP_IMAGE_UPLOAD_CONFIGURATION'		=> 'Image Upload Configuration',
+	'ACP_IMAGEUPLOAD_ENABLE'				=> 'Enable Image Upload',
+	'ACP_IMAGEUPLOAD_ENABLE_EXPLAIN'		=> 'Global setting to enable Image Upload.',
+	'ACP_IMAGEUPLOAD_NUMBER'				=> 'Size of upload',
+	'ACP_IMAGEUPLOAD_NUMBER_EXPLAIN'		=> 'Set size of upload in MB default is 2 MB.',
+	'ACP_IMAGEUPLOAD_NEW_DOWNLOAD_SIZE'		=> 'The maximum size your php.ini allows is <strong>%1$s %2$s</strong>!',
+));
