@@ -15,10 +15,13 @@ class imageupload_module
 
 	function main($id, $mode)
 	{
-		global $phpbb_container, $user;
+		global $phpbb_container, $request, $user;
 
 		// Get an instance of the admin controller
 		$admin_controller = $phpbb_container->get('dmzx.imageupload.admin.controller');
+
+		// Request
+		$action = $request->variable('action', '');
 
 		// Make the $u_action url available in the admin controller
 		$admin_controller->set_page_url($this->u_action);
@@ -30,6 +33,14 @@ class imageupload_module
 				$this->tpl_name = 'acp_imageupload';
 				// Set the page title for our ACP page
 				$this->page_title = $user->lang['ACP_IMAGE_UPLOAD_CONFIG'];
+
+				switch ($action)
+				{
+					case 'delete';
+						$admin_controller->delete();
+					break;
+				}
+
 				// Load the display options handle in the admin controller
 				$admin_controller->display_options();
 			break;

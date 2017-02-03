@@ -1,0 +1,25 @@
+.imageupload-preview {
+	position: relative;
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	margin-bottom: 2px;
+	vertical-align: middle;
+}
+
+.imageupload-preview img {
+	position: absolute;
+	-moz-transition: all 1s ease;
+	-webkit-transition: all 1s ease;
+	left: 0px;
+	top: 0px;
+	max-height: 20px;
+	max-width: 20px;
+}
+
+.imageupload-preview img:hover {
+	max-height: 550px;
+	max-width: 550px;
+	box-shadow: 0 0 20px #000;
+	z-index: 10;
+}

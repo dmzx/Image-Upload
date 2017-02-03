@@ -45,4 +45,16 @@ $lang = array_merge($lang, array(
 	'ACP_IMAGEUPLOAD_NUMBER'				=> 'Size of upload',
 	'ACP_IMAGEUPLOAD_NUMBER_EXPLAIN'		=> 'Set size of upload in MB default is 2 MB.',
 	'ACP_IMAGEUPLOAD_NEW_DOWNLOAD_SIZE'		=> 'The maximum size your php.ini allows is <strong>%1$s %2$s</strong>!',
+	'ACP_IMAGEUPLOAD_REALLY_DELETE_IMAGE'	=> 'Really delete image?',
+	'ACP_IMAGEUPLOAD_TITLE'					=> 'Image name',
+	'ACP_IMAGEUPLOAD_TITLE_REAL'			=> 'Image real name',
+	'ACP_IMAGEUPLOAD_PREVIEW'				=> 'Preview',
+	'ACP_IMAGEUPLOAD_WIDTH_HEIGHT'			=> 'Width/Height',
+	'ACP_IMAGEUPLOAD_FOLDER_SIZE'			=> 'Total folder size',
+	'ACP_IMAGEUPLOAD_USERNAME'				=> 'Uploaded by',
+	'ACP_IMAGEUPLOAD_SIZE'					=> 'Size',
+	'ACP_MULTI_IMAGES'		=>	array(
+		1 => '%s image',
+		2 => '%s images',
+	),
 ));

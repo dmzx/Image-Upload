@@ -3,8 +3,8 @@
 	"type": "phpbb-extension",
 	"description": "This extension will add an upload system for images to your forum.",
 	"homepage": "http://www.dmzx-web.net",
-	"version": "1.0.0",
-	"time": "2017-01-29",
+	"version": "1.0.1",
+	"time": "2017-02-02",
 	"keywords": ["phpbb", "extension", "imageupload"],
 	"license": "GPL-2.0",
 	"authors": [
@@ -12,6 +12,11 @@
 			"name": "dmzx",
 			"homepage": "http://www.dmzx-web.net",
 			"email": "info@dmzx-web.net",
+			"role": "Extension Developer"
+		},
+		{
+			"name": "martin",
+			"homepage": "http://www.martins.homelinux.net",
 			"role": "Extension Developer"
 		}
 	],

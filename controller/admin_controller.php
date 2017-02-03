@@ -14,6 +14,10 @@ use phpbb\template\template;
 use phpbb\log\log_interface;
 use phpbb\user;
 use phpbb\request\request_interface;
+use phpbb\db\driver\driver_interface as db_interface;
+use phpbb\pagination;
+use phpbb\extension\manager;
+use phpbb\path_helper;
 
 class admin_controller
 {
@@ -32,6 +36,25 @@ class admin_controller
 	/** @var request_interface */
 	protected $request;
 
+	/** @var db_interface */
+	protected $db;
+
+	/** @var pagination */
+	protected $pagination;
+
+	/** @var manager */
+	protected $ext_manager;
+
+	/** @var path_helper */
+	protected $path_helper;
+
+	/**
+	* The database table
+	*
+	* @var string
+	*/
+	protected $image_upload_table;
+
 	/** @var string Custom form action */
 	protected $u_action;
 
@@ -43,20 +66,37 @@ class admin_controller
 	 * @param log_interface			$log
 	 * @param user					$user
 	 * @param request_interface		$request
+	 * @param db_interface			$db
+	 * @param pagination			$pagination
+	 * @param manager				$ext_manager
+	 * @param path_helper			$path_helper
+	 * @param string 				$image_upload_table
 	 */
 	public function __construct(
 		config $config,
 		template $template,
 		log_interface $log,
 		user $user,
-		request_interface $request
+		request_interface $request,
+		db_interface $db,
+		pagination $pagination,
+		manager $ext_manager,
+		path_helper $path_helper,
+		$image_upload_table
 	)
 	{
-		$this->config 		= $config;
-		$this->template 	= $template;
-		$this->log 			= $log;
-		$this->user 		= $user;
-		$this->request 		= $request;
+		$this->config 				= $config;
+		$this->template 			= $template;
+		$this->log 					= $log;
+		$this->user 				= $user;
+		$this->request 				= $request;
+		$this->db 					= $db;
+		$this->pagination 			= $pagination;
+		$this->ext_manager	 		= $ext_manager;
+		$this->path_helper	 		= $path_helper;
+		$this->image_upload_table 	= $image_upload_table;
+		$this->ext_path 			= $this->ext_manager->get_extension_path('dmzx/imageupload', true);
+		$this->ext_path_web 		= $this->path_helper->update_web_root_path($this->ext_path);
 	}
 
 	/**
@@ -68,6 +108,9 @@ class admin_controller
 	public function display_options()
 	{
 		$this->user->add_lang_ext('dmzx/imageupload', 'acp_imageupload');
+
+		$start	= $this->request->variable('start', 0);
+		$number	= 25;
 
 		add_form_key('acp_imageupload');
 
@@ -98,14 +141,102 @@ class admin_controller
 			$unit = ($unit == 'k') ? 'KB' : (($unit == 'g') ? 'GB' : 'MB');
 		}
 
+		// Total number of images
+		$sql = 'SELECT COUNT(imageupload_id) AS total_imageupload, SUM(filesize) AS total_filesize
+			FROM ' . $this->image_upload_table;
+		$result = $this->db->sql_query($sql);
+		$row = $this->db->sql_fetchrow($result);
+		$total_imageupload = $row['total_imageupload'];
+		$total_filesize = $row['total_filesize'];
+		$this->db->sql_freeresult($result);
+
+		// List all images
+		$sql = 'SELECT im.*, u.user_id, u.username, u.user_colour
+			FROM ' . $this->image_upload_table . ' im
+			LEFT JOIN ' . USERS_TABLE . ' u
+				ON u.user_id = im.user_id
+			ORDER BY imageupload_id DESC';
+		$result = $this->db->sql_query_limit($sql, $number, $start);
+		while ($row = $this->db->sql_fetchrow($result))
+		{
+			$file_name = $row['imageupload_realname'];
+
+			if (function_exists('getimagesize'))
+			{
+				$getimagesize = getimagesize($this->ext_path_web . 'files/' . $file_name);
+			}
+			else
+			{
+				$getimagesize = array(0, 0);
+			}
+
+			$filesize = @filesize($this->ext_path_web . 'files/' . $file_name);
+
+			$this->template->assign_block_vars('images', array(
+				'FILENAME'			=> $row['imageupload_filename'],
+				'FILENAME_REAL'		=> $file_name,
+				'IMAGEPATH'			=> $this->ext_path_web . 'files/' . $file_name,
+				'WIDTH'				=> $getimagesize[0],
+				'HEIGHT'			=> $getimagesize[1],
+				'SIZE'				=> get_formatted_filesize($filesize),
+				'IMAGE_USERNAME'	=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
+				'U_DEL'				=> $this->u_action . '&amp;action=delete&amp;id=' . $row['imageupload_id'],
+			));
+		}
+		$this->db->sql_freeresult($result);
+
+		$base_url = $this->u_action;
+		//Start pagination
+		$this->pagination->generate_template_pagination($base_url, 'pagination', 'start', $total_imageupload, $number, $start);
+
 		$this->template->assign_vars(array(
 			'ACP_IMAGEUPLOAD_VERSION'			=> $this->config['imageupload_system_version'],
 			'ACP_IMAGEUPLOAD_ENABLE'			=> $this->config['imageupload_enable'],
 			'ACP_IMAGEUPLOAD_NUMBER'			=> $this->config['imageupload_number'],
 			'ACP_IMAGEUPLOAD_ALLOWED_SIZE'		=> sprintf($this->user->lang['ACP_IMAGEUPLOAD_NEW_DOWNLOAD_SIZE'], $max_filesize, $unit),
-
+			'ACP_TOTAL_IMAGES'					=> $this->user->lang('ACP_MULTI_IMAGES', (int) $total_imageupload),
+			'TOTAL_FILE_SIZE'					=> get_formatted_filesize($total_filesize),
 			'U_ACTION'							=> $this->u_action,
 		));
+	}
+
+	public function delete()
+	{
+		$id = $this->request->variable('id', '');
+
+		$this->user->add_lang_ext('dmzx/imageupload', 'acp_imageupload');
+
+		if (confirm_box(true))
+		{
+			$sql = 'SELECT imageupload_realname, imageupload_filename
+				FROM ' . $this->image_upload_table . '
+				WHERE imageupload_id = ' . (int) $id;
+			$result = $this->db->sql_query($sql);
+			$row = $this->db->sql_fetchrow($result);
+			$file_name = $row['imageupload_realname'];
+			$image_name = $row['imageupload_filename'];
+			$this->db->sql_freeresult($result);
+
+			$delete_file = $this->ext_path_web . 'files/' . $file_name;
+
+			@unlink($delete_file);
+
+			$sql = 'DELETE FROM ' . $this->image_upload_table . '
+				WHERE imageupload_id = ' . (int) $id;
+			$this->db->sql_query($sql);
+
+			// Log message
+			$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'LOG_IMAGEUPLOAD_DELETED', time(), array($image_name));
+		}
+		else
+		{
+			confirm_box(false, $this->user->lang['ACP_IMAGEUPLOAD_REALLY_DELETE_IMAGE'], build_hidden_fields(array(
+				'imageupload_id'	=> $id,
+				'action'			=> 'delete',
+				))
+			);
+		}
+		redirect($this->u_action);
 	}
 
 	/**

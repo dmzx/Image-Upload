@@ -8,24 +8,19 @@
     color: #ECF1F3;
     border: 1px solid #000;
 }
-
 #codes input{
 	width: 99%;
 }
-
 .icon-upload { 
 	background-image: url("./images/icon_upload.png"); 
 }
-
 #upload {
 	max-width: 100%;
 	height: auto;
 }
-
 #showdiv {
     text-align: center;
 }
-
 #codehtml {
     font-weight: bold;
 }

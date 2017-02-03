@@ -136,16 +136,6 @@ class imageupload
 		$this->files_factory 		= $files_factory;
 		$this->ext_path 			= $this->ext_manager->get_extension_path('dmzx/imageupload', true);
 		$this->ext_path_web 		= $this->path_helper->update_web_root_path($this->ext_path);
-
-		if (!function_exists('submit_post'))
-		{
-			include($this->root_path . 'includes/functions_posting.' . $this->php_ext);
-		}
-
-		if (!defined('PHPBB_USE_BOARD_URL_PATH'))
-		{
-			define('PHPBB_USE_BOARD_URL_PATH', true);
-		}
 	}
 
 	public function handle_imageupload()
@@ -170,7 +160,6 @@ class imageupload
 
 		$title			= $this->request->variable('title', '', true);
 		$filename		= $this->request->variable('filename', '', true);
-		$ftp_upload		= $this->request->variable('ftp_upload', '', true);
 		$max_filesize 	= $this->config['imageupload_number'];
 		$unit = 'MB';
 
@@ -207,62 +196,71 @@ class imageupload
 				$fileupload->fileupload('', $allowed_extensions);
 			}
 
-			$target_folder = $this->request->variable('parent', 0);
-			$upload_name = $this->request->variable('filename', '');
-
 			$upload_dir = 'ext/dmzx/imageupload/files/';
 
-			if (!$ftp_upload)
+			$upload_file = (isset($this->files_factory)) ? $fileupload->handle_upload('files.types.form', 'filename') : $fileupload->form_upload('filename');
+
+			if (!$upload_file->get('uploadname'))
 			{
-				$upload_file = (isset($this->files_factory)) ? $fileupload->handle_upload('files.types.form', 'filename') : $fileupload->form_upload('filename');
-
-				if (!$upload_file->get('uploadname'))
-				{
-					meta_refresh(3, $this->helper->route('dmzx_imageupload_controller_upload'));
-					throw new http_exception(400, 'IMAGEUPLOAD_NO_FILENAME');
-				}
-
-				$upload_file->move_file(str_replace($this->root_path, '', $upload_dir), true, true, 0644);
-				@chmod($this->ext_path_web . 'files/' . $upload_file->get('uploadname'), 0644);
-
-				if (sizeof($upload_file->error) && $upload_file->get('uploadname'))
-				{
-					$upload_file->remove();
-					meta_refresh(3, $this->helper->route('dmzx_imageupload_controller_upload'));
-
-					trigger_error(implode('<br />', $upload_file->error));
-				}
-
-				// End the upload
-				$filesize = @filesize($this->root_path . $upload_dir . '/' . $upload_file->get('uploadname'));
-				$sql_ary = array(
-					'imageupload_filename'	=> $upload_file->get('uploadname'),
-					'upload_time'			=> time(),
-					'filesize'				=> $filesize,
-					'user_id'				=> $this->user->data['user_id'],
-				);
-
-				if ($unit == 'MB')
-				{
-					$multiplier = 1048576;
-				}
-				else if ($unit == 'KB')
-				{
-					$multiplier = 1024;
-				}
-
-				if ($filesize > ($max_filesize * $multiplier))
-				{
-					@unlink($this->root_path . $upload_dir . '/' . $upload_file->get('uploadname'));
-					meta_refresh(3, $this->helper->route('dmzx_imageupload_controller_upload'));
-
-					throw new http_exception(400, 'IMAGEUPLOAD_FILE_TOO_BIG');
-				}
-
-				$this->template->assign_vars(array(
-					'FILENAME'	=> generate_board_url().'/'.$upload_dir . $upload_file->get('uploadname'),
-				));
+				meta_refresh(3, $this->helper->route('dmzx_imageupload_controller_upload'));
+				throw new http_exception(400, 'IMAGEUPLOAD_NO_FILENAME');
 			}
+
+			$upload_file->clean_filename('uploadname');
+			$upload_file->move_file(str_replace($this->root_path, '', $upload_dir), true, true, 0644);
+			@chmod($this->ext_path_web . 'files/' . $upload_file->get('uploadname'), 0644);
+
+			if (sizeof($upload_file->error) && $upload_file->get('uploadname'))
+			{
+				$upload_file->remove();
+				meta_refresh(3, $this->helper->route('dmzx_imageupload_controller_upload'));
+
+				trigger_error(implode('<br />', $upload_file->error));
+			}
+
+			if (function_exists('getimagesize'))
+			{
+				$getimagesize = getimagesize($this->root_path . $upload_dir . '/' . $upload_file->get('realname'));
+			}
+			else
+			{
+				$getimagesize = array(0, 0);
+			}
+
+			// End the upload
+			$sql_ary = array(
+				'imageupload_filename'	=> $upload_file->get('uploadname'),
+				'imageupload_realname'	=> $upload_file->get('realname'),
+				'upload_time'			=> time(),
+				'filesize'				=> $upload_file->get('filesize'),
+				'user_id'				=> $this->user->data['user_id'],
+			);
+
+			if ($unit == 'MB')
+			{
+				$multiplier = 1048576;
+			}
+			else if ($unit == 'KB')
+			{
+				$multiplier = 1024;
+			}
+
+			if ($upload_file->get('filesize') > ($max_filesize * $multiplier))
+			{
+				@unlink($this->root_path . $upload_dir . '/' . $upload_file->get('realname'));
+				meta_refresh(3, $this->helper->route('dmzx_imageupload_controller_upload'));
+
+				throw new http_exception(400, 'IMAGEUPLOAD_FILE_TOO_BIG');
+			}
+
+			$filesize = @filesize($this->root_path . $upload_dir . '/' . $upload_file->get('realname'));
+
+			$this->template->assign_vars(array(
+				'FILENAME'	=> generate_board_url() . '/' . $upload_dir . $upload_file->get('realname'),
+				'WIDTH'		=> $getimagesize[0],
+				'HEIGHT'	=> $getimagesize[1],
+				'SIZE'		=> get_formatted_filesize($filesize),
+			));
 
 			$this->db->sql_query('INSERT INTO ' . $this->image_upload_table .' ' . $this->db->sql_build_array('INSERT', $sql_ary));
 			// Log message

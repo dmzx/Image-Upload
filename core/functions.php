@@ -53,7 +53,7 @@ class functions
 		$author_names = array();
 		$author_homepages = array();
 
-		foreach (array_slice($meta['authors'], 0, 1) as $author)
+		foreach (array_slice($meta['authors'], 0, 2) as $author)
 		{
 			$author_names[] = $author['name'];
 			$author_homepages[] = sprintf('<a href="%1$s" title="%2$s">%2$s</a>', $author['homepage'], $author['name']);

@@ -1,3 +1,4 @@
+<!-- INCLUDECSS css/acp_imageupload.css -->
 <!-- INCLUDE overall_header.html -->
 
 <h1>{L_ACP_IMAGE_UPLOAD}</h1>
@@ -26,6 +27,47 @@
 			</dd>
 		</dl>
 	</fieldset>
+	<!-- IF .images -->
+	<!-- IF .pagination or ACP_TOTAL_IMAGES -->
+	<div class="pagination">
+		{ACP_TOTAL_IMAGES}
+		<!-- IF .pagination -->
+			<!-- INCLUDE pagination.html -->
+		<!-- ELSE -->
+			&bull; {PAGE_NUMBER}
+		<!-- ENDIF -->
+	</div>
+	<!-- ENDIF -->
+	<div class="clear"></div>
+	<table cellspacing="1">
+		<thead>
+			<tr>
+				<th>{L_ACP_IMAGEUPLOAD_TITLE}</th>
+				<th>{L_ACP_IMAGEUPLOAD_PREVIEW}</th>
+				<th>{L_ACP_IMAGEUPLOAD_TITLE_REAL}</th>
+				<th>{L_ACP_IMAGEUPLOAD_USERNAME}</th>
+				<th>{L_ACP_IMAGEUPLOAD_WIDTH_HEIGHT}</th>
+				<th>{L_ACP_IMAGEUPLOAD_SIZE}</th>
+				<th>{L_ACTION}</th>
+			</tr>
+		</thead>
+		<tbody>
+		<!-- BEGIN images -->
+			<!-- IF images.S_ROW_COUNT is even --><tr class="row1"><!-- ELSE --><tr class="row2"><!-- ENDIF -->
+				<td valign="top">{images.FILENAME}</td>
+				<td class="imageupload-preview"><img src="{images.IMAGEPATH}" /></td>
+				<td valign="top">{images.FILENAME_REAL}</td>
+				<td valign="top">{images.IMAGE_USERNAME}</td>
+				<td valign="top">{images.WIDTH} {L_PIXEL} * {images.HEIGHT} {L_PIXEL}</td>
+				<td valign="top">{images.SIZE}</td>
+				<td style="width: 10%;">&nbsp;<a href="{images.U_DEL}">{ICON_DELETE}</a>&nbsp;</td>
+			</tr>
+		<!-- END images -->
+		</tbody>
+	</table>
+	<span style="float:left;display:block;">{L_ACP_IMAGEUPLOAD_FOLDER_SIZE}{L_COLON} {TOTAL_FILE_SIZE}</span>
+	<br />
+	<!-- ENDIF -->
 	<fieldset>
 		<p class="submit-buttons">
 			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;

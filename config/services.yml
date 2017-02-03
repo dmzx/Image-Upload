@@ -21,6 +21,11 @@ services:
             - '@log'
             - '@user'
             - '@request'
+            - '@dbal.conn'
+            - '@pagination'
+            - '@ext.manager'
+            - '@path_helper'
+            - '%dmzx.imageupload.table.image_upload%'
     dmzx.imageupload.controller.upload:
         class: dmzx\imageupload\controller\imageupload
         arguments:
