@@ -59,4 +59,3 @@ $lang = array_merge($lang, array(
 		2 => '%s afbeeldingen',
 	),
 ));
-));

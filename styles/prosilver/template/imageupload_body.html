@@ -8,7 +8,7 @@
 			<p>{IMAGEUPLOAD_ALLOWED_SIZE}</p>
 			<dl>
 				<dt><label>{L_IMAGEUPLOAD_NEW_FILENAME}{L_COLON}</label> <input class="inputbox autowidth" type="file" name="filename" size="52" /></dt>
-				<dd></dd>
+				<dd><label>{L_ALLOWED} {L_EXTENSION}{L_COLON}</label><!-- BEGIN allowed_extension --><!-- IF not allowed_extension.FIRST -->,<!-- ENDIF --> {allowed_extension.EXTENSION}<!-- END allowed_extension --></dd>
 			</dl>
 		</div>
 	</div>

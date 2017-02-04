@@ -174,12 +174,12 @@ class imageupload
 
 		$this->user->add_lang('posting');
 
+		// Add allowed extensions
+		$allowed_extensions = $this->allowed_extensions;
+
 		if ($this->request->is_set_post('submit'))
 		{
 			$filecheck = $multiplier = '';
-
-			// Add allowed extensions
-			$allowed_extensions = $this->allowed_extensions;
 
 			if ($this->files_factory !== null)
 			{
@@ -265,6 +265,19 @@ class imageupload
 			$this->db->sql_query('INSERT INTO ' . $this->image_upload_table .' ' . $this->db->sql_build_array('INSERT', $sql_ary));
 			// Log message
 			$this->log_message('LOG_IMAGEUPLOAD_ADD', $upload_file->get('uploadname'), 'IMAGEUPLOAD_NEW_ADDED');
+		}
+
+		$ext_count = 0;
+		$first_extension = true;
+
+		foreach ($allowed_extensions as $ext)
+		{
+			$ext_count++;
+			$this->template->assign_block_vars('allowed_extension', array(
+				'EXTENSION' => strtolower(trim($ext)),
+				'FIRST'		=> $first_extension,
+			));
+			$first_extension = false;
 		}
 
 		$form_enctype = (@ini_get('file_uploads') == '0' || strtolower(@ini_get('file_uploads')) == 'off') ? '' : ' enctype="multipart/form-data"';
