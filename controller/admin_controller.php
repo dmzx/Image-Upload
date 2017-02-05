@@ -242,7 +242,7 @@ class admin_controller
 			{
 				if (sizeof($ids))
 				{
-					foreach($ids as $id)
+					foreach ($ids as $id)
 					{
 						$sql = 'SELECT imageupload_realname, imageupload_filename
 							FROM ' . $this->image_upload_table . '
