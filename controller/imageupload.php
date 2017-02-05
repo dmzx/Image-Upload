@@ -229,7 +229,7 @@ class imageupload
 
 			// End the upload
 			$sql_ary = array(
-				'imageupload_filename'	=> $upload_file->get('uploadname'),
+				'imageupload_filename'	=> ucfirst(str_replace('_', ' ', preg_replace('#^(.*)\..*$#', '\1', $upload_file->get('uploadname')))),
 				'imageupload_realname'	=> $upload_file->get('realname'),
 				'upload_time'			=> time(),
 				'filesize'				=> $upload_file->get('filesize'),

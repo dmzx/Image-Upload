@@ -97,6 +97,8 @@ class admin_controller
 		$this->image_upload_table 	= $image_upload_table;
 		$this->ext_path 			= $this->ext_manager->get_extension_path('dmzx/imageupload', true);
 		$this->ext_path_web 		= $this->path_helper->update_web_root_path($this->ext_path);
+
+		$this->user->add_lang_ext('dmzx/imageupload', 'acp_imageupload');
 	}
 
 	/**
@@ -107,10 +109,13 @@ class admin_controller
 	*/
 	public function display_options()
 	{
-		$this->user->add_lang_ext('dmzx/imageupload', 'acp_imageupload');
-
-		$start	= $this->request->variable('start', 0);
-		$number	= 25;
+		$start		= $this->request->variable('start', 0);
+		$sort_days	= $this->request->variable('st', 0);
+		$sort_key	= $this->request->variable('sk', 'upload_time');
+		$sort_dir	= $this->request->variable('sd', 'd');
+		$ids 		= $this->request->variable('ids', array(0));
+		$deletemark	= $this->request->variable('delmarked', false, false, \phpbb\request\request_interface::POST);
+		$number		= $this->config['topics_per_page'];
 
 		add_form_key('acp_imageupload');
 
@@ -150,12 +155,37 @@ class admin_controller
 		$total_filesize = $row['total_filesize'];
 		$this->db->sql_freeresult($result);
 
+		$limit_days = array(
+			0 => $this->user->lang['ALL_ENTRIES'],
+			1 => $this->user->lang['1_DAY'],
+			7 => $this->user->lang['7_DAYS'],
+			14 => $this->user->lang['2_WEEKS'],
+			30 => $this->user->lang['1_MONTH'],
+			90 => $this->user->lang['3_MONTHS'],
+			180 => $this->user->lang['6_MONTHS'],
+			365 => $this->user->lang['1_YEAR']
+		);
+		$sort_by_text = array(
+			'd' => $this->user->lang['ACP_IMAGEUPLOAD_SORT_DATE'],
+			't' => $this->user->lang['ACP_IMAGEUPLOAD_TITLE'],
+			'c' => $this->user->lang['ACP_IMAGEUPLOAD_SORT_USERNAME'],
+			's' => $this->user->lang['ACP_IMAGEUPLOAD_SIZE']
+		);
+		$sort_by_sql = array(
+			'd' => 'upload_time',
+			't' => 'imageupload_filename',
+			'c' => 'username',
+			's' => 'filesize'
+		);
+		$s_limit_days = $s_sort_key = $s_sort_dir = $u_sort_param = '';
+		gen_sort_selects($limit_days, $sort_by_text, $sort_days, $sort_key, $sort_dir, $s_limit_days, $s_sort_key, $s_sort_dir, $u_sort_param);
+		$sql_sort_order = $sort_by_sql[$sort_key] . ' ' . (($sort_dir == 'd') ? 'DESC' : 'ASC');
+
 		// List all images
 		$sql = 'SELECT im.*, u.user_id, u.username, u.user_colour
-			FROM ' . $this->image_upload_table . ' im
-			LEFT JOIN ' . USERS_TABLE . ' u
-				ON u.user_id = im.user_id
-			ORDER BY imageupload_id DESC';
+			FROM ' . $this->image_upload_table . ' im, ' . USERS_TABLE . ' u
+			WHERE u.user_id = im.user_id
+			ORDER BY ' . $sql_sort_order;
 		$result = $this->db->sql_query_limit($sql, $number, $start);
 		while ($row = $this->db->sql_fetchrow($result))
 		{
@@ -180,7 +210,7 @@ class admin_controller
 				'HEIGHT'			=> $getimagesize[1],
 				'SIZE'				=> get_formatted_filesize($filesize),
 				'IMAGE_USERNAME'	=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-				'U_DEL'				=> $this->u_action . '&amp;action=delete&amp;id=' . $row['imageupload_id'],
+				'ID'				=> $row['imageupload_id'],
 			));
 		}
 		$this->db->sql_freeresult($result);
@@ -196,49 +226,57 @@ class admin_controller
 			'ACP_IMAGEUPLOAD_ALLOWED_SIZE'		=> sprintf($this->user->lang['ACP_IMAGEUPLOAD_NEW_DOWNLOAD_SIZE'], $max_filesize, $unit),
 			'ACP_TOTAL_IMAGES'					=> $this->user->lang('ACP_MULTI_IMAGES', (int) $total_imageupload),
 			'TOTAL_FILE_SIZE'					=> get_formatted_filesize($total_filesize),
+			'S_SELECT_SORT_DIR'					=> $s_sort_dir,
+			'S_SELECT_SORT_KEY'					=> $s_sort_key,
 			'U_ACTION'							=> $this->u_action,
 		));
-	}
 
-	public function delete()
-	{
-		$id = $this->request->variable('id', '');
-
-		$this->user->add_lang_ext('dmzx/imageupload', 'acp_imageupload');
-
-		if (confirm_box(true))
+		if (($deletemark))
 		{
-			$sql = 'SELECT imageupload_realname, imageupload_filename
-				FROM ' . $this->image_upload_table . '
-				WHERE imageupload_id = ' . (int) $id;
-			$result = $this->db->sql_query($sql);
-			$row = $this->db->sql_fetchrow($result);
-			$file_name = $row['imageupload_realname'];
-			$image_name = $row['imageupload_filename'];
-			$this->db->sql_freeresult($result);
+			if (!sizeof($ids))
+			{
+				trigger_error($this->user->lang('ACP_IMAGEUPLOAD_NOT_SELECTED') . adm_back_link($this->u_action));
+			}
 
-			$delete_file = $this->ext_path_web . 'files/' . $file_name;
+			if (confirm_box(true))
+			{
+				if (sizeof($ids))
+				{
+					foreach($ids as $id)
+					{
+						$sql = 'SELECT imageupload_realname, imageupload_filename
+							FROM ' . $this->image_upload_table . '
+							WHERE imageupload_id = ' . (int) $id;
+						$result = $this->db->sql_query($sql);
+						$row = $this->db->sql_fetchrow($result);
+						$file_name = $row['imageupload_realname'];
+						$image_name = $row['imageupload_filename'];
+						$this->db->sql_freeresult($result);
 
-			@unlink($delete_file);
+						$delete_file = $this->ext_path_web . 'files/' . $file_name;
 
-			$sql = 'DELETE FROM ' . $this->image_upload_table . '
-				WHERE imageupload_id = ' . (int) $id;
-			$this->db->sql_query($sql);
+						@unlink($delete_file);
 
-			// Log message
-			$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'LOG_IMAGEUPLOAD_DELETED', time(), array($image_name));
+						$sql = 'DELETE FROM ' . $this->image_upload_table . '
+							WHERE imageupload_id = ' . (int) $id;
+						$this->db->sql_query($sql);
+
+						// Log message
+						$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'LOG_IMAGEUPLOAD_DELETED', time(), array($image_name));
+					}
+				}
+			}
+			else
+			{
+				confirm_box(false, $this->user->lang['ACP_IMAGEUPLOAD_REALLY_DELETE_IMAGE'], build_hidden_fields(array(
+					'ids'		=> $ids,
+					'delmarked'	=> $deletemark,
+					'action'	=> $this->u_action))
+				);
+			}
+			redirect($this->u_action);
 		}
-		else
-		{
-			confirm_box(false, $this->user->lang['ACP_IMAGEUPLOAD_REALLY_DELETE_IMAGE'], build_hidden_fields(array(
-				'imageupload_id'	=> $id,
-				'action'			=> 'delete',
-				))
-			);
-		}
-		redirect($this->u_action);
 	}
-
 	/**
 	* Set the options a user can configure
 	*

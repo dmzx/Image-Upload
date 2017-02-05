@@ -57,4 +57,7 @@ $lang = array_merge($lang, array(
 		1 => '%s image',
 		2 => '%s images',
 	),
+	'ACP_IMAGEUPLOAD_SORT_USERNAME'			=> 'Username',
+	'ACP_IMAGEUPLOAD_SORT_DATE'				=> 'Date',
+	'ACP_IMAGEUPLOAD_NOT_SELECTED'			=> 'Not selected any images',
 ));

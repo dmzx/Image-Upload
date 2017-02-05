@@ -27,6 +27,13 @@
 			</dd>
 		</dl>
 	</fieldset>
+	<fieldset>
+		<p class="submit-buttons">
+			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+			{S_FORM_TOKEN}
+		</p>
+	</fieldset>
 	<!-- IF .images -->
 	<!-- IF .pagination or ACP_TOTAL_IMAGES -->
 	<div class="pagination">
@@ -48,7 +55,7 @@
 				<th>{L_ACP_IMAGEUPLOAD_USERNAME}</th>
 				<th>{L_ACP_IMAGEUPLOAD_WIDTH_HEIGHT}</th>
 				<th>{L_ACP_IMAGEUPLOAD_SIZE}</th>
-				<th>{L_ACTION}</th>
+				<th style="text-align: center;">{L_MARK}</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -60,21 +67,22 @@
 				<td valign="top">{images.IMAGE_USERNAME}</td>
 				<td valign="top">{images.WIDTH} {L_PIXEL} * {images.HEIGHT} {L_PIXEL}</td>
 				<td valign="top">{images.SIZE}</td>
-				<td style="width: 10%;">&nbsp;<a href="{images.U_DEL}">{ICON_DELETE}</a>&nbsp;</td>
+				<td style="text-align: center;"><input type="checkbox" class="radio" name="ids[]" value="{images.ID}" title="{images.ID}"/></td>
 			</tr>
 		<!-- END images -->
 		</tbody>
 	</table>
 	<span style="float:left;display:block;">{L_ACP_IMAGEUPLOAD_FOLDER_SIZE}{L_COLON} {TOTAL_FILE_SIZE}</span>
 	<br />
-	<!-- ENDIF -->
-	<fieldset>
-		<p class="submit-buttons">
-			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
-			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
-			{S_FORM_TOKEN}
-		</p>
+	<fieldset class="quick">
+		<p class="small"><a href="#" onclick="marklist('acp_imageupload', 'ids', true);">{L_MARK_ALL}</a> &bull; <a href="#" onclick="marklist('acp_imageupload', 'ids', false);">{L_UNMARK_ALL}</a></p>
+		<input class="button2" name="delmarked" value="{L_DELETE_MARKED}" type="submit">
 	</fieldset>
+	<fieldset class="display-options">
+		<span class="gensmall">{L_SORT_BY}</span> {S_SELECT_SORT_KEY} {S_SELECT_SORT_DIR}&nbsp;
+		<input class="button2" type="submit" name="sort" value="{L_GO}" />
+	</fieldset>
+	<!-- ENDIF -->
 </form>
 
 <!-- INCLUDE overall_footer.html -->
