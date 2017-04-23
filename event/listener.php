@@ -94,7 +94,7 @@ class listener implements EventSubscriberInterface
 	* @param string 			$image_upload_table
 	* @param helper				$helper
 	* @param auth				$auth
-	* @param string	 			$phpbb_container
+	* @param Container 			$phpbb_container
 	* @param string				$php_ext
 	* @param factory			$files_factory
 	* @param operator			$operator
@@ -113,7 +113,7 @@ class listener implements EventSubscriberInterface
 		$image_upload_table,
 		helper $helper,
 		auth $auth,
-		$phpbb_container,
+		Container $phpbb_container,
 		$php_ext,
 		factory $files_factory = null,
 		operator $operator = null
