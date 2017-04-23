@@ -21,7 +21,7 @@ use phpbb\extension\manager;
 use phpbb\path_helper;
 use phpbb\controller\helper;
 use phpbb\auth\auth;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Container;
 use phpbb\files\factory;
 use phpbb\collapsiblecategories\operator\operator as operator;
 
@@ -67,7 +67,7 @@ class listener implements EventSubscriberInterface
 	/** @var auth */
 	protected $auth;
 
-	/** @var ContainerBuilder */
+	/** @var Container */
 	protected $phpbb_container;
 
 	/** @var string */
