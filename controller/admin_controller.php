@@ -18,7 +18,7 @@ use phpbb\db\driver\driver_interface as db_interface;
 use phpbb\pagination;
 use phpbb\extension\manager;
 use phpbb\path_helper;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Container;
 
 class admin_controller
 {
@@ -49,7 +49,7 @@ class admin_controller
 	/** @var path_helper */
 	protected $path_helper;
 
-	/** @var ContainerBuilder */
+	/** @var Container */
 	protected $phpbb_container;
 
 	/**
@@ -74,7 +74,7 @@ class admin_controller
 	 * @param pagination			$pagination
 	 * @param manager				$ext_manager
 	 * @param path_helper			$path_helper
-	 * @param string	 			$phpbb_container
+	 * @param Container	 			$phpbb_container
 	 * @param string 				$image_upload_table
 	 */
 	public function __construct(
@@ -87,7 +87,7 @@ class admin_controller
 		pagination $pagination,
 		manager $ext_manager,
 		path_helper $path_helper,
-		$phpbb_container,
+		Container $phpbb_container,
 		$image_upload_table
 	)
 	{
