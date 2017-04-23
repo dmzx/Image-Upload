@@ -29,13 +29,13 @@
 			<h4 id="showdiv">{L_IMAGEUPLOAD_SUCCEEDED}<br /><br />{WIDTH} {L_PIXEL} * {HEIGHT} {L_PIXEL} - {SIZE}</h4>
 			<p id="codes">
 				<label id="codehtml">{L_IMAGEUPLOAD_DIRECT_LINK}{L_COLON}</label><br />
-				<input type="text" value="{FILENAME}" onclick="javascript:this.focus();this.select();" readonly="true" /><br />
+				<input type="text" value="{FILENAME}" id="link" /><i class="buttoncopy" data-copytarget="#link">{L_IMAGEUPLOAD_COPY}</i><br />
 				<label id="codehtml">{L_IMAGEUPLOAD_URL_LINK}{L_COLON}</label><br />
-				<input type="text" value="[url={FILENAME}]{L_IMAGEUPLOAD_BY} {SITENAME}[/url]" onclick="javascript:this.focus();this.select();" readonly="true" /><br />
+				<input type="text" value="[url={FILENAME}]{L_IMAGEUPLOAD_BY} {SITENAME}[/url]" id="url" /><i class="buttoncopy" data-copytarget="#url">{L_IMAGEUPLOAD_COPY}</i><br />
 				<label id="codehtml">{L_IMAGEUPLOAD_IMG_LINK}{L_COLON}</label><br />
-				<input type="text" value="[img]{FILENAME}[/img]" onclick="javascript:this.focus();this.select();" readonly="true" /><br />
+				<input type="text" value="[img]{FILENAME}[/img]" id="img" /><i class="buttoncopy" data-copytarget="#img">{L_IMAGEUPLOAD_COPY}</i><br />
 				<label id="codehtml">{L_IMAGEUPLOAD_HSIMG_LINK}{L_COLON}</label><br />
-				<input type="text" value="[hsimg]{FILENAME}[/hsimg]" onclick="javascript:this.focus();this.select();" readonly="true" /><br /><br />
+				<input type="text" value="[hsimg]{FILENAME}[/hsimg]" id="hsimg" /><i class="buttoncopy" data-copytarget="#hsimg">{L_IMAGEUPLOAD_COPY}</i><br /><br />
 				<div id="showdiv">
 					<img id="upload" src="{FILENAME}" title="{L_IMAGEUPLOAD_BY} {SITENAME}" /><br />
 				</div>
@@ -44,5 +44,7 @@
 	</div>
 </div>
 <!-- ENDIF -->
+
+<!-- INCLUDEJS js/copy.js -->
 
 <!-- INCLUDE overall_footer.html -->

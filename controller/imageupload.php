@@ -84,21 +84,21 @@ class imageupload
 	/**
 	* Constructor
 	*
-	* @param config							$config
-	* @param functions						$functions
-	* @param template		 				$template
-	* @param user							$user
-	* @param auth							$auth
-	* @param log_interface					$log
-	* @param db_interface					$db
-	* @param helper		 					$helper
-	* @param request_interface				$request
-	* @param manager						$ext_manager
-	* @param path_helper					$path_helper
-	* @param string 						$php_ext
-	* @param string 						$root_path
-	* @param string 						$image_upload_table
-	* @param factory						$files_factory
+	* @param config				$config
+	* @param functions			$functions
+	* @param template		 	$template
+	* @param user				$user
+	* @param auth				$auth
+	* @param log_interface		$log
+	* @param db_interface		$db
+	* @param helper		 		$helper
+	* @param request_interface	$request
+	* @param manager			$ext_manager
+	* @param path_helper		$path_helper
+	* @param string 			$php_ext
+	* @param string 			$root_path
+	* @param string 			$image_upload_table
+	* @param factory			$files_factory
 	*
 	*/
 	public function __construct(

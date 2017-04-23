@@ -1,0 +1,44 @@
+<!-- IF IMAGEUPLOAD_USE_UPLOAD -->
+<div id="imageupload-panel" class="panel bg3">
+	<div class="inner">
+		<fieldset class="fields1">
+			<p>{L_IMAGEUPLOAD_POSTINGPAGE}</p>
+			<div class="panel upload_inner" style="max-height:150px; overflow-x:hidden; overflow-y:auto;">
+				<div class="inner">
+					<!-- BEGIN images -->
+						<div style="float:left; text-align: center;" class="upload_enabled">
+							<div class="imageupload_index-preview">
+								<img class="imageupload_index" id="{images.FILENAME_REAL}" src="{images.IMAGEPATH}" title="{images.FILENAME} - {images.WIDTH} {L_PIXEL} * {images.HEIGHT} {L_PIXEL} - {images.SIZE}"	/>
+							</div>
+							<div>{images.FILENAME}</div>
+							<div id="myModal" class="modal">
+								<span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+								<img class="modal-content" id="image_show_id">
+								<div id="caption"></div>
+							</div>
+						</div>
+						<script>
+							var modal = document.getElementById('myModal');
+
+							var img = document.getElementById('{images.FILENAME_REAL}');
+							var modalImg = document.getElementById("image_show_id");
+							var captionText = document.getElementById("caption");
+							img.onclick = function(){
+								modal.style.display = "block";
+								modalImg.src = this.src;
+								captionText.innerHTML = this.alt;
+							}
+
+							var span = document.getElementsByClassName("close")[0];
+
+							span.onclick = function() {
+								modal.style.display = "none";
+							}
+						</script>
+					<!-- END images -->
+				</div>
+			</div>
+		</fieldset>
+	</div>
+</div>
+<!-- ENDIF -->

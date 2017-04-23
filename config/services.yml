@@ -5,12 +5,21 @@ services:
         class: dmzx\imageupload\event\listener
         arguments:
             - '@config'
-            - '@user'
             - '@template'
+            - '@log'
+            - '@user'
+            - '@request'
+            - '@dbal.conn'
+            - '@pagination'
+            - '@ext.manager'
+            - '@path_helper'
+            - '%dmzx.imageupload.table.image_upload%'
             - '@controller.helper'
             - '@auth'
+            - '@service_container'
             - '%core.php_ext%'
             - '@?files.factory'
+            - '@?phpbb.collapsiblecategories.operator'
         tags:
             - { name: event.listener }
     dmzx.imageupload.admin.controller:
@@ -25,6 +34,7 @@ services:
             - '@pagination'
             - '@ext.manager'
             - '@path_helper'
+            - '@service_container'
             - '%dmzx.imageupload.table.image_upload%'
     dmzx.imageupload.controller.upload:
         class: dmzx\imageupload\controller\imageupload

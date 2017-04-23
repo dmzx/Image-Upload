@@ -18,6 +18,7 @@ use phpbb\db\driver\driver_interface as db_interface;
 use phpbb\pagination;
 use phpbb\extension\manager;
 use phpbb\path_helper;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class admin_controller
 {
@@ -48,6 +49,9 @@ class admin_controller
 	/** @var path_helper */
 	protected $path_helper;
 
+	/** @var ContainerBuilder */
+	protected $phpbb_container;
+
 	/**
 	* The database table
 	*
@@ -70,6 +74,7 @@ class admin_controller
 	 * @param pagination			$pagination
 	 * @param manager				$ext_manager
 	 * @param path_helper			$path_helper
+	 * @param string	 			$phpbb_container
 	 * @param string 				$image_upload_table
 	 */
 	public function __construct(
@@ -82,6 +87,7 @@ class admin_controller
 		pagination $pagination,
 		manager $ext_manager,
 		path_helper $path_helper,
+		$phpbb_container,
 		$image_upload_table
 	)
 	{
@@ -94,6 +100,7 @@ class admin_controller
 		$this->pagination 			= $pagination;
 		$this->ext_manager	 		= $ext_manager;
 		$this->path_helper	 		= $path_helper;
+		$this->phpbb_container 		= $phpbb_container;
 		$this->image_upload_table 	= $image_upload_table;
 		$this->ext_path 			= $this->ext_manager->get_extension_path('dmzx/imageupload', true);
 		$this->ext_path_web 		= $this->path_helper->update_web_root_path($this->ext_path);
@@ -156,12 +163,12 @@ class admin_controller
 		$this->db->sql_freeresult($result);
 
 		$limit_days = array(
-			0 => $this->user->lang['ALL_ENTRIES'],
-			1 => $this->user->lang['1_DAY'],
-			7 => $this->user->lang['7_DAYS'],
-			14 => $this->user->lang['2_WEEKS'],
-			30 => $this->user->lang['1_MONTH'],
-			90 => $this->user->lang['3_MONTHS'],
+			0 	=> $this->user->lang['ALL_ENTRIES'],
+			1 	=> $this->user->lang['1_DAY'],
+			7 	=> $this->user->lang['7_DAYS'],
+			14 	=> $this->user->lang['2_WEEKS'],
+			30 	=> $this->user->lang['1_MONTH'],
+			90 	=> $this->user->lang['3_MONTHS'],
 			180 => $this->user->lang['6_MONTHS'],
 			365 => $this->user->lang['1_YEAR']
 		);
@@ -187,6 +194,7 @@ class admin_controller
 			WHERE u.user_id = im.user_id
 			ORDER BY ' . $sql_sort_order;
 		$result = $this->db->sql_query_limit($sql, $number, $start);
+
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			$file_name = $row['imageupload_realname'];
@@ -222,14 +230,21 @@ class admin_controller
 		$this->template->assign_vars(array(
 			'ACP_IMAGEUPLOAD_VERSION'			=> $this->config['imageupload_system_version'],
 			'ACP_IMAGEUPLOAD_ENABLE'			=> $this->config['imageupload_enable'],
+			'ACP_IMAGEUPLOAD_INDEX_ENABLE'		=> $this->config['imageupload_index_enable'],
 			'ACP_IMAGEUPLOAD_NUMBER'			=> $this->config['imageupload_number'],
 			'ACP_IMAGEUPLOAD_ALLOWED_SIZE'		=> sprintf($this->user->lang['ACP_IMAGEUPLOAD_NEW_DOWNLOAD_SIZE'], $max_filesize, $unit),
 			'ACP_TOTAL_IMAGES'					=> $this->user->lang('ACP_MULTI_IMAGES', (int) $total_imageupload),
+			'ACP_IMAGEUPLOAD_CHAT_ENABLE'		=> $this->config['imageupload_chat_enable'],
 			'TOTAL_FILE_SIZE'					=> get_formatted_filesize($total_filesize),
 			'S_SELECT_SORT_DIR'					=> $s_sort_dir,
 			'S_SELECT_SORT_KEY'					=> $s_sort_key,
 			'U_ACTION'							=> $this->u_action,
 		));
+
+		if ($this->phpbb_container->has('dmzx.mchat.settings'))
+		{
+			$this->template->assign_var('IMAGEUPLOAD_CHAT_VIEW', true);
+		}
 
 		if (($deletemark))
 		{
@@ -287,6 +302,8 @@ class admin_controller
 	{
 		$this->config->set('imageupload_enable', $this->request->variable('imageupload_enable', 1));
 		$this->config->set('imageupload_number', $this->request->variable('imageupload_number', 2));
+		$this->config->set('imageupload_index_enable', $this->request->variable('imageupload_index_enable', 0));
+		$this->config->set('imageupload_chat_enable', $this->request->variable('imageupload_chat_enable', 0));
 	}
 
 	/**

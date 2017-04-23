@@ -42,6 +42,8 @@ $lang = array_merge($lang, array(
 	'ACP_IMAGE_UPLOAD_CONFIGURATION'		=> 'Image Upload Configuration',
 	'ACP_IMAGEUPLOAD_ENABLE'				=> 'Enable Image Upload',
 	'ACP_IMAGEUPLOAD_ENABLE_EXPLAIN'		=> 'Global setting to enable Image Upload.',
+	'ACP_IMAGEUPLOAD_INDEX_ENABLE'			=> 'Enable Images on index',
+	'ACP_IMAGEUPLOAD_INDEX_ENABLE_EXPLAIN'	=> 'Global on/off of images on index for all members.<br />Members can set in UCP if they want to see uploaded images on index.',
 	'ACP_IMAGEUPLOAD_NUMBER'				=> 'Size of upload',
 	'ACP_IMAGEUPLOAD_NUMBER_EXPLAIN'		=> 'Set size of upload in MB default is 2 MB.',
 	'ACP_IMAGEUPLOAD_NEW_DOWNLOAD_SIZE'		=> 'The maximum size your php.ini allows is <strong>%1$s %2$s</strong>!',
@@ -60,4 +62,6 @@ $lang = array_merge($lang, array(
 	'ACP_IMAGEUPLOAD_SORT_USERNAME'			=> 'Username',
 	'ACP_IMAGEUPLOAD_SORT_DATE'				=> 'Date',
 	'ACP_IMAGEUPLOAD_NOT_SELECTED'			=> 'Not selected any images',
+	'ACP_IMAGEUPLOAD_CHAT_ENABLE'			=> 'Enable mChat image posting',
+	'ACP_IMAGEUPLOAD_CHAT_ENABLE_EXPLAIN'	=> 'Set to yes to insert uploaded images on index with onclick insert.',
 ));

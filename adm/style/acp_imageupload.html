@@ -26,6 +26,24 @@
 				<input type="number" name="imageupload_number" id="imageupload_number" size="4" maxlength="4" min="1" max="5000" value="{ACP_IMAGEUPLOAD_NUMBER}" />
 			</dd>
 		</dl>
+		<dl>
+			<dt><label for="imageupload_index_enable">{L_ACP_IMAGEUPLOAD_INDEX_ENABLE}{L_COLON}</label><br />
+				<span>{L_ACP_IMAGEUPLOAD_INDEX_ENABLE_EXPLAIN}</span>
+			</dt>
+			<dd>
+				<label><input type="radio" class="radio" name="imageupload_index_enable" value="1"<!-- IF ACP_IMAGEUPLOAD_INDEX_ENABLE --> id="imageupload_index_enable" checked="checked"<!-- ENDIF --> /> {L_YES}</label>
+				<label><input type="radio" class="radio" name="imageupload_index_enable" value="0"<!-- IF not ACP_IMAGEUPLOAD_INDEX_ENABLE --> id="imageupload_index_enable" checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+			</dd>
+		</dl>
+		<!-- IF IMAGEUPLOAD_CHAT_VIEW -->
+		<dl>
+			<dt><label>{L_ACP_IMAGEUPLOAD_CHAT_ENABLE}{L_COLON}</label><br /><span>{L_ACP_IMAGEUPLOAD_CHAT_ENABLE_EXPLAIN}</span></dt>
+			<dd>
+				<label><input name="imageupload_chat_enable" type="radio" <!-- IF ACP_IMAGEUPLOAD_CHAT_ENABLE --> checked="checked"<!-- ENDIF --> class="radio" value="1" /> {L_YES}</label>
+				<label><input name="imageupload_chat_enable" type="radio" <!-- IF not ACP_IMAGEUPLOAD_CHAT_ENABLE --> checked="checked"<!-- ENDIF --> class="radio" value="0" /> {L_NO}</label>
+			</dd>
+		</dl>
+		<!-- ENDIF -->
 	</fieldset>
 	<fieldset>
 		<p class="submit-buttons">
