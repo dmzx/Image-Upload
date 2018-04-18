@@ -33,6 +33,7 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 
 $lang = array_merge($lang, array(
-	'ACL_U_IMAGE_UPLOAD'	=> 'Can upload files in Image Upload',
+	'ACL_U_IMAGE_UPLOAD'	=> 'Can upload images in Image Upload',
 	'ACL_U_IMAGEUPLOAD'		=> 'Image Upload',
+	'ACL_U_IMAGE_DELETE'	=> 'Can delete images in UCP',
 ));

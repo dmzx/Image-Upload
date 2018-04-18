@@ -60,3 +60,23 @@ services:
             - '@template'
             - '@config'
             - '@ext.manager'
+    dmzx.imageupload.ucp.controller:
+        class: dmzx\imageupload\controller\ucp_controller
+        arguments:
+            - '@config'
+            - '@template'
+            - '@log'
+            - '@user'
+            - '@request'
+            - '@dbal.conn'
+            - '@pagination'
+            - '@ext.manager'
+            - '@path_helper'
+            - '%dmzx.imageupload.table.image_upload%'
+            - '@controller.helper'
+            - '@auth'
+            - '@service_container'
+            - '%core.php_ext%'
+            - '%core.root_path%'
+            - '@?files.factory'
+            - '@?phpbb.collapsiblecategories.operator'

@@ -1,8 +1,8 @@
-<!-- IF IMAGEUPLOAD_USE_UPLOAD -->
-<li <!-- IF not PHPBB_IS_32 -->class="small-icon icon-upload"<!-- ENDIF --> data-last-responsive="true">
-	<a href="{U_IMAGEUPLOAD_UPLOAD}" target="_blank" title="{L_IMAGEUPLOAD_UPLOAD}" role="menuitem">
-		<!-- IF PHPBB_IS_32 --><i class="icon fa fa-upload" aria-hidden="true"></i><!-- ENDIF -->
-		<span>{L_IMAGEUPLOAD_UPLOAD}</span>
+{% if IMAGEUPLOAD_USE_UPLOAD %}
+<li {% if not PHPBB_IS_32 %}class="small-icon icon-upload"{% endif %} data-last-responsive="true">
+	<a href="{{ U_IMAGEUPLOAD_UPLOAD }}" target="_blank" title="{{ lang('IMAGEUPLOAD_UPLOAD') }}" role="menuitem">
+		{% if PHPBB_IS_32 %}<i class="icon fa fa-upload" aria-hidden="true"></i>{% endif %}
+		<span>{{ lang('IMAGEUPLOAD_UPLOAD') }}</span>
 	</a>
 </li>
-<!-- ENDIF -->
+{% endif %}

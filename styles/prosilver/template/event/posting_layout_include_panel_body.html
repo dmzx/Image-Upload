@@ -1,18 +1,18 @@
-<!-- IF IMAGEUPLOAD_USE_UPLOAD -->
+{% if IMAGEUPLOAD_USE_UPLOAD and loops.images|length %}
 <div id="imageupload-panel" class="panel bg3">
 	<div class="inner">
 		<fieldset class="fields1">
-			<p>{L_IMAGEUPLOAD_POSTINGPAGE}</p>
+			<p>{{ lang('IMAGEUPLOAD_POSTINGPAGE') }}</p>
 			<div class="panel upload_inner" style="max-height:150px; overflow-x:hidden; overflow-y:auto;">
 				<div class="inner">
-					<!-- BEGIN images -->
+					{% for images in loops.images %}
 						<div style="float:left; text-align: center;" class="upload_enabled">
 							<div class="imageupload_index-preview">
-								<img class="imageupload_index" id="{images.FILENAME_REAL}" src="{images.IMAGEPATH}" title="{images.FILENAME} - {images.WIDTH} {L_PIXEL} * {images.HEIGHT} {L_PIXEL} - {images.SIZE}"	/>
+								<img class="imageupload_index" id="{{ images.FILENAME_REAL }}" src="{{ images.IMAGEPATH }}" title="{{ images.FILENAME }} - {{ images.WIDTH }} {{ lang('PIXEL') }} * {{ images.HEIGHT }} {{ lang('PIXEL') }} - {{ images.SIZE }}"	/>
 							</div>
-							<div>{images.FILENAME}</div>
+							<div><i class="button" onclick="insert_text(' [img]{{ images.IMAGE_POSTING_BUTTON }}[/img] ');">{{ images.FILENAME }}</i></div>
 							<div id="myModal" class="modal">
-								<span class="close" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+								<span class="imgclose" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
 								<img class="modal-content" id="image_show_id">
 								<div id="caption"></div>
 							</div>
@@ -20,7 +20,7 @@
 						<script>
 							var modal = document.getElementById('myModal');
 
-							var img = document.getElementById('{images.FILENAME_REAL}');
+							var img = document.getElementById('{{ images.FILENAME_REAL }}');
 							var modalImg = document.getElementById("image_show_id");
 							var captionText = document.getElementById("caption");
 							img.onclick = function(){
@@ -29,16 +29,16 @@
 								captionText.innerHTML = this.alt;
 							}
 
-							var span = document.getElementsByClassName("close")[0];
+							var span = document.getElementsByClassName("imgclose")[0];
 
 							span.onclick = function() {
 								modal.style.display = "none";
 							}
 						</script>
-					<!-- END images -->
+					{% endfor %}
 				</div>
 			</div>
 		</fieldset>
 	</div>
 </div>
-<!-- ENDIF -->
+{% endif %}

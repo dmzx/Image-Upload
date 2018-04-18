@@ -1,106 +1,106 @@
-<!-- INCLUDECSS css/acp_imageupload.css -->
-<!-- INCLUDE overall_header.html -->
+{% INCLUDECSS 'css/acp_imageupload.css' %}
+{% INCLUDE 'overall_header.html' %}
 
-<h1>{L_ACP_IMAGE_UPLOAD}</h1>
+<h1>{{ lang('ACP_IMAGE_UPLOAD') }}</h1>
 
 <p><img src="https://img.shields.io/badge/{{ lang('Version') }}-{{ ACP_IMAGEUPLOAD_VERSION }}-green.svg?style=plastic" /></p>
 
-<form id="acp_imageupload" method="post" action="{U_ACTION}">
+<form id="acp_imageupload" method="post" action="{{ U_ACTION }}">
 	<fieldset>
-		<legend>{L_ACP_IMAGE_UPLOAD_CONFIGURATION}</legend>
+		<legend>{{ lang('ACP_IMAGE_UPLOAD_CONFIGURATION') }}</legend>
 		<dl>
-			<dt><label for="imageupload_enable">{L_ACP_IMAGEUPLOAD_ENABLE}{L_COLON}</label><br />
-				<span>{L_ACP_IMAGEUPLOAD_ENABLE_EXPLAIN}</span>
+			<dt><label for="imageupload_enable">{{ lang('ACP_IMAGEUPLOAD_ENABLE') }}{{ lang('COLON') }}</label><br />
+				<span>{{ lang('ACP_IMAGEUPLOAD_ENABLE_EXPLAIN') }}</span>
 			</dt>
 			<dd>
-				<label><input type="radio" class="radio" name="imageupload_enable" value="1"<!-- IF ACP_IMAGEUPLOAD_ENABLE --> id="imageupload_enable" checked="checked"<!-- ENDIF --> /> {L_YES}</label>
-				<label><input type="radio" class="radio" name="imageupload_enable" value="0"<!-- IF not ACP_IMAGEUPLOAD_ENABLE --> id="imageupload_enable" checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+				<label><input type="radio" class="radio" name="imageupload_enable" value="1"{% if ACP_IMAGEUPLOAD_ENABLE %} id="imageupload_enable" checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="imageupload_enable" value="0"{% if not ACP_IMAGEUPLOAD_ENABLE %} id="imageupload_enable" checked="checked"{% endif %} /> {{ lang('NO') }}</label>
 			</dd>
 		</dl>
 		<dl>
 			<dt>
-				<label for="imageupload_number">{L_ACP_IMAGEUPLOAD_NUMBER}{L_COLON}</label><br />
-				<span>{L_ACP_IMAGEUPLOAD_NUMBER_EXPLAIN}<br />{ACP_IMAGEUPLOAD_ALLOWED_SIZE}</span>
+				<label for="imageupload_number">{{ lang('ACP_IMAGEUPLOAD_NUMBER') }}{{ lang('COLON') }}</label><br />
+				<span>{{ lang('ACP_IMAGEUPLOAD_NUMBER_EXPLAIN') }}<br />{{ ACP_IMAGEUPLOAD_ALLOWED_SIZE }}</span>
 			</dt>
 			<dd>
-				<input type="number" name="imageupload_number" id="imageupload_number" size="4" maxlength="4" min="1" max="5000" value="{ACP_IMAGEUPLOAD_NUMBER}" />
+				<input type="number" name="imageupload_number" id="imageupload_number" size="4" maxlength="4" min="1" max="5000" value="{{ ACP_IMAGEUPLOAD_NUMBER }}" />
 			</dd>
 		</dl>
 		<dl>
-			<dt><label for="imageupload_index_enable">{L_ACP_IMAGEUPLOAD_INDEX_ENABLE}{L_COLON}</label><br />
-				<span>{L_ACP_IMAGEUPLOAD_INDEX_ENABLE_EXPLAIN}</span>
+			<dt><label for="imageupload_index_enable">{{ lang('ACP_IMAGEUPLOAD_INDEX_ENABLE') }}{{ lang('COLON') }}</label><br />
+				<span>{{ lang('ACP_IMAGEUPLOAD_INDEX_ENABLE_EXPLAIN') }}</span>
 			</dt>
 			<dd>
-				<label><input type="radio" class="radio" name="imageupload_index_enable" value="1"<!-- IF ACP_IMAGEUPLOAD_INDEX_ENABLE --> id="imageupload_index_enable" checked="checked"<!-- ENDIF --> /> {L_YES}</label>
-				<label><input type="radio" class="radio" name="imageupload_index_enable" value="0"<!-- IF not ACP_IMAGEUPLOAD_INDEX_ENABLE --> id="imageupload_index_enable" checked="checked"<!-- ENDIF --> /> {L_NO}</label>
+				<label><input type="radio" class="radio" name="imageupload_index_enable" value="1"{% if ACP_IMAGEUPLOAD_INDEX_ENABLE %} id="imageupload_index_enable" checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="imageupload_index_enable" value="0"{% if not ACP_IMAGEUPLOAD_INDEX_ENABLE %} id="imageupload_index_enable" checked="checked"{% endif %} /> {{ lang('NO') }}</label>
 			</dd>
 		</dl>
-		<!-- IF IMAGEUPLOAD_CHAT_VIEW -->
+		{% if IMAGEUPLOAD_CHAT_VIEW %}
 		<dl>
-			<dt><label>{L_ACP_IMAGEUPLOAD_CHAT_ENABLE}{L_COLON}</label><br /><span>{L_ACP_IMAGEUPLOAD_CHAT_ENABLE_EXPLAIN}</span></dt>
+			<dt><label>{{ lang('ACP_IMAGEUPLOAD_CHAT_ENABLE') }}{{ lang('COLON') }}</label><br /><span>{{ lang('ACP_IMAGEUPLOAD_CHAT_ENABLE_EXPLAIN') }}</span></dt>
 			<dd>
-				<label><input name="imageupload_chat_enable" type="radio" <!-- IF ACP_IMAGEUPLOAD_CHAT_ENABLE --> checked="checked"<!-- ENDIF --> class="radio" value="1" /> {L_YES}</label>
-				<label><input name="imageupload_chat_enable" type="radio" <!-- IF not ACP_IMAGEUPLOAD_CHAT_ENABLE --> checked="checked"<!-- ENDIF --> class="radio" value="0" /> {L_NO}</label>
+				<label><input name="imageupload_chat_enable" type="radio" {% if ACP_IMAGEUPLOAD_CHAT_ENABLE %} checked="checked"{% endif %} class="radio" value="1" /> {{ lang('YES') }}</label>
+				<label><input name="imageupload_chat_enable" type="radio" {% if not ACP_IMAGEUPLOAD_CHAT_ENABLE %} checked="checked"{% endif %} class="radio" value="0" /> {{ lang('NO') }}</label>
 			</dd>
 		</dl>
-		<!-- ENDIF -->
+		{% endif %}
 	</fieldset>
 	<fieldset>
 		<p class="submit-buttons">
-			<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
-			<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
-			{S_FORM_TOKEN}
+			<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />&nbsp;
+			<input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}" />
+			{{ S_FORM_TOKEN }}
 		</p>
 	</fieldset>
-	<!-- IF .images -->
-	<!-- IF .pagination or ACP_TOTAL_IMAGES -->
+	{% if loops.images|length %}
+	{% if loops.pagination|length or ACP_TOTAL_IMAGES %}
 	<div class="pagination">
-		{ACP_TOTAL_IMAGES}
-		<!-- IF .pagination -->
-			<!-- INCLUDE pagination.html -->
-		<!-- ELSE -->
-			&bull; {PAGE_NUMBER}
-		<!-- ENDIF -->
+		{{ ACP_TOTAL_IMAGES }}
+		{% if loops.pagination|length %}
+			{% INCLUDE 'pagination.html' %}
+		{% else %}
+			&bull; {{ PAGE_NUMBER }}
+		{% endif %}
 	</div>
-	<!-- ENDIF -->
+	{% endif %}
 	<div class="clear"></div>
 	<table cellspacing="1">
 		<thead>
 			<tr>
-				<th>{L_ACP_IMAGEUPLOAD_TITLE}</th>
-				<th>{L_ACP_IMAGEUPLOAD_PREVIEW}</th>
-				<th>{L_ACP_IMAGEUPLOAD_TITLE_REAL}</th>
-				<th>{L_ACP_IMAGEUPLOAD_USERNAME}</th>
-				<th>{L_ACP_IMAGEUPLOAD_WIDTH_HEIGHT}</th>
-				<th>{L_ACP_IMAGEUPLOAD_SIZE}</th>
-				<th style="text-align: center;">{L_MARK}</th>
+				<th>{{ lang('ACP_IMAGEUPLOAD_TITLE') }}</th>
+				<th>{{ lang('ACP_IMAGEUPLOAD_PREVIEW') }}</th>
+				<th>{{ lang('ACP_IMAGEUPLOAD_TITLE_REAL') }}</th>
+				<th>{{ lang('ACP_IMAGEUPLOAD_USERNAME') }}</th>
+				<th>{{ lang('ACP_IMAGEUPLOAD_WIDTH_HEIGHT') }}</th>
+				<th>{{ lang('ACP_IMAGEUPLOAD_SIZE') }}</th>
+				<th style="text-align: center;">{{ lang('MARK') }}</th>
 			</tr>
 		</thead>
 		<tbody>
-		<!-- BEGIN images -->
-			<!-- IF images.S_ROW_COUNT is even --><tr class="row1"><!-- ELSE --><tr class="row2"><!-- ENDIF -->
-				<td valign="top">{images.FILENAME}</td>
-				<td class="imageupload-preview"><img src="{images.IMAGEPATH}" /></td>
-				<td valign="top">{images.FILENAME_REAL}</td>
-				<td valign="top">{images.IMAGE_USERNAME}</td>
-				<td valign="top">{images.WIDTH} {L_PIXEL} * {images.HEIGHT} {L_PIXEL}</td>
-				<td valign="top">{images.SIZE}</td>
-				<td style="text-align: center;"><input type="checkbox" class="radio" name="ids[]" value="{images.ID}" title="{images.ID}"/></td>
+		{% for images in loops.images %}
+			{% if images.S_ROW_COUNT is even %}<tr class="row1">{% else %}<tr class="row2">{% endif %}
+				<td valign="top">{{ images.FILENAME }}</td>
+				<td class="imageupload-preview"><img src="{{ images.IMAGEPATH }}" /></td>
+				<td valign="top">{{ images.FILENAME_REAL }}</td>
+				<td valign="top">{{ images.IMAGE_USERNAME }}</td>
+				<td valign="top">{{ images.WIDTH }} {{ lang('PIXEL') }} * {{ images.HEIGHT }} {{ lang('PIXEL') }}</td>
+				<td valign="top">{{ images.SIZE }}</td>
+				<td style="text-align: center;"><input type="checkbox" class="radio" name="ids[]" value="{{ images.ID }}" title="{{ images.ID }}"/></td>
 			</tr>
-		<!-- END images -->
+		{% endfor %}
 		</tbody>
 	</table>
-	<span style="float:left;display:block;">{L_ACP_IMAGEUPLOAD_FOLDER_SIZE}{L_COLON} {TOTAL_FILE_SIZE}</span>
+	<span style="float:left;display:block;">{{ lang('ACP_IMAGEUPLOAD_FOLDER_SIZE') }}{{ lang('COLON') }} {{ TOTAL_FILE_SIZE }}</span>
 	<br />
 	<fieldset class="quick">
-		<p class="small"><a href="#" onclick="marklist('acp_imageupload', 'ids', true);">{L_MARK_ALL}</a> &bull; <a href="#" onclick="marklist('acp_imageupload', 'ids', false);">{L_UNMARK_ALL}</a></p>
-		<input class="button2" name="delmarked" value="{L_DELETE_MARKED}" type="submit">
+		<p class="small"><a href="#" onclick="marklist('acp_imageupload', 'ids', true);">{{ lang('MARK_ALL') }}</a> &bull; <a href="#" onclick="marklist('acp_imageupload', 'ids', false);">{{ lang('UNMARK_ALL') }}</a></p>
+		<input class="button2" name="delmarked" value="{{ lang('DELETE_MARKED') }}" type="submit">
 	</fieldset>
 	<fieldset class="display-options">
-		<span class="gensmall">{L_SORT_BY}</span> {S_SELECT_SORT_KEY} {S_SELECT_SORT_DIR}&nbsp;
-		<input class="button2" type="submit" name="sort" value="{L_GO}" />
+		<span class="gensmall">{{ lang('SORT_BY') }}</span> {{ S_SELECT_SORT_KEY }} {{ S_SELECT_SORT_DIR }}&nbsp;
+		<input class="button2" type="submit" name="sort" value="{{ lang('GO') }}" />
 	</fieldset>
-	<!-- ENDIF -->
+	{% endif %}
 </form>
 
-<!-- INCLUDE overall_footer.html -->
+{% INCLUDE 'overall_footer.html' %}

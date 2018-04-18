@@ -52,9 +52,12 @@ $lang = array_merge($lang, array(
 	'IMAGEUPLOAD_BY'							=> 'Image Upload by',
 	'IMAGEUPLOAD_COPY'							=> 'copy',
 	'IMAGEUPLOAD_UPLOADED_IMAGES'				=> 'Your uploaded images',
-	'IMAGEUPLOAD_POSTINGPAGE'					=> 'Here your find your uploaded images click image to preview, just drag and drop into the posting area.',
+	'IMAGEUPLOAD_POSTINGPAGE'					=> 'Here your find your uploaded images click image to preview.',
 	'IMAGEUPLOAD_INDEXPAGE'						=> 'Here your find your uploaded images click image to preview, just drag and drop.',
 	'IMAGEUPLOAD_INDEXPAGE_CHAT'				=> 'Here your find your uploaded images click image to preview, just drag and drop or click title button to post direct in mChat.',
 	'IMAGEUPLOAD_UPC_INDEX'						=> 'See your uploaded images on index page',
 	'IMAGEUPLOAD_COLLAPSIBLE_CATEGORIES_TITLE'	=> 'Toggle visibility of uploaded images',
+	'IMAGEUPLOAD_UCP_DELETE_IMAGES'				=> 'Delete image',
+	'IMAGEUPLOAD_UCP_DELETED_IMAGES'			=> 'Deleted image',
+	'IMAGEUPLOAD_PAGE_RETURN'					=> 'Return to UCP'
 ));

@@ -189,6 +189,9 @@ class listener implements EventSubscriberInterface
 			'u_image_upload'	=> array(
 				'lang'		=> 'ACL_U_IMAGE_UPLOAD',
 				'cat'		=> 'Image Upload'
+			),'u_image_delete'	=> array(
+				'lang'		=> 'ACL_U_IMAGE_DELETE',
+				'cat'		=> 'Image Upload'
 			),
 		));
 		$event['categories'] = array_merge($event['categories'], array(
@@ -269,15 +272,18 @@ class listener implements EventSubscriberInterface
 
 			$filesize = @filesize($this->ext_path_web . 'files/' . $file_name);
 
+			$board_url = generate_board_url();
+
 			$this->template->assign_block_vars('images', array(
-				'FILENAME'			=> $row['imageupload_filename'],
-				'FILENAME_REAL'		=> $file_name,
-				'IMAGEPATH'			=> $this->ext_path_web . 'files/' . $file_name,
-				'WIDTH'				=> $getimagesize[0],
-				'HEIGHT'			=> $getimagesize[1],
-				'SIZE'				=> get_formatted_filesize($filesize),
-				'IMAGE_USERNAME'	=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-				'ID'				=> $row['imageupload_id'],
+				'FILENAME'					=> $row['imageupload_filename'],
+				'FILENAME_REAL'				=> $file_name,
+				'IMAGEPATH'					=> $this->ext_path_web . 'files/' . $file_name,
+				'IMAGE_POSTING_BUTTON'		=> $board_url . '/ext/dmzx/imageupload/files/' . $file_name,
+				'WIDTH'						=> $getimagesize[0],
+				'HEIGHT'					=> $getimagesize[1],
+				'SIZE'						=> get_formatted_filesize($filesize),
+				'IMAGE_USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
+				'ID'						=> $row['imageupload_id'],
 			));
 		}
 		$this->db->sql_freeresult($result);

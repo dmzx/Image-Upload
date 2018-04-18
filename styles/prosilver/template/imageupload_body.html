@@ -1,50 +1,50 @@
-<!-- INCLUDE overall_header.html -->
+{% INCLUDE 'overall_header.html' %}
 
-<form method="post" id="add_imageupload" {S_FORM_ENCTYPE}>
+<form method="post" id="add_imageupload" {{ S_FORM_ENCTYPE }}>
 	<div class="panel" id="showdiv">
 		<div class="inner">
-			<h2>{L_IMAGEUPLOAD_UPLOAD_SECTION}</h2>
-			<p>{L_IMAGEUPLOAD_UPLOAD_MESSAGE}</p>
-			<p>{IMAGEUPLOAD_ALLOWED_SIZE}</p>
+			<h2>{{ lang('IMAGEUPLOAD_UPLOAD_SECTION') }}</h2>
+			<p>{{ lang('IMAGEUPLOAD_UPLOAD_MESSAGE') }}</p>
+			<p>{{ IMAGEUPLOAD_ALLOWED_SIZE }}</p>
 			<dl>
-				<dt><label>{L_IMAGEUPLOAD_NEW_FILENAME}{L_COLON}</label> <input class="inputbox autowidth" type="file" name="filename" size="52" /></dt>
-				<dd><label>{L_ALLOWED} {L_EXTENSION}{L_COLON}</label><!-- BEGIN allowed_extension --><!-- IF not allowed_extension.FIRST -->,<!-- ENDIF --> {allowed_extension.EXTENSION}<!-- END allowed_extension --></dd>
+				<dt><label>{{ lang('IMAGEUPLOAD_NEW_FILENAME') }}{{ lang('COLON') }}</label> <input class="inputbox autowidth" type="file" name="filename" size="52" /></dt>
+				<dd><label>{{ lang('ALLOWED') }} {{ lang('EXTENSION') }}{{ lang('COLON') }}</label>{% for allowed_extension in loops.allowed_extension %}{% if not allowed_extension.FIRST %},{% endif %} {{ allowed_extension.EXTENSION }}{% endfor %}</dd>
 			</dl>
 		</div>
 	</div>
 	<div class="panel bg2">
 		<div class="inner">
 			<fieldset class="submit-buttons">
-				<input class="button1" id="submit" name="submit" value="{L_SUBMIT}" type="submit" />&nbsp;
-				{S_FORM_TOKEN}
+				<input class="button1" id="submit" name="submit" value="{{ lang('SUBMIT') }}" type="submit" />&nbsp;
+				{{ S_FORM_TOKEN }}
 			</fieldset>
 		</div>
 	</div>
 </form>
 
-<!-- IF FILENAME -->
+{% if FILENAME %}
 <div class="panel bg2">
 	<div class="inner">
 		<fieldset class="fields2">
-			<h4 id="showdiv">{L_IMAGEUPLOAD_SUCCEEDED}<br /><br />{WIDTH} {L_PIXEL} * {HEIGHT} {L_PIXEL} - {SIZE}</h4>
+			<h4 id="showdiv">{{ lang('IMAGEUPLOAD_SUCCEEDED') }}<br /><br />{{ WIDTH }} {{ lang('PIXEL') }} * {{ HEIGHT }} {{ lang('PIXEL') }} - {{ SIZE }}</h4>
 			<p id="codes">
-				<label id="codehtml">{L_IMAGEUPLOAD_DIRECT_LINK}{L_COLON}</label><br />
-				<input type="text" value="{FILENAME}" id="link" /><i class="buttoncopy" data-copytarget="#link">{L_IMAGEUPLOAD_COPY}</i><br />
-				<label id="codehtml">{L_IMAGEUPLOAD_URL_LINK}{L_COLON}</label><br />
-				<input type="text" value="[url={FILENAME}]{L_IMAGEUPLOAD_BY} {SITENAME}[/url]" id="url" /><i class="buttoncopy" data-copytarget="#url">{L_IMAGEUPLOAD_COPY}</i><br />
-				<label id="codehtml">{L_IMAGEUPLOAD_IMG_LINK}{L_COLON}</label><br />
-				<input type="text" value="[img]{FILENAME}[/img]" id="img" /><i class="buttoncopy" data-copytarget="#img">{L_IMAGEUPLOAD_COPY}</i><br />
-				<label id="codehtml">{L_IMAGEUPLOAD_HSIMG_LINK}{L_COLON}</label><br />
-				<input type="text" value="[hsimg]{FILENAME}[/hsimg]" id="hsimg" /><i class="buttoncopy" data-copytarget="#hsimg">{L_IMAGEUPLOAD_COPY}</i><br /><br />
+				<label id="codehtml">{{ lang('IMAGEUPLOAD_DIRECT_LINK') }}{{ lang('COLON') }}</label><br />
+				<input type="text" value="{{ FILENAME }}" id="link" /><i class="buttoncopy" data-copytarget="#link">{{ lang('IMAGEUPLOAD_COPY') }}</i><br />
+				<label id="codehtml">{{ lang('IMAGEUPLOAD_URL_LINK') }}{{ lang('COLON') }}</label><br />
+				<input type="text" value="[url={{ FILENAME }}]{{ lang('IMAGEUPLOAD_BY') }} {{ SITENAME }}[/url]" id="url" /><i class="buttoncopy" data-copytarget="#url">{{ lang('IMAGEUPLOAD_COPY') }}</i><br />
+				<label id="codehtml">{{ lang('IMAGEUPLOAD_IMG_LINK') }}{{ lang('COLON') }}</label><br />
+				<input type="text" value="[img]{{ FILENAME }}[/img]" id="img" /><i class="buttoncopy" data-copytarget="#img">{{ lang('IMAGEUPLOAD_COPY') }}</i><br />
+				<label id="codehtml">{{ lang('IMAGEUPLOAD_HSIMG_LINK') }}{{ lang('COLON') }}</label><br />
+				<input type="text" value="[hsimg]{{ FILENAME }}[/hsimg]" id="hsimg" /><i class="buttoncopy" data-copytarget="#hsimg">{{ lang('IMAGEUPLOAD_COPY') }}</i><br /><br />
 				<div id="showdiv">
-					<img id="upload" src="{FILENAME}" title="{L_IMAGEUPLOAD_BY} {SITENAME}" /><br />
+					<img id="upload" src="{{ FILENAME }}" title="{{ lang('IMAGEUPLOAD_BY') }} {{ SITENAME }}" /><br />
 				</div>
 			</p>
 		</fieldset>
 	</div>
 </div>
-<!-- ENDIF -->
+{% endif %}
 
-<!-- INCLUDEJS js/copy.js -->
+{% INCLUDEJS 'js/copy.js' %}
 
-<!-- INCLUDE overall_footer.html -->
+{% INCLUDE 'overall_footer.html' %}
