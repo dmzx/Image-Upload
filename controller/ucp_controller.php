@@ -9,7 +9,6 @@
 
 namespace dmzx\imageupload\controller;
 
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use phpbb\config\config;
 use phpbb\template\template;
 use phpbb\log\log_interface;
