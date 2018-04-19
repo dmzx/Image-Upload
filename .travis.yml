@@ -7,8 +7,6 @@ matrix:
     - php: 5.5
       env: DB=mysqli
     - php: 5.5
-      env: DB=mysql
-    - php: 5.5
       env: DB=mariadb
     - php: 5.5
       env: DB=postgres
