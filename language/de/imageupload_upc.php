@@ -1,10 +1,10 @@
 <?php
 /**
 *
-* @package phpBB Extension - Image Upload
+* @version $Id: imageupload_upc.php 145 2018-04-18 14:34:06Z Scanialady $
+* @package phpBB Extension - Image Upload (Deutsch)
 * @copyright (c) 2017 dmzx - http://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
-* @Spanish translation - ThE KuKa (Raul Arroyo) - http://www.phpbb-es.com
 *
 */
 
@@ -31,14 +31,12 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ‚ ‘ ’ « » „ “ ” …
 //
 
 $lang = array_merge($lang, array(
-	'ACP_IMAGE_UPLOAD'			=> 'Subida de Imágenes',
-	'ACP_IMAGE_UPLOAD_CONFIG'	=> 'Configuración',
-	// Log
-	'LOG_IMAGEUPLOAD_ADD'		=> '<strong>Nueva imagen añadida</strong><br>» %1$s',
-	'LOG_IMAGEUPLOAD_SETTINGS'	=> '<strong>Configuración de Subida de Imágenes cambiada</strong>',
-	'LOG_IMAGEUPLOAD_DELETED'	=> '<strong>Imagen borrada</strong><br>» %1$s',
+	'IMAGEUPLOAD_UCP'							=> 'Hochgeladene Bilder',
+	'IMAGEUPLOAD_UCP_UPLOADED_IMAGES'			=> 'Deine hochgeladenen Bilder.',
+	'IMAGEUPLOAD_UCP_UPLOADED_NO_IMAGES'		=> 'Noch keine Bilder hochgeladen.',
+	'IMAGEUPLOAD_UCP_UPLOADED_IMAGES_DELETE'	=> 'Deine hochgeladenen Bilder können hier gelöscht werden.',
 ));

@@ -1,10 +1,10 @@
 <?php
 /**
 *
-* @package phpBB Extension - Image Upload
+* @version $Id: info_ucp_imageupload.php 145 2018-04-18 14:34:06Z Scanialady $
+* @package phpBB Extension - Image Upload (Deutsch)
 * @copyright (c) 2017 dmzx - http://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
-* @Spanish translation - ThE KuKa (Raul Arroyo) - http://www.phpbb-es.com
 *
 */
 
@@ -30,10 +30,10 @@ if (empty($lang) || !is_array($lang))
 // equally where a string contains only two placeholders which are used to wrap text
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
-// Some characters for use
-// ’ » “ ” …
+// Some characters you may want to copy&paste:
+// ‚ ‘ ’ « » „ “ ” …
+//
 
 $lang = array_merge($lang, array(
-	'ACL_U_IMAGE_UPLOAD'	=> 'Puede subir archivos en Subida de Imágenes',
-	'ACL_U_IMAGEUPLOAD'		=> 'Subida de Imágenes',
+	'UCP_IMAGEUPLOAD_TITLE'	=> 'Hochgeladene Bilder',
 ));

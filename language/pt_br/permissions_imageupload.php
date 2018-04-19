@@ -35,4 +35,5 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'ACL_U_IMAGE_UPLOAD'	=> 'Pode enviar imagens usando Image Upload',
 	'ACL_U_IMAGEUPLOAD'		=> 'Image Upload',
+	'ACL_U_IMAGE_DELETE'	=> 'Pode excluir imagens no UCP',
 ));

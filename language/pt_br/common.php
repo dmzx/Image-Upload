@@ -57,4 +57,7 @@ $lang = array_merge($lang, array(
 	'IMAGEUPLOAD_INDEXPAGE_CHAT'				=> 'Aqui você encontra suas imagens enviadas, clique para preview. Apenas arraste e solte ou clique no botão título para postar diretamente no mChat.',
 	'IMAGEUPLOAD_UPC_INDEX'						=> 'Ver suas imagens enviadas para a página índice',
 	'IMAGEUPLOAD_COLLAPSIBLE_CATEGORIES_TITLE'	=> 'Alterna visibilidade das imagens enviadas',
+	'IMAGEUPLOAD_UCP_DELETE_IMAGES'				=> 'Excluir imagem',
+	'IMAGEUPLOAD_UCP_DELETED_IMAGES'			=> 'Imagem excluída',
+	'IMAGEUPLOAD_PAGE_RETURN'					=> 'Voltar ao UCP'
 ));

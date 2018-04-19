@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @version $Id: permissions_imageupload.php 57 2017-02-05 22:26:34Z Scanialady $
+* @version $Id: permissions_imageupload.php 145 2018-04-18 14:34:06Z Scanialady $
 * @package phpBB Extension - Image Upload
 * @copyright (c) 2017 dmzx - http://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
@@ -34,6 +34,8 @@ if (empty($lang) || !is_array($lang))
 // ‚ ‘ ’ « » „ “ ” …
 
 $lang = array_merge($lang, array(
-	'ACL_U_IMAGE_UPLOAD'	=> 'Kann Dateien in Image Upload hochladen',
+	'ACL_U_IMAGE_UPLOAD'	=> 'Kann Bilder in Image Upload hochladen',
 	'ACL_U_IMAGEUPLOAD'		=> 'Image Upload',
+
+	'ACL_U_IMAGE_DELETE'	=> 'Kann Bilder im UCP löschen',
 ));

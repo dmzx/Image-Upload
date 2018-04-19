@@ -3,7 +3,6 @@
 *
 * @package phpBB Extension - Image Upload
 * @copyright (c) 2017 dmzx - http://www.dmzx-web.net
-* Nederlandse vertaling @ Solidjeuh <https://www.froddelpower.be>
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -35,10 +34,8 @@ if (empty($lang) || !is_array($lang))
 //
 
 $lang = array_merge($lang, array(
-	'ACP_IMAGE_UPLOAD'			=> 'Afbeelding Uploader',
-	'ACP_IMAGE_UPLOAD_CONFIG'	=> 'Configuratie',
-	// Log
-	'LOG_IMAGEUPLOAD_ADD'		=> '<strong>Nieuwe afbeelding toegevoegd</strong><br>» %1$s',
-	'LOG_IMAGEUPLOAD_SETTINGS'	=> '<strong>Afbeelding uploader configuratie gewijzigd</strong>',
-	'LOG_IMAGEUPLOAD_DELETED'	=> '<strong>Verwijderde afbeelding</strong><br>» %1$s',
+	'IMAGEUPLOAD_UCP'							=> 'Imagens enviadas',
+	'IMAGEUPLOAD_UCP_UPLOADED_IMAGES'			=> 'Suas imagens enviadas.',
+	'IMAGEUPLOAD_UCP_UPLOADED_NO_IMAGES'		=> 'Nenhuma imagem enviada ainda.',
+	'IMAGEUPLOAD_UCP_UPLOADED_IMAGES_DELETE'	=> 'Imagens enviadas podem ser excluídas aqui.',
 ));

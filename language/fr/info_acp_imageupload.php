@@ -1,13 +1,17 @@
 <?php
 /**
-*
-* @package phpBB Extension - Image Upload
-* @copyright (c) 2017 dmzx - http://www.dmzx-web.net
-* Nederlandse vertaling @ Solidjeuh <https://www.froddelpower.be>
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
-*
-*/
+ *
+ * Image Upload. An extension for the phpBB Forum Software package.
+ * French translation by Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2017 dmzx <http://www.dmzx-web.net>
+ * @license GNU General Public License, version 2 (GPL-2.0)
+ *
+ */
 
+/**
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -30,10 +34,15 @@ if (empty($lang) || !is_array($lang))
 // equally where a string contains only two placeholders which are used to wrap text
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
-// Some characters for use
-// ’ » “ ” …
+// Some characters you may want to copy&paste:
+// ’ « » “ ” …
+//
 
 $lang = array_merge($lang, array(
-	'ACL_U_IMAGE_UPLOAD'	=> 'Kan bestanden uploaden in de afbeelding uploader',
-	'ACL_U_IMAGEUPLOAD'		=> 'Afbeelding Uploader',
+	'ACP_IMAGE_UPLOAD'			=> 'Transfert d’images',
+	'ACP_IMAGE_UPLOAD_CONFIG'	=> 'Paramètres',
+	// Log
+	'LOG_IMAGEUPLOAD_ADD'		=> '<strong>Fichier image transféré</strong><br>» %1$s',
+	'LOG_IMAGEUPLOAD_SETTINGS'	=> '<strong>Paramètres du « Transfert d’images » sauvegardés</strong>',
+	'LOG_IMAGEUPLOAD_DELETED'	=> '<strong>Fichier image supprimé</strong><br>» %1$s',
 ));

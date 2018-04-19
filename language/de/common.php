@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @version $Id: common.php 88 2017-04-24 20:00:25Z Scanialady $
+* @version $Id: common.php 145 2018-04-18 14:34:06Z Scanialady $
 * @package phpBB Extension - Image Upload (deutsch)
 * @copyright (c) 2017 dmzx - http://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
@@ -37,9 +37,9 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'IMAGEUPLOAD_UPLOAD'						=> 'Bilder-Upload',
 	'IMAGEUPLOAD_UPLOAD_SECTION'				=> 'Bilder-Upload Bereich',
-	'IMAGEUPLOAD_UPLOAD_MESSAGE'				=> 'Lade dein Bild hier hoch. (Beachte, dass dieser Ordner wieder geleert wird, und alle Uploads werden protokolliert)',
+	'IMAGEUPLOAD_UPLOAD_MESSAGE'				=> 'Lade dein Bild hier hoch. (Beachte, dass dieser Ordner wieder geleert wird, und alle Uploads protokolliert werden.)',
 	'IMAGEUPLOAD_NOT_ENABELD'					=> 'Bilder-Upload ist nicht aktiviert',
-	'IMAGEUPLOAD_NEW_DOWNLOAD_SIZE'				=> 'Die maximale Größe der Datei beträgt <strong>%1$s %2$s</strong>! Abhängig von der benötigten Zeit, die zum hochladen benötigt wird, kann der Wert auch niedriger sein!',
+	'IMAGEUPLOAD_NEW_DOWNLOAD_SIZE'				=> 'Die maximale Größe der Datei beträgt <strong>%1$s %2$s</strong>! Abhängig von der Zeit, die zum hochladen benötigt wird, kann der Wert auch niedriger sein!',
 	'IMAGEUPLOAD_NO_FILENAME'					=> 'Du musst eine Datei angeben, welche hochgeladen werden soll!',
 	'IMAGEUPLOAD_FILE_TOO_BIG'					=> 'Die Datei ist größer, als dein Webanbieter erlaubt!',
 	'IMAGEUPLOAD_NEW_ADDED'						=> 'Dein Eintrag wurde erfolgreich	zur Datenbank hinzugefügt.',
@@ -53,9 +53,12 @@ $lang = array_merge($lang, array(
 	'IMAGEUPLOAD_BY'							=> 'Bild hochgeladen von ',
 	'IMAGEUPLOAD_COPY'							=> 'kopieren',
 	'IMAGEUPLOAD_UPLOADED_IMAGES'				=> 'Deine hochgeladenen Bilder',
-	'IMAGEUPLOAD_POSTINGPAGE'					=> 'Hier findest du deine hochgeladenen Bilder. Klicke auf das Bild für eine Vorschau, lediglich ziehen und in den Textbereich fallen lassen für den Beitrag.',
-	'IMAGEUPLOAD_INDEXPAGE'						=> 'Hier findest du deine hochgeladenen Bilder. Klicke auf das Bild für eine Vorschau, lediglich ziehen und fallen lassen.',
-	'IMAGEUPLOAD_INDEXPAGE_CHAT'				=> 'Hier findest du deine hochgeladenen Bilder. Klicke auf das Bild für eine Vorschau, lediglich ziehen und fallen lassen, oder klicke auf den Titel-Button, um es direkt in mChat zu posten.',
+	'IMAGEUPLOAD_POSTINGPAGE'					=> 'Hier findest du deine hochgeladenen Bilder. Klicke auf das Bild für eine Vorschau.',
+	'IMAGEUPLOAD_INDEXPAGE'						=> 'Hier findest du deine hochgeladenen Bilder. Klicke auf das Bild für eine Vorschau, lediglich ziehen und in den Textbereich fallen lassen.',
+	'IMAGEUPLOAD_INDEXPAGE_CHAT'				=> 'Hier findest du deine hochgeladenen Bilder. Klicke auf das Bild für eine Vorschau, lediglich ziehen und in den Textbereich fallen lassen, oder klicke auf den Titel-Button, um es direkt in mChat zu posten.',
 	'IMAGEUPLOAD_UPC_INDEX'						=> 'Deine hochgeladenen Bilder auf der Forenseite sehen',
 	'IMAGEUPLOAD_COLLAPSIBLE_CATEGORIES_TITLE'	=> 'Sichtbarkeit der hochgeladenen Bilder umschalten',
+	'IMAGEUPLOAD_UCP_DELETE_IMAGES'				=> 'Bild löschen',
+	'IMAGEUPLOAD_UCP_DELETED_IMAGES'			=> 'Bild gelöscht',
+	'IMAGEUPLOAD_PAGE_RETURN'					=> 'Zurück zum UCP'
 ));

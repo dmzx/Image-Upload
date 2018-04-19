@@ -40,4 +40,5 @@ $lang = array_merge($lang, array(
 	'LOG_IMAGEUPLOAD_ADD'		=> '<strong>Nova imagem adicionada</strong><br>» %1$s',
 	'LOG_IMAGEUPLOAD_SETTINGS'	=> '<strong>Configuração modificada</strong>',
 	'LOG_IMAGEUPLOAD_DELETED'	=> '<strong>Imagem excluída</strong><br>» %1$s',
+	'LOG_USER_IMAGE_DELETED'	=> '<strong>Imagem %s excluída com o nome real %s no servidor</strong>',
 ));

@@ -1,7 +1,7 @@
 <?php
 /**
 *
-* @version $Id: acp_imageupload.php 88 2017-04-24 20:00:25Z Scanialady $
+* @version $Id: acp_imageupload.php 145 2018-04-18 14:34:06Z Scanialady $
 * @package phpBB Extension - Image Upload (deutsch)
 * @copyright (c) 2017 dmzx - http://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
