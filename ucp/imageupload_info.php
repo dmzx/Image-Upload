@@ -22,7 +22,7 @@ class imageupload_info
 			'modes'			=> array(
 				'main'	=> array(
 					'title'	=> 'UCP_IMAGEUPLOAD_TITLE',
-					'auth'	=> 'ext_dmzx/imageupload && acl_u_image_upload',
+					'auth'	=> 'ext_dmzx/imageupload',
 					'cat'	=> array('UCP_MAIN')
 				),
 			),
