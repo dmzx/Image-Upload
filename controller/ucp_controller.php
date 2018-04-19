@@ -21,7 +21,6 @@ use phpbb\extension\manager;
 use phpbb\path_helper;
 use phpbb\controller\helper;
 use phpbb\auth\auth;
-use Symfony\Component\DependencyInjection\Container;
 use phpbb\files\factory;
 use phpbb\collapsiblecategories\operator\operator as operator;
 
@@ -194,7 +193,7 @@ class ucp_controller
 					// Add action to the user log
 					$this->log->add('user', $this->user->data['user_id'], $this->user->ip, 'LOG_USER_IMAGE_DELETED', time(), array($image_name, $file_name, 'reportee_id' => $this->user->data['user_id'], $this->user->data['username']));
 
-				 	$meta_info = append_sid("{$this->root_path}ucp.{$this->php_ext}");
+					$meta_info = append_sid("{$this->root_path}ucp.{$this->php_ext}");
 					$message = $this->user->lang['IMAGEUPLOAD_UCP_DELETED_IMAGES'];
 					meta_refresh(1, $meta_info);
 					$message .= '<br /><br />' . $this->user->lang('IMAGEUPLOAD_PAGE_RETURN', '<a href="' . $meta_info . '">', '</a>');
