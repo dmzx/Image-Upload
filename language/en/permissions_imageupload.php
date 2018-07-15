@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB Extension - Image Upload
-* @copyright (c) 2017 dmzx - http://www.dmzx-web.net
+* @copyright (c) 2017 dmzx - https://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -33,6 +33,7 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 
 $lang = array_merge($lang, array(
-	'ACL_U_IMAGE_UPLOAD'	=> 'Can upload files in Image Upload',
+	'ACL_U_IMAGE_UPLOAD'	=> 'Can upload images in Image Upload',
 	'ACL_U_IMAGEUPLOAD'		=> 'Image Upload',
+	'ACL_U_IMAGE_DELETE'	=> 'Can delete images in UCP',
 ));

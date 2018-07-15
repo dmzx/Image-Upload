@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB Extension - Image Upload
-* @copyright (c) 2017 dmzx - http://www.dmzx-web.net
+* @copyright (c) 2017 dmzx - https://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -40,4 +40,5 @@ $lang = array_merge($lang, array(
 	'LOG_IMAGEUPLOAD_ADD'		=> '<strong>Added new image</strong><br>» %1$s',
 	'LOG_IMAGEUPLOAD_SETTINGS'	=> '<strong>Image Upload configuration changed</strong>',
 	'LOG_IMAGEUPLOAD_DELETED'	=> '<strong>Deleted image</strong><br>» %1$s',
+	'LOG_USER_IMAGE_DELETED'	=> '<strong>Image %s deleted with real name %s on server</strong>',
 ));

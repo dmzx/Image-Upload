@@ -1,0 +1,8 @@
+{% if IMAGEUPLOAD_USE_UPLOAD %}
+<ul class="topiclist sidebar">
+	<li class="row bg1 sidebar-link">
+		<a href="{{ U_IMAGEUPLOAD_UPLOAD }}" onclick="popup('./imageupload', 550, 600); return false;" title="{{ lang('IMAGEUPLOAD_UPLOAD') }}" role="menuitem">
+		<i class="icon fa fa-upload" aria-hidden="true"></i><span>{{ lang('IMAGEUPLOAD_UPLOAD') }}</span></a>
+	</ul>
+</li>
+{% endif %}

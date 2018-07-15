@@ -1,9 +1,8 @@
 <?php
 /**
 *
-* @version $Id: permissions_imageupload.php 57 2017-02-05 22:26:34Z Scanialady $
 * @package phpBB Extension - Image Upload
-* @copyright (c) 2017 dmzx - http://www.dmzx-web.net
+* @copyright (c) 2017 dmzx - https://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -30,10 +29,10 @@ if (empty($lang) || !is_array($lang))
 // equally where a string contains only two placeholders which are used to wrap text
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
-// Some characters for use
-// ‚ ‘ ’ « » „ “ ” …
+// Some characters you may want to copy&paste:
+// ’ » “ ” …
+//
 
 $lang = array_merge($lang, array(
-	'ACL_U_IMAGE_UPLOAD'	=> 'Kann Dateien in Image Upload hochladen',
-	'ACL_U_IMAGEUPLOAD'		=> 'Image Upload',
+	'UCP_IMAGEUPLOAD_TITLE'	=> 'Uploaded images',
 ));

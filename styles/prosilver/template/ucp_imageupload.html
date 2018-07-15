@@ -1,0 +1,73 @@
+{% INCLUDE 'ucp_header.html' %}
+
+<h2>{{ lang('IMAGEUPLOAD_UCP') }}</h2>
+
+{% if loops.images|length %}
+<form id="imageupload_ucp" method="post">
+	<div class="panel">
+		<div class="inner">
+			<ul class="topiclist">
+				<li class="header">
+					<dl class="row-item">
+						<dt>{% if S_IMAGEUPLOAD_DELETE_IMAGE %}{{ lang('IMAGEUPLOAD_UCP_UPLOADED_IMAGES_DELETE') }}{% else %}{{ lang('IMAGEUPLOAD_UCP_UPLOADED_IMAGES') }}{% endif %}</dt>
+						<dd style="border: none">&nbsp;</dd>
+					</dl>
+				</li>
+			</ul>
+			<ul class="topiclist cplist responsive-show-columns" style="max-height:200px; overflow-x:hidden; overflow-y:auto;">
+				<li class="row-items">
+					<dl>
+						<dt>
+							<fieldset>
+								<div class="panel upload_inner">
+									<div class="inner">
+									{% for images in loops.images %}
+										<div style="float:left; text-align: center;" class="upload_enabled">
+											<div class="imageupload_index-preview">
+												<img class="imageupload_index" id="{{ images.FILENAME_REAL }}" src="{{ images.IMAGEPATH }}" title="{{ images.FILENAME }} - {{ images.WIDTH }} {{ lang('PIXEL') }} * {{ images.HEIGHT }} {{ lang('PIXEL') }} - {{ images.SIZE }}"	/>
+											</div>
+											<div>{% if S_IMAGEUPLOAD_DELETE_IMAGE %}<a href="{{ images.U_DELETES }}" title="{{ lang('IMAGEUPLOAD_UCP_DELETE_IMAGES') }}"><i class="button button-icon-only">{{ images.FILENAME }}</i></a>{% else %}{{ images.FILENAME }}{% endif %}</div>
+											<div id="myModal" class="modal">
+												<span class="imgclose" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
+												<img class="modal-content" id="image_show_id">
+												<div id="caption"></div>
+											</div>
+										</div>
+										<script>
+											var modal = document.getElementById('myModal');
+											var img = document.getElementById('{{ images.FILENAME_REAL }}');
+											var modalImg = document.getElementById("image_show_id");
+											var captionText = document.getElementById("caption");
+											img.onclick = function(){
+												modal.style.display = "block";
+												modalImg.src = this.src;
+												captionText.innerHTML = this.alt;
+											}
+											var span = document.getElementsByClassName("imgclose")[0];
+											span.onclick = function() {
+												modal.style.display = "none";
+											}
+										</script>
+									{% endfor %}
+									</div>
+								</div>
+							</fieldset>
+						</dt>
+						<dd style="border: none">&nbsp;</dd>
+					</dl>
+				</li>
+			</ul>
+		</div>
+	</div>
+</form>
+{% else %}
+<div class="panel">
+	<div class="inner">
+		<h3>{% if S_IMAGEUPLOAD_DELETE_IMAGE %}{{ lang('IMAGEUPLOAD_UCP_UPLOADED_IMAGES_DELETE') }}{% else %}{{ lang('IMAGEUPLOAD_UCP_UPLOADED_IMAGES') }}{% endif %}</h3>
+		<p>{{ lang('IMAGEUPLOAD_UCP_UPLOADED_NO_IMAGES') }}</p>
+	</div>
+</div>
+{% endif %}
+
+{% INCLUDE 'ucp_footer.html' %}
+

@@ -1,13 +1,17 @@
 <?php
 /**
-*
-* @package phpBB Extension - Image Upload
-* @copyright (c) 2017 dmzx - http://www.dmzx-web.net
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
-* @Spanish translation - ThE KuKa (Raul Arroyo) - http://www.phpbb-es.com
-*
-*/
+ *
+ * Image Upload. An extension for the phpBB Forum Software package.
+ * French translation by Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2018 dmzx <https://www.dmzx-web.net>
+ * @license GNU General Public License, version 2 (GPL-2.0-only)
+ *
+ */
 
+/**
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -31,14 +35,12 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ’ » “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
-	'ACP_IMAGE_UPLOAD'			=> 'Subida de Imágenes',
-	'ACP_IMAGE_UPLOAD_CONFIG'	=> 'Configuración',
-	// Log
-	'LOG_IMAGEUPLOAD_ADD'		=> '<strong>Nueva imagen añadida</strong><br>» %1$s',
-	'LOG_IMAGEUPLOAD_SETTINGS'	=> '<strong>Configuración de Subida de Imágenes cambiada</strong>',
-	'LOG_IMAGEUPLOAD_DELETED'	=> '<strong>Imagen borrada</strong><br>» %1$s',
+	'IMAGEUPLOAD_UCP'							=> 'Transfert d’images',
+	'IMAGEUPLOAD_UCP_UPLOADED_IMAGES'			=> 'Vos images transférées.',
+	'IMAGEUPLOAD_UCP_UPLOADED_NO_IMAGES'		=> 'Aucun image n’a encore été transférée.',
+	'IMAGEUPLOAD_UCP_UPLOADED_IMAGES_DELETE'	=> 'Depuis cette page il est possible de supprimer de vos images transférées.',
 ));

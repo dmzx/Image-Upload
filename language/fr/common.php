@@ -4,8 +4,8 @@
  * Image Upload. An extension for the phpBB Forum Software package.
  * French translation by Galixte (http://www.galixte.com)
  *
- * @copyright (c) 2017 dmzx <http://www.dmzx-web.net>
- * @license GNU General Public License, version 2 (GPL-2.0)
+ * @copyright (c) 2018 dmzx <https://www.dmzx-web.net>
+ * @license GNU General Public License, version 2 (GPL-2.0-only)
  *
  */
 
@@ -62,4 +62,7 @@ $lang = array_merge($lang, array(
 	'IMAGEUPLOAD_INDEXPAGE_CHAT'				=> '<br /> Depuis ce bloc il est possible de voir l’ensemble des fichiers image transférés.<br /> En cliquant sur une miniature il est possible d’afficher un aperçu de l’image.<br /> Aussi, il est possible de :<ul style="font-size: 1.1em;"><li> - publier le lien de l’image dans le tchat « mChat » en effectuant les actions de glisser/déposer la miniature dans la zone de saisie du texte du tchat ;</li><li> - publier directement l’image dans le tchat « mChat » en cliquant sur le bouton correspondant au nom de l’image.</li>',
 	'IMAGEUPLOAD_UPC_INDEX'						=> 'Afficher les fichier image trasnférés sur la page de l’index du forum',
 	'IMAGEUPLOAD_COLLAPSIBLE_CATEGORIES_TITLE'	=> 'Afficher / Masquer le bloc des fichiers image transférés',
+	'IMAGEUPLOAD_UCP_DELETE_IMAGES'				=> 'Êtes-vous sûr de vouloir supprimer le fichier image ?',
+	'IMAGEUPLOAD_UCP_DELETED_IMAGES'			=> 'Le fichier image a été supprimée.',
+	'IMAGEUPLOAD_PAGE_RETURN'					=> 'Retour vers l’outil de transfert d’images.',
 ));

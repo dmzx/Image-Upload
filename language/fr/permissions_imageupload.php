@@ -4,8 +4,8 @@
  * Image Upload. An extension for the phpBB Forum Software package.
  * French translation by Galixte (http://www.galixte.com)
  *
- * @copyright (c) 2017 dmzx <http://www.dmzx-web.net>
- * @license GNU General Public License, version 2 (GPL-2.0)
+ * @copyright (c) 2018 dmzx <https://www.dmzx-web.net>
+ * @license GNU General Public License, version 2 (GPL-2.0-only)
  *
  */
 
@@ -41,4 +41,5 @@ if (empty($lang) || !is_array($lang))
 $lang = array_merge($lang, array(
 	'ACL_U_IMAGE_UPLOAD'	=> 'Peut transférer des fichiers image au moyen de l’outil « Transfert d’images ».',
 	'ACL_U_IMAGEUPLOAD'		=> 'Transfert d’images',
+	'ACL_U_IMAGE_DELETE'	=> 'Peut supprimer des fichiers image depuis le PCU (Panneau de l’utilsateur).',
 ));

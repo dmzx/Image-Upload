@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB Extension - Image Upload
-* @copyright (c) 2017 dmzx - http://www.dmzx-web.net
+* @copyright (c) 2017 dmzx - https://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
