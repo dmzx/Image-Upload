@@ -1,12 +1,17 @@
 <?php
 /**
-*
-* @package phpBB Extension - Image Upload
-* @copyright (c) 2017 dmzx - http://www.dmzx-web.net
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
-*
-*/
+ *
+ * Image Upload. An extension for the phpBB Forum Software package.
+ * French translation by Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2018 dmzx <https://www.dmzx-web.net>
+ * @license GNU General Public License, version 2 (GPL-2.0-only)
+ *
+ */
 
+/**
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -29,11 +34,13 @@ if (empty($lang) || !is_array($lang))
 // equally where a string contains only two placeholders which are used to wrap text
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
-// Some characters for use
-// ’ » “ ” …
+// Some characters you may want to copy&paste:
+// ’ « » “ ” …
+//
 
 $lang = array_merge($lang, array(
-	'ACL_U_IMAGE_UPLOAD'	=> 'Pode enviar imagens usando Image Upload',
-	'ACL_U_IMAGEUPLOAD'		=> 'Image Upload',
-	'ACL_U_IMAGE_DELETE'	=> 'Pode excluir imagens no UCP',
+	'IMAGEUPLOAD_UCP'							=> 'Transfert d’images',
+	'IMAGEUPLOAD_UCP_UPLOADED_IMAGES'			=> 'Vos images transférées.',
+	'IMAGEUPLOAD_UCP_UPLOADED_NO_IMAGES'		=> 'Aucun image n’a encore été transférée.',
+	'IMAGEUPLOAD_UCP_UPLOADED_IMAGES_DELETE'	=> 'Depuis cette page il est possible de supprimer de vos images transférées.',
 ));

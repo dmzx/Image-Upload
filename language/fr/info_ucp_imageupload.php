@@ -1,13 +1,17 @@
 <?php
 /**
-*
-* @version $Id: info_acp_imageupload.php 145 2018-04-18 14:34:06Z Scanialady $
-* @package phpBB Extension - Image Upload (deutsch)
-* @copyright (c) 2017 dmzx - http://www.dmzx-web.net
-* @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
-*
-*/
+ *
+ * Image Upload. An extension for the phpBB Forum Software package.
+ * French translation by Galixte (http://www.galixte.com)
+ *
+ * @copyright (c) 2018 dmzx <https://www.dmzx-web.net>
+ * @license GNU General Public License, version 2 (GPL-2.0-only)
+ *
+ */
 
+/**
+ * DO NOT CHANGE
+ */
 if (!defined('IN_PHPBB'))
 {
 	exit;
@@ -31,15 +35,9 @@ if (empty($lang) || !is_array($lang))
 // in a url you again do not need to specify an order e.g., 'Click %sHERE%s' is fine
 //
 // Some characters you may want to copy&paste:
-// ‚ ‘ ’ « » „ “ ” …
+// ’ « » “ ” …
 //
 
 $lang = array_merge($lang, array(
-	'ACP_IMAGE_UPLOAD'			=> 'Image Upload',
-	'ACP_IMAGE_UPLOAD_CONFIG'	=> 'Konfiguration',
-	// Log
-	'LOG_IMAGEUPLOAD_ADD'		=> '<strong>Neues Bild hinzugefügt:</strong><br>» %1$s',
-	'LOG_IMAGEUPLOAD_SETTINGS'	=> '<strong>Image Upload Konfiguration geändert</strong>',
-	'LOG_IMAGEUPLOAD_DELETED'	=> '<strong>Bild gelöscht:</strong><br>» %1$s',
-	'LOG_USER_IMAGE_DELETED'	=> '<strong>Bild %s mit dem realen Namen %s auf dem Server gelöscht.</strong>',
+	'UCP_IMAGEUPLOAD_TITLE'	=> 'Transfert d’images',
 ));

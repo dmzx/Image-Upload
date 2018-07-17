@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB Extension - Image Upload
-* @copyright (c) 2017 dmzx - http://www.dmzx-web.net
+* @copyright (c) 2017 dmzx - https://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -193,7 +193,7 @@ class ucp_controller
 					// Add action to the user log
 					$this->log->add('user', $this->user->data['user_id'], $this->user->ip, 'LOG_USER_IMAGE_DELETED', time(), array($image_name, $file_name, 'reportee_id' => $this->user->data['user_id'], $this->user->data['username']));
 
-					$meta_info = append_sid("{$this->root_path}ucp.{$this->php_ext}");
+					$meta_info = append_sid("{$this->root_path}ucp.php?i=-dmzx-imageupload-ucp-imageupload_module&mode=main");
 					$message = $this->user->lang['IMAGEUPLOAD_UCP_DELETED_IMAGES'];
 					meta_refresh(1, $meta_info);
 					$message .= '<br /><br />' . $this->user->lang('IMAGEUPLOAD_PAGE_RETURN', '<a href="' . $meta_info . '">', '</a>');
@@ -203,7 +203,7 @@ class ucp_controller
 				{
 					if ($this->request->is_set_post('cancel'))
 					{
-						redirect(append_sid("{$this->root_path}ucp.{$this->php_ext}"));
+						redirect(append_sid("{$this->root_path}ucp.php?i=-dmzx-imageupload-ucp-imageupload_module&mode=main"));
 					}
 					else
 					{

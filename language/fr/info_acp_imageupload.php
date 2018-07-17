@@ -4,8 +4,8 @@
  * Image Upload. An extension for the phpBB Forum Software package.
  * French translation by Galixte (http://www.galixte.com)
  *
- * @copyright (c) 2017 dmzx <http://www.dmzx-web.net>
- * @license GNU General Public License, version 2 (GPL-2.0)
+ * @copyright (c) 2018 dmzx <https://www.dmzx-web.net>
+ * @license GNU General Public License, version 2 (GPL-2.0-only)
  *
  */
 
@@ -45,4 +45,5 @@ $lang = array_merge($lang, array(
 	'LOG_IMAGEUPLOAD_ADD'		=> '<strong>Fichier image transféré</strong><br>» %1$s',
 	'LOG_IMAGEUPLOAD_SETTINGS'	=> '<strong>Paramètres du « Transfert d’images » sauvegardés</strong>',
 	'LOG_IMAGEUPLOAD_DELETED'	=> '<strong>Fichier image supprimé</strong><br>» %1$s',
+	'LOG_USER_IMAGE_DELETED'	=> '<strong>Fichier image « %s » supprimé du serveur dont le nom réel : « %s »</strong>',
 ));
