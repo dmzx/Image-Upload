@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB Extension - Image Upload
-* @copyright (c) 2017 dmzx - http://www.dmzx-web.net
+* @copyright (c) 2017 dmzx - https://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -18,6 +18,7 @@ use phpbb\db\driver\driver_interface as db_interface;
 use phpbb\pagination;
 use phpbb\extension\manager;
 use phpbb\path_helper;
+use phpbb\filesystem\filesystem;
 use Symfony\Component\DependencyInjection\Container;
 
 class admin_controller
@@ -49,6 +50,9 @@ class admin_controller
 	/** @var path_helper */
 	protected $path_helper;
 
+	/** @var filesystem */
+	protected $filesystem;
+
 	/** @var Container */
 	protected $phpbb_container;
 
@@ -74,6 +78,7 @@ class admin_controller
 	 * @param pagination			$pagination
 	 * @param manager				$ext_manager
 	 * @param path_helper			$path_helper
+	 * @param filesystem			$filesystem
 	 * @param Container	 			$phpbb_container
 	 * @param string 				$image_upload_table
 	 */
@@ -87,6 +92,7 @@ class admin_controller
 		pagination $pagination,
 		manager $ext_manager,
 		path_helper $path_helper,
+		filesystem $filesystem,
 		Container $phpbb_container,
 		$image_upload_table
 	)
@@ -100,6 +106,7 @@ class admin_controller
 		$this->pagination 			= $pagination;
 		$this->ext_manager	 		= $ext_manager;
 		$this->path_helper	 		= $path_helper;
+		$this->filesystem			= $filesystem;
 		$this->phpbb_container 		= $phpbb_container;
 		$this->image_upload_table 	= $image_upload_table;
 		$this->ext_path 			= $this->ext_manager->get_extension_path('dmzx/imageupload', true);
@@ -270,7 +277,11 @@ class admin_controller
 
 						$delete_file = $this->ext_path_web . 'files/' . $file_name;
 
-						@unlink($delete_file);
+						# Delete the image
+						if ($this->filesystem->exists($delete_file))
+						{
+							$this->filesystem->remove($delete_file);
+						}
 
 						$sql = 'DELETE FROM ' . $this->image_upload_table . '
 							WHERE imageupload_id = ' . (int) $id;

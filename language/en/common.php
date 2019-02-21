@@ -2,7 +2,7 @@
 /**
 *
 * @package phpBB Extension - Image Upload
-* @copyright (c) 2017 dmzx - http://www.dmzx-web.net
+* @copyright (c) 2017 dmzx - https://www.dmzx-web.net
 * @license http://opensource.org/licenses/gpl-2.0.php GNU General Public License v2
 *
 */
@@ -59,5 +59,5 @@ $lang = array_merge($lang, array(
 	'IMAGEUPLOAD_COLLAPSIBLE_CATEGORIES_TITLE'	=> 'Toggle visibility of uploaded images',
 	'IMAGEUPLOAD_UCP_DELETE_IMAGES'				=> 'Delete image',
 	'IMAGEUPLOAD_UCP_DELETED_IMAGES'			=> 'Deleted image',
-	'IMAGEUPLOAD_PAGE_RETURN'					=> 'Return to UCP'
+	'IMAGEUPLOAD_PAGE_RETURN'					=> 'Returning to uploaded images',
 ));

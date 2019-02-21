@@ -9,19 +9,20 @@
 
 namespace dmzx\imageupload\migrations;
 
-class imageupload_v103 extends \phpbb\db\migration\migration
+class imageupload_v107 extends \phpbb\db\migration\migration
 {
 	static public function depends_on()
 	{
 		return array(
-			'\dmzx\imageupload\migrations\imageupload_v102',
+			'\dmzx\imageupload\migrations\imageupload_v106',
 		);
 	}
 
 	public function update_data()
 	{
 		return array(
-			array('config.update', array('imageupload_system_version', '1.0.3')),
+			// Update config
+			array('config.update', array('imageupload_system_version', '1.0.7')),
 		);
 	}
 }
