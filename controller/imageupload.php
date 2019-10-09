@@ -15,12 +15,12 @@ use dmzx\imageupload\core\functions;
 use phpbb\template\template;
 use phpbb\user;
 use phpbb\auth\auth;
-use phpbb\log\log_interface;
 use phpbb\db\driver\driver_interface as db_interface;
 use phpbb\controller\helper;
 use phpbb\request\request_interface;
 use phpbb\extension\manager;
 use phpbb\path_helper;
+use phpbb\config\db_text;
 use phpbb\files\factory;
 
 class imageupload
@@ -40,9 +40,6 @@ class imageupload
 	/** @var auth */
 	protected $auth;
 
-	/** @var log_interface */
-	protected $log;
-
 	/** @var db_interface */
 	protected $db;
 
@@ -57,6 +54,9 @@ class imageupload
 
 	/** @var path_helper */
 	protected $path_helper;
+
+	/** @var db_text */
+	protected $config_text;
 
 	/** @var string */
 	protected $php_ext;
@@ -74,13 +74,6 @@ class imageupload
 	/** @var factory */
 	protected $files_factory;
 
-	protected $allowed_extensions = array(
-		'gif',
-		'jpg',
-		'jpeg',
-		'png',
-	);
-
 	/**
 	* Constructor
 	*
@@ -89,12 +82,12 @@ class imageupload
 	* @param template		 	$template
 	* @param user				$user
 	* @param auth				$auth
-	* @param log_interface		$log
 	* @param db_interface		$db
 	* @param helper		 		$helper
 	* @param request_interface	$request
 	* @param manager			$ext_manager
 	* @param path_helper		$path_helper
+	* @param db_text			$config_text
 	* @param string 			$php_ext
 	* @param string 			$root_path
 	* @param string 			$image_upload_table
@@ -107,12 +100,12 @@ class imageupload
 		template $template,
 		user $user,
 		auth $auth,
-		log_interface $log,
 		db_interface $db,
 		helper $helper,
 		request_interface $request,
 		manager $ext_manager,
 		path_helper $path_helper,
+		db_text $config_text,
 		$php_ext,
 		$root_path,
 		$image_upload_table,
@@ -124,12 +117,12 @@ class imageupload
 		$this->template 			= $template;
 		$this->user 				= $user;
 		$this->auth 				= $auth;
-		$this->log 					= $log;
 		$this->db 					= $db;
 		$this->helper 				= $helper;
 		$this->request 				= $request;
 		$this->ext_manager	 		= $ext_manager;
 		$this->path_helper	 		= $path_helper;
+		$this->config_text 			= $config_text;
 		$this->php_ext 				= $php_ext;
 		$this->root_path 			= $root_path;
 		$this->image_upload_table 	= $image_upload_table;
@@ -175,7 +168,7 @@ class imageupload
 		$this->user->add_lang('posting');
 
 		// Add allowed extensions
-		$allowed_extensions = $this->allowed_extensions;
+		$allowed_extensions = $this->functions->allowed_extensions();
 
 		if ($this->request->is_set_post('submit'))
 		{
@@ -264,26 +257,24 @@ class imageupload
 
 			$this->db->sql_query('INSERT INTO ' . $this->image_upload_table .' ' . $this->db->sql_build_array('INSERT', $sql_ary));
 			// Log message
-			$this->log_message('LOG_IMAGEUPLOAD_ADD', $upload_file->get('uploadname'), 'IMAGEUPLOAD_NEW_ADDED');
+			$this->functions->log_message('LOG_IMAGEUPLOAD_ADD', $upload_file->get('uploadname'), 'IMAGEUPLOAD_NEW_ADDED');
 		}
 
-		$ext_count = 0;
-		$first_extension = true;
+		$allowed_extensions_list = $this->config_text->get_array([
+			'imageupload_allowed_extensions',
+		]);
 
-		foreach ($allowed_extensions as $ext)
-		{
-			$ext_count++;
-			$this->template->assign_block_vars('allowed_extension', array(
-				'EXTENSION' => strtolower(trim($ext)),
-				'FIRST'		=> $first_extension,
-			));
-			$first_extension = false;
-		}
+		$allowed_extensions_array = explode(',', trim($allowed_extensions_list['imageupload_allowed_extensions']));
+
+		sort($allowed_extensions_array);
+
+		$imageupload_allowed_extensions = implode(' ,', $allowed_extensions_array);
 
 		$form_enctype = (@ini_get('file_uploads') == '0' || strtolower(@ini_get('file_uploads')) == 'off') ? '' : ' enctype="multipart/form-data"';
 
 		$this->template->assign_vars(array(
 			'IMAGEUPLOAD_ALLOWED_SIZE'		=> sprintf($this->user->lang['IMAGEUPLOAD_NEW_DOWNLOAD_SIZE'], $max_filesize, $unit),
+			'IMAGEUPLOAD_ALLOWED_EXT'		=> $imageupload_allowed_extensions,
 			'S_FORM_ENCTYPE'				=> $form_enctype,
 		));
 
@@ -298,16 +289,5 @@ class imageupload
 
 		// Send all data to the template file
 		return $this->helper->render('imageupload_body.html', $this->user->lang('IMAGEUPLOAD_UPLOAD_SECTION'));
-	}
-
-	/**
-	 * Log Message
-	 *
-	 * @return message
-	 * @access private
-	*/
-	private function log_message($log_message, $title, $user_message)
-	{
-		$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, $log_message, time(), array($title));
 	}
 }

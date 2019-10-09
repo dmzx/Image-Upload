@@ -8,7 +8,7 @@
 			<p>{{ IMAGEUPLOAD_ALLOWED_SIZE }}</p>
 			<dl>
 				<dt><label>{{ lang('IMAGEUPLOAD_NEW_FILENAME') }}{{ lang('COLON') }}</label> <input class="inputbox autowidth" type="file" name="filename" size="52" /></dt>
-				<dd><label>{{ lang('ALLOWED') }} {{ lang('EXTENSION') }}{{ lang('COLON') }}</label>{% for allowed_extension in loops.allowed_extension %}{% if not allowed_extension.FIRST %},{% endif %} {{ allowed_extension.EXTENSION }}{% endfor %}</dd>
+				<dd><label>{{ lang('ALLOWED') }} {{ lang('EXTENSION') }}{{ lang('COLON') }}</label>{{ IMAGEUPLOAD_ALLOWED_EXT }}</dd>
 			</dl>
 		</div>
 	</div>

@@ -27,6 +27,15 @@
 			</dd>
 		</dl>
 		<dl>
+			<dt>
+				<label>{{ lang('ACP_IMAGEUPLOAD_EXT') }}{{ lang('COLON') }}</label><br>
+				<span>{{ lang('ACP_IMAGEUPLOAD_EXT_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				<textarea name="imageupload_allowed_extensions" rows="1" cols="20" style="width: 30%;">{{ ACP_IMAGEUPLOAD_EXT }}</textarea>
+			</dd>
+		</dl>
+		<dl>
 			<dt><label for="imageupload_index_enable">{{ lang('ACP_IMAGEUPLOAD_INDEX_ENABLE') }}{{ lang('COLON') }}</label><br />
 				<span>{{ lang('ACP_IMAGEUPLOAD_INDEX_ENABLE_EXPLAIN') }}</span>
 			</dt>

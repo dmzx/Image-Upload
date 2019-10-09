@@ -22,7 +22,6 @@ use phpbb\path_helper;
 use phpbb\controller\helper;
 use phpbb\auth\auth;
 use Symfony\Component\DependencyInjection\Container;
-use phpbb\files\factory;
 use phpbb\collapsiblecategories\operator\operator as operator;
 
 class listener implements EventSubscriberInterface
@@ -73,9 +72,6 @@ class listener implements EventSubscriberInterface
 	/** @var string */
 	protected $php_ext;
 
-	/** @var factory */
-	protected $files_factory;
-
 	/** @var operator */
 	protected $operator;
 
@@ -96,7 +92,6 @@ class listener implements EventSubscriberInterface
 	* @param auth				$auth
 	* @param Container 			$phpbb_container
 	* @param string				$php_ext
-	* @param factory			$files_factory
 	* @param operator			$operator
 	*
 	*/
@@ -115,7 +110,6 @@ class listener implements EventSubscriberInterface
 		auth $auth,
 		Container $phpbb_container,
 		$php_ext,
-		factory $files_factory = null,
 		operator $operator = null
 	)
 	{
@@ -135,7 +129,6 @@ class listener implements EventSubscriberInterface
 		$this->auth 				= $auth;
 		$this->phpbb_container 		= $phpbb_container;
 		$this->php_ext				= $php_ext;
-		$this->files_factory 		= $files_factory;
 		$this->operator 			= $operator;
 	}
 
@@ -178,7 +171,6 @@ class listener implements EventSubscriberInterface
 			'U_IMAGEUPLOAD_UPLOAD'		=> $this->helper->route('dmzx_imageupload_controller_upload'),
 			'IMAGEUPLOAD_USE_UPLOAD'	=> ($this->auth->acl_get('u_image_upload') && $this->config['imageupload_enable']) ? true : false,
 			'IMAGEUPLOAD_INDEX_ENABLE'	=> $this->config['imageupload_index_enable'],
-			'PHPBB_IS_32'				=> ($this->files_factory !== null) ? true : false,
 			'UCP_IMAGEUPLOAD_INDEX'		=> $this->user->data['user_imageupload_index_enable'],
 		));
 	}

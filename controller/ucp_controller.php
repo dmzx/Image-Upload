@@ -10,27 +10,19 @@
 namespace dmzx\imageupload\controller;
 
 use phpbb\exception\http_exception;
-use phpbb\config\config;
 use phpbb\template\template;
 use phpbb\log\log_interface;
 use phpbb\user;
 use phpbb\request\request_interface;
 use phpbb\db\driver\driver_interface as db_interface;
-use phpbb\pagination;
 use phpbb\extension\manager;
 use phpbb\path_helper;
 use phpbb\filesystem\filesystem;
 use phpbb\controller\helper;
 use phpbb\auth\auth;
-use Symfony\Component\DependencyInjection\Container;
-use phpbb\files\factory;
-use phpbb\collapsiblecategories\operator\operator as operator;
 
 class ucp_controller
 {
-	/** @var config */
-	protected $config;
-
 	/** @var template */
 	protected $template;
 
@@ -45,9 +37,6 @@ class ucp_controller
 
 	/** @var db_interface */
 	protected $db;
-
-	/** @var pagination */
-	protected $pagination;
 
 	/** @var manager */
 	protected $ext_manager;
@@ -71,72 +60,46 @@ class ucp_controller
 	/** @var auth */
 	protected $auth;
 
-	/** @var Container */
-	protected $phpbb_container;
-
-	/** @var string */
-	protected $php_ext;
-
 	/** @var string */
 	protected $root_path;
-
-	/** @var factory */
-	protected $files_factory;
-
-	/** @var operator */
-	protected $operator;
 
 	/**
 	* Constructor
 	*
-	* @param config				$config
 	* @param template			$template
 	* @param log_interface		$log
 	* @param user				$user
 	* @param request_interface	$request
 	* @param db_interface		$db
-	* @param pagination			$pagination
 	* @param manager			$ext_manager
 	* @param path_helper		$path_helper
 	* @param filesystem			$filesystem
 	* @param string 			$image_upload_table
 	* @param helper				$helper
 	* @param auth				$auth
-	* @param Container 			$phpbb_container
-	* @param string				$php_ext
 	* @param string 			$root_path
-	* @param factory			$files_factory
-	* @param operator			$operator
 	*
 	*/
 	public function __construct(
-		config $config,
 		template $template,
 		log_interface $log,
 		user $user,
 		request_interface $request,
 		db_interface $db,
-		pagination $pagination,
 		manager $ext_manager,
 		path_helper $path_helper,
 		filesystem $filesystem,
 		$image_upload_table,
 		helper $helper,
 		auth $auth,
-		Container $phpbb_container,
-		$php_ext,
-		$root_path,
-		factory $files_factory = null,
-		operator $operator = null
+		$root_path
 	)
 	{
-		$this->config 				= $config;
 		$this->template 			= $template;
 		$this->log 					= $log;
 		$this->user 				= $user;
 		$this->request 				= $request;
 		$this->db 					= $db;
-		$this->pagination 			= $pagination;
 		$this->ext_manager	 		= $ext_manager;
 		$this->path_helper	 		= $path_helper;
 		$this->filesystem			= $filesystem;
@@ -145,11 +108,7 @@ class ucp_controller
 		$this->ext_path_web 		= $this->path_helper->update_web_root_path($this->ext_path);
 		$this->helper 				= $helper;
 		$this->auth 				= $auth;
-		$this->phpbb_container 		= $phpbb_container;
-		$this->php_ext				= $php_ext;
 		$this->root_path 			= $root_path;
-		$this->files_factory 		= $files_factory;
-		$this->operator 			= $operator;
 	}
 
 	public function main()

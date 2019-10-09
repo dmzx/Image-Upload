@@ -20,6 +20,7 @@ use phpbb\extension\manager;
 use phpbb\path_helper;
 use phpbb\filesystem\filesystem;
 use Symfony\Component\DependencyInjection\Container;
+use phpbb\config\db_text;
 
 class admin_controller
 {
@@ -56,6 +57,9 @@ class admin_controller
 	/** @var Container */
 	protected $phpbb_container;
 
+	/** @var db_text */
+	protected $config_text;
+
 	/**
 	* The database table
 	*
@@ -80,6 +84,7 @@ class admin_controller
 	 * @param path_helper			$path_helper
 	 * @param filesystem			$filesystem
 	 * @param Container	 			$phpbb_container
+	 * @param db_text				$config_text
 	 * @param string 				$image_upload_table
 	 */
 	public function __construct(
@@ -94,6 +99,7 @@ class admin_controller
 		path_helper $path_helper,
 		filesystem $filesystem,
 		Container $phpbb_container,
+		db_text $config_text,
 		$image_upload_table
 	)
 	{
@@ -108,6 +114,7 @@ class admin_controller
 		$this->path_helper	 		= $path_helper;
 		$this->filesystem			= $filesystem;
 		$this->phpbb_container 		= $phpbb_container;
+		$this->config_text 			= $config_text;
 		$this->image_upload_table 	= $image_upload_table;
 		$this->ext_path 			= $this->ext_manager->get_extension_path('dmzx/imageupload', true);
 		$this->ext_path_web 		= $this->path_helper->update_web_root_path($this->ext_path);
@@ -132,6 +139,16 @@ class admin_controller
 		$number		= $this->config['topics_per_page'];
 
 		add_form_key('acp_imageupload');
+
+		$allowed_extensions_list = $this->config_text->get_array([
+			'imageupload_allowed_extensions',
+		]);
+
+		$allowed_extensions_array = explode(',', trim($allowed_extensions_list['imageupload_allowed_extensions']));
+
+		sort($allowed_extensions_array);
+
+		$imageupload_allowed_extensions = implode(',', $allowed_extensions_array);
 
 		// Is the form being submitted to us?
 		if ($this->request->is_set_post('submit'))
@@ -237,6 +254,7 @@ class admin_controller
 		$this->template->assign_vars(array(
 			'ACP_IMAGEUPLOAD_VERSION'			=> $this->config['imageupload_system_version'],
 			'ACP_IMAGEUPLOAD_ENABLE'			=> $this->config['imageupload_enable'],
+			'ACP_IMAGEUPLOAD_EXT'				=> $imageupload_allowed_extensions,
 			'ACP_IMAGEUPLOAD_INDEX_ENABLE'		=> $this->config['imageupload_index_enable'],
 			'ACP_IMAGEUPLOAD_NUMBER'			=> $this->config['imageupload_number'],
 			'ACP_IMAGEUPLOAD_ALLOWED_SIZE'		=> sprintf($this->user->lang['ACP_IMAGEUPLOAD_NEW_DOWNLOAD_SIZE'], $max_filesize, $unit),
@@ -311,10 +329,16 @@ class admin_controller
 	*/
 	protected function set_options()
 	{
+		$imageupload_allowed_extensions = $this->request->variable('imageupload_allowed_extensions', '', true);
+
 		$this->config->set('imageupload_enable', $this->request->variable('imageupload_enable', 1));
 		$this->config->set('imageupload_number', $this->request->variable('imageupload_number', 2));
 		$this->config->set('imageupload_index_enable', $this->request->variable('imageupload_index_enable', 0));
 		$this->config->set('imageupload_chat_enable', $this->request->variable('imageupload_chat_enable', 0));
+
+		$this->config_text->set_array([
+			'imageupload_allowed_extensions'			=> $imageupload_allowed_extensions,
+		]);
 	}
 
 	/**

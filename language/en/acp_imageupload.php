@@ -64,4 +64,6 @@ $lang = array_merge($lang, array(
 	'ACP_IMAGEUPLOAD_NOT_SELECTED'			=> 'Not selected any images',
 	'ACP_IMAGEUPLOAD_CHAT_ENABLE'			=> 'Enable mChat image posting',
 	'ACP_IMAGEUPLOAD_CHAT_ENABLE_EXPLAIN'	=> 'Set to yes to insert uploaded images on index with onclick insert.',
+	'ACP_IMAGEUPLOAD_EXT'					=> 'Allowed extensions',
+	'ACP_IMAGEUPLOAD_EXT_EXPLAIN'			=> 'Allowed extensions to include, separated by a comma (Example: gif,jpeg,jpg,png)',
 ));

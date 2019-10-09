@@ -14,11 +14,14 @@
 				</dl>
 				{% if IMAGEUPLOAD_IS_COLLAPSIBLE %}
 				<a href="{{ U_IMAGEUPLOAD_COLLAPSE_URL }}"
-					class="collapse-btn collapse-{% if S_IMAGEUPLOAD_HIDDEN %}show{% else %}hide{% endif %}"
-					data-hidden="{{ S_IMAGEUPLOAD_HIDDEN }}"
-					data-ajax="phpbb_collapse"
-					data-overlay="true"
-					title="{{ lang('IMAGEUPLOAD_COLLAPSIBLE_CATEGORIES_TITLE') }}"></a>
+					class="collapse-btn imageupload-collapse"
+						data-hidden="{{ S_IMAGEUPLOAD_HIDDEN }}"
+						data-ajax="phpbb_collapse"
+						data-overlay="true"
+						data-title-alt="{{ lang('IMAGEUPLOAD_COLLAPSIBLE_CATEGORIES_TITLE', ((not S_IMAGEUPLOAD_HIDDEN) * 1)) }}"
+						title="{{ lang('IMAGEUPLOAD_COLLAPSIBLE_CATEGORIES_TITLE', (S_IMAGEUPLOAD_HIDDEN * 1)) }}">
+						<i class="fa {% if S_IMAGEUPLOAD_HIDDEN %}fa-plus-square{% else %}fa-minus-square{% endif %}"></i>
+					</a>
 				{% endif %}
 			</li>
 		</ul>
