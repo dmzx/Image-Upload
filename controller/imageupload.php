@@ -74,6 +74,8 @@ class imageupload
 	/** @var factory */
 	protected $files_factory;
 
+	protected $directoryLevel = 2;
+
 	/**
 	* Constructor
 	*
@@ -189,8 +191,6 @@ class imageupload
 				$fileupload->fileupload('', $allowed_extensions);
 			}
 
-			$upload_dir = 'ext/dmzx/imageupload/files/';
-
 			$upload_file = (isset($this->files_factory)) ? $fileupload->handle_upload('files.types.form', 'filename') : $fileupload->form_upload('filename');
 
 			if (!$upload_file->get('uploadname'))
@@ -200,8 +200,24 @@ class imageupload
 			}
 
 			$upload_file->clean_filename('uploadname');
-			$upload_file->move_file(str_replace($this->root_path, '', $upload_dir), true, true, 0644);
-			@chmod($this->ext_path_web . 'files/' . $upload_file->get('uploadname'), 0644);
+
+			//prepare the upload dir
+			$upload_subdir = $this->getSubDir(md5($upload_file->get('uploadname')));
+			$upload_dir = 'ext/dmzx/imageupload/img-files' . $upload_subdir . "/";
+			if (!is_dir($this->root_path . "/" . $upload_dir)) {
+				try {
+					@mkdir($this->root_path . $upload_dir, 0755, true);
+					if (!is_writable($this->root_path . $upload_dir)) {
+						throw new \Exception(sprintf("[imageupload] error: directory <strong>%s</strong> is not writable!", $this->root_path . $upload_dir));
+					}
+					file_put_contents($this->root_path . $upload_dir . 'index.html', '');
+				} catch (\Exception $e) {
+					throw $e;
+				}
+			}
+
+			$upload_file->move_file(str_replace($this->root_path, '', $upload_dir), true, true, 0755);
+			@chmod($this->root_path . $upload_dir . $upload_file->get('uploadname'), 0755);
 
 			if (sizeof($upload_file->error) && $upload_file->get('uploadname'))
 			{
@@ -223,7 +239,7 @@ class imageupload
 			// End the upload
 			$sql_ary = array(
 				'imageupload_filename'	=> ucfirst(str_replace('_', ' ', preg_replace('#^(.*)\..*$#', '\1', $upload_file->get('uploadname')))),
-				'imageupload_realname'	=> $upload_file->get('realname'),
+				'imageupload_realname'	=> $upload_subdir . "/" . $upload_file->get('realname'),
 				'upload_time'			=> time(),
 				'filesize'				=> $upload_file->get('filesize'),
 				'user_id'				=> $this->user->data['user_id'],
@@ -289,5 +305,24 @@ class imageupload
 
 		// Send all data to the template file
 		return $this->helper->render('imageupload_body.html', $this->user->lang('IMAGEUPLOAD_UPLOAD_SECTION'));
+	}
+
+	/**
+	 * @param $key
+	 * @return string
+	 * borrow from https://github.com/yiisoft/yii2/blob/4f41d1118c531e009ba1b468949c694e86d2a5f0/framework/caching/FileCache.php#L204
+	 */
+	protected function getSubDir($key)
+	{
+		$hex = '/'. $this->user->data['user_id'];
+		if ($this->directoryLevel > 0) {
+			for ($i = 0; $i < $this->directoryLevel; ++$i) {
+				if (($prefix = substr($key, $i + $i, 2)) !== false) {
+					$hex .= '/' . $prefix;
+				}
+			}
+			return $hex;
+		}
+		return $hex;
 	}
 }
