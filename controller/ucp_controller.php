@@ -149,7 +149,7 @@ class ucp_controller
 					$image_name = $row['imageupload_filename'];
 					$this->db->sql_freeresult($result);
 
-					$delete_file = $this->root_path . 'ext/dmzx/imageupload/files/' . $file_name;
+					$delete_file = $this->root_path . 'ext/dmzx/imageupload/img-files/' . $file_name;
 
 					# Delete the image
 					if ($this->filesystem->exists($delete_file))
@@ -198,25 +198,26 @@ class ucp_controller
 				while ($row = $this->db->sql_fetchrow($result))
 				{
 					$file_name = $row['imageupload_realname'];
+					$file_path = $this->ext_path_web . 'img-files/' . $file_name;
 
-					if (function_exists('getimagesize'))
+					if (function_exists('getimagesize') && is_file($file_path))
 					{
-						$getimagesize = getimagesize($this->ext_path_web . 'files/' . $file_name);
+						$getimagesize = getimagesize($file_path);
 					}
 					else
 					{
 						$getimagesize = array(0, 0);
 					}
 
-					$filesize = @filesize($this->ext_path_web . 'files/' . $file_name);
+					$filesize = @filesize($file_path);
 
 					$board_url = generate_board_url();
 
 					$this->template->assign_block_vars('images', array(
 						'FILENAME'					=> $row['imageupload_filename'],
 						'FILENAME_REAL'				=> $file_name,
-						'IMAGEPATH'					=> $this->ext_path_web . 'files/' . $file_name,
-						'IMAGE_POSTING_BUTTON'		=> $board_url . '/ext/dmzx/imageupload/files/' . $file_name,
+						'IMAGEPATH'					=> $file_path,
+						'IMAGE_POSTING_BUTTON'		=> $board_url . '/ext/dmzx/imageupload/img-files/' . $file_name,
 						'WIDTH'						=> $getimagesize[0],
 						'HEIGHT'					=> $getimagesize[1],
 						'SIZE'						=> get_formatted_filesize($filesize),

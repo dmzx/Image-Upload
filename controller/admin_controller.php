@@ -222,22 +222,23 @@ class admin_controller
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			$file_name = $row['imageupload_realname'];
+			$file_path = $this->ext_path_web . 'img-files/' . $file_name;
 
-			if (function_exists('getimagesize'))
+			if (function_exists('getimagesize') && is_file($file_path))
 			{
-				$getimagesize = getimagesize($this->ext_path_web . 'files/' . $file_name);
+				$getimagesize = getimagesize($file_path);
 			}
 			else
 			{
 				$getimagesize = array(0, 0);
 			}
 
-			$filesize = @filesize($this->ext_path_web . 'files/' . $file_name);
+			$filesize = @filesize($file_path);
 
 			$this->template->assign_block_vars('images', array(
 				'FILENAME'			=> $row['imageupload_filename'],
 				'FILENAME_REAL'		=> $file_name,
-				'IMAGEPATH'			=> $this->ext_path_web . 'files/' . $file_name,
+				'IMAGEPATH'			=> $file_path,
 				'WIDTH'				=> $getimagesize[0],
 				'HEIGHT'			=> $getimagesize[1],
 				'SIZE'				=> get_formatted_filesize($filesize),
@@ -293,7 +294,7 @@ class admin_controller
 						$image_name = $row['imageupload_filename'];
 						$this->db->sql_freeresult($result);
 
-						$delete_file = $this->ext_path_web . 'files/' . $file_name;
+						$delete_file = $file_path;
 
 						# Delete the image
 						if ($this->filesystem->exists($delete_file))
