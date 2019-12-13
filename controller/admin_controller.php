@@ -11,7 +11,6 @@ namespace dmzx\imageupload\controller;
 
 use phpbb\config\config;
 use phpbb\template\template;
-use phpbb\log\log_interface;
 use phpbb\user;
 use phpbb\request\request_interface;
 use phpbb\db\driver\driver_interface as db_interface;
@@ -21,6 +20,7 @@ use phpbb\path_helper;
 use phpbb\filesystem\filesystem;
 use Symfony\Component\DependencyInjection\Container;
 use phpbb\config\db_text;
+use dmzx\imageupload\core\functions;
 
 class admin_controller
 {
@@ -29,9 +29,6 @@ class admin_controller
 
 	/** @var template */
 	protected $template;
-
-	/** @var log_interface */
-	protected $log;
 
 	/** @var user */
 	protected $user;
@@ -60,6 +57,9 @@ class admin_controller
 	/** @var db_text */
 	protected $config_text;
 
+	/** @var functions */
+	protected $functions;
+
 	/**
 	* The database table
 	*
@@ -75,7 +75,6 @@ class admin_controller
 	 *
 	 * @param config				$config
 	 * @param template				$template
-	 * @param log_interface			$log
 	 * @param user					$user
 	 * @param request_interface		$request
 	 * @param db_interface			$db
@@ -85,12 +84,12 @@ class admin_controller
 	 * @param filesystem			$filesystem
 	 * @param Container	 			$phpbb_container
 	 * @param db_text				$config_text
+	 * @param functions				$functions
 	 * @param string 				$image_upload_table
 	 */
 	public function __construct(
 		config $config,
 		template $template,
-		log_interface $log,
 		user $user,
 		request_interface $request,
 		db_interface $db,
@@ -100,12 +99,12 @@ class admin_controller
 		filesystem $filesystem,
 		Container $phpbb_container,
 		db_text $config_text,
+		functions $functions,
 		$image_upload_table
 	)
 	{
 		$this->config 				= $config;
 		$this->template 			= $template;
-		$this->log 					= $log;
 		$this->user 				= $user;
 		$this->request 				= $request;
 		$this->db 					= $db;
@@ -115,6 +114,7 @@ class admin_controller
 		$this->filesystem			= $filesystem;
 		$this->phpbb_container 		= $phpbb_container;
 		$this->config_text 			= $config_text;
+		$this->functions 			= $functions;
 		$this->image_upload_table 	= $image_upload_table;
 		$this->ext_path 			= $this->ext_manager->get_extension_path('dmzx/imageupload', true);
 		$this->ext_path_web 		= $this->path_helper->update_web_root_path($this->ext_path);
@@ -128,14 +128,13 @@ class admin_controller
 	* @return null
 	* @access public
 	*/
-	public function display_options()
+	public function display_options($id, $mode)
 	{
 		$start		= $this->request->variable('start', 0);
 		$sort_days	= $this->request->variable('st', 0);
 		$sort_key	= $this->request->variable('sk', 'upload_time');
 		$sort_dir	= $this->request->variable('sd', 'd');
-		$ids 		= $this->request->variable('ids', array(0));
-		$deletemark	= $this->request->variable('delmarked', false, false, \phpbb\request\request_interface::POST);
+		$action 	= $this->request->variable('action', '');
 		$number		= $this->config['topics_per_page'];
 
 		add_form_key('acp_imageupload');
@@ -162,7 +161,7 @@ class admin_controller
 			$this->set_options();
 
 			// Add option settings change action to the admin log
-			$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'LOG_IMAGEUPLOAD_SETTINGS');
+			$this->functions->log_message('LOG_IMAGEUPLOAD_SETTINGS', '');
 
 			trigger_error($this->user->lang['ACP_IMAGEUPLOAD_SAVED'] . adm_back_link($this->u_action));
 		}
@@ -222,6 +221,7 @@ class admin_controller
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			$file_name = $row['imageupload_realname'];
+			$image_name = $row['imageupload_filename'];
 			$file_path = $this->ext_path_web . 'img-files/' . $file_name;
 
 			if (function_exists('getimagesize') && is_file($file_path))
@@ -243,7 +243,7 @@ class admin_controller
 				'HEIGHT'			=> $getimagesize[1],
 				'SIZE'				=> get_formatted_filesize($filesize),
 				'IMAGE_USERNAME'	=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-				'ID'				=> $row['imageupload_id'],
+				'U_DELETE'			=> $this->u_action . '&amp;action=delete&amp;id=' . $row['imageupload_id']
 			));
 		}
 		$this->db->sql_freeresult($result);
@@ -258,13 +258,14 @@ class admin_controller
 			'ACP_IMAGEUPLOAD_EXT'				=> $imageupload_allowed_extensions,
 			'ACP_IMAGEUPLOAD_INDEX_ENABLE'		=> $this->config['imageupload_index_enable'],
 			'ACP_IMAGEUPLOAD_NUMBER'			=> $this->config['imageupload_number'],
-			'ACP_IMAGEUPLOAD_ALLOWED_SIZE'		=> sprintf($this->user->lang['ACP_IMAGEUPLOAD_NEW_DOWNLOAD_SIZE'], $max_filesize, $unit),
+			'ACP_IMAGEUPLOAD_ALLOWED_SIZE'		=> $this->user->lang('ACP_IMAGEUPLOAD_NEW_DOWNLOAD_SIZE', $max_filesize, $unit),
 			'ACP_TOTAL_IMAGES'					=> $this->user->lang('ACP_MULTI_IMAGES', (int) $total_imageupload),
 			'ACP_IMAGEUPLOAD_CHAT_ENABLE'		=> $this->config['imageupload_chat_enable'],
 			'TOTAL_FILE_SIZE'					=> get_formatted_filesize($total_filesize),
 			'S_SELECT_SORT_DIR'					=> $s_sort_dir,
 			'S_SELECT_SORT_KEY'					=> $s_sort_key,
 			'U_ACTION'							=> $this->u_action,
+
 		));
 
 		if ($this->phpbb_container->has('dmzx.mchat.settings'))
@@ -272,56 +273,59 @@ class admin_controller
 			$this->template->assign_var('IMAGEUPLOAD_CHAT_VIEW', true);
 		}
 
-		if (($deletemark))
+		switch ($action)
 		{
-			if (!sizeof($ids))
-			{
-				trigger_error($this->user->lang('ACP_IMAGEUPLOAD_NOT_SELECTED') . adm_back_link($this->u_action));
-			}
+			case 'delete':
+				$image_id = $this->request->variable('id', 0);
 
-			if (confirm_box(true))
-			{
-				if (sizeof($ids))
+				if (!$image_id)
 				{
-					foreach ($ids as $id)
-					{
-						$sql = 'SELECT imageupload_realname, imageupload_filename
-							FROM ' . $this->image_upload_table . '
-							WHERE imageupload_id = ' . (int) $id;
-						$result = $this->db->sql_query($sql);
-						$row = $this->db->sql_fetchrow($result);
-						$file_name = $row['imageupload_realname'];
-						$image_name = $row['imageupload_filename'];
-						$this->db->sql_freeresult($result);
-
-						$delete_file = $file_path;
-
-						# Delete the image
-						if ($this->filesystem->exists($delete_file))
-						{
-							$this->filesystem->remove($delete_file);
-						}
-
-						$sql = 'DELETE FROM ' . $this->image_upload_table . '
-							WHERE imageupload_id = ' . (int) $id;
-						$this->db->sql_query($sql);
-
-						// Log message
-						$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, 'LOG_IMAGEUPLOAD_DELETED', time(), array($image_name));
-					}
+					trigger_error($this->user->lang('ACP_IMAGEUPLOAD_NOT_SELECTED') . adm_back_link($this->u_action), E_USER_WARNING);
 				}
-			}
-			else
-			{
-				confirm_box(false, $this->user->lang['ACP_IMAGEUPLOAD_REALLY_DELETE_IMAGE'], build_hidden_fields(array(
-					'ids'		=> $ids,
-					'delmarked'	=> $deletemark,
-					'action'	=> $this->u_action))
-				);
-			}
-			redirect($this->u_action);
+
+				if (confirm_box(true))
+				{
+					$sql = 'SELECT imageupload_realname, imageupload_filename
+						FROM ' . $this->image_upload_table . '
+						WHERE imageupload_id = ' . (int) $image_id;
+					$result = $this->db->sql_query($sql);
+					$row = $this->db->sql_fetchrow($result);
+					$file_name = $row['imageupload_realname'];
+					$image_name = $row['imageupload_filename'];
+					$this->db->sql_freeresult($result);
+
+					$delete_file = $this->ext_path_web . 'img-files/' . $file_name;
+
+					# Delete the image
+					if ($this->filesystem->exists($delete_file))
+					{
+						$dir = dirname($file_name, 2);
+						$this->filesystem->remove($delete_file);
+						$this->functions->remove_dir($this->ext_path_web . 'img-files' . $dir);
+					}
+
+					$sql = 'DELETE FROM ' . $this->image_upload_table . '
+						WHERE imageupload_id = ' . (int) $image_id;
+					$this->db->sql_query($sql);
+
+					// Log message
+					$this->functions->log_message('LOG_IMAGEUPLOAD_DELETED', $image_name);
+				}
+				else
+				{
+					confirm_box(false, $this->user->lang['ACP_IMAGEUPLOAD_REALLY_DELETE_IMAGE'], build_hidden_fields(array(
+							'i'		 => $id,
+							'mode'	 => $mode,
+							'id'	 => $image_id,
+							'action' => 'delete',
+						))
+					);
+				}
+				redirect($this->u_action);
+			break;
 		}
 	}
+
 	/**
 	* Set the options a user can configure
 	*
@@ -338,7 +342,7 @@ class admin_controller
 		$this->config->set('imageupload_chat_enable', $this->request->variable('imageupload_chat_enable', 0));
 
 		$this->config_text->set_array([
-			'imageupload_allowed_extensions'			=> $imageupload_allowed_extensions,
+			'imageupload_allowed_extensions' => $imageupload_allowed_extensions,
 		]);
 	}
 

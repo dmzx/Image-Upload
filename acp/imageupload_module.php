@@ -31,7 +31,7 @@ class imageupload_module
 				// Set the page title for our ACP page
 				$this->page_title = $user->lang['ACP_IMAGE_UPLOAD_CONFIG'];
 				// Load the display options handle in the admin controller
-				$admin_controller->display_options();
+				$admin_controller->display_options($id, $mode);
 			break;
 		}
 	}

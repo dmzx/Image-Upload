@@ -20,9 +20,11 @@ use phpbb\path_helper;
 use phpbb\filesystem\filesystem;
 use phpbb\controller\helper;
 use phpbb\auth\auth;
+use dmzx\imageupload\core\functions;
 
 class ucp_controller
 {
+	protected $subfolders;
 	/** @var template */
 	protected $template;
 
@@ -60,6 +62,9 @@ class ucp_controller
 	/** @var auth */
 	protected $auth;
 
+	/** @var functions */
+	protected $functions;
+
 	/** @var string */
 	protected $root_path;
 
@@ -77,6 +82,7 @@ class ucp_controller
 	* @param string 			$image_upload_table
 	* @param helper				$helper
 	* @param auth				$auth
+	* @param functions			$functions
 	* @param string 			$root_path
 	*
 	*/
@@ -92,6 +98,7 @@ class ucp_controller
 		$image_upload_table,
 		helper $helper,
 		auth $auth,
+		functions $functions,
 		$root_path
 	)
 	{
@@ -108,6 +115,7 @@ class ucp_controller
 		$this->ext_path_web 		= $this->path_helper->update_web_root_path($this->ext_path);
 		$this->helper 				= $helper;
 		$this->auth 				= $auth;
+		$this->functions 			= $functions;
 		$this->root_path 			= $root_path;
 	}
 
@@ -154,7 +162,9 @@ class ucp_controller
 					# Delete the image
 					if ($this->filesystem->exists($delete_file))
 					{
+						$dir = dirname($file_name, 2);
 						$this->filesystem->remove($delete_file);
+						$this->functions->remove_dir($this->root_path . 'ext/dmzx/imageupload/img-files' . $dir);
 					}
 
 					$sql = 'DELETE FROM ' . $this->image_upload_table . '

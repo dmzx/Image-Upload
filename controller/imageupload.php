@@ -204,11 +204,14 @@ class imageupload
 			//prepare the upload dir
 			$upload_subdir = $this->getSubDir(md5($upload_file->get('uploadname')));
 			$upload_dir = 'ext/dmzx/imageupload/img-files' . $upload_subdir . "/";
-			if (!is_dir($this->root_path . "/" . $upload_dir)) {
+			if (!is_dir($this->root_path . "/" . $upload_dir))
+			{
 				try {
 					@mkdir($this->root_path . $upload_dir, 0755, true);
-					if (!is_writable($this->root_path . $upload_dir)) {
-						throw new \Exception(sprintf("[imageupload] error: directory <strong>%s</strong> is not writable!", $this->root_path . $upload_dir));
+					if (!is_writable($this->root_path . $upload_dir))
+					{
+						meta_refresh(5, $this->helper->route('dmzx_imageupload_controller_upload'));
+						throw new http_exception(400, $this->user->lang('IMAGEUPLOAD_DIRECTORY_FAIL', $upload_dir));
 					}
 					file_put_contents($this->root_path . $upload_dir . 'index.html', '');
 				} catch (\Exception $e) {
@@ -273,7 +276,7 @@ class imageupload
 
 			$this->db->sql_query('INSERT INTO ' . $this->image_upload_table .' ' . $this->db->sql_build_array('INSERT', $sql_ary));
 			// Log message
-			$this->functions->log_message('LOG_IMAGEUPLOAD_ADD', $upload_file->get('uploadname'), 'IMAGEUPLOAD_NEW_ADDED');
+			$this->functions->log_message('LOG_IMAGEUPLOAD_ADD', $upload_file->get('uploadname'));
 		}
 
 		$allowed_extensions_list = $this->config_text->get_array([
@@ -315,9 +318,13 @@ class imageupload
 	protected function getSubDir($key)
 	{
 		$hex = '/'. $this->user->data['user_id'];
-		if ($this->directoryLevel > 0) {
-			for ($i = 0; $i < $this->directoryLevel; ++$i) {
-				if (($prefix = substr($key, $i + $i, 2)) !== false) {
+		if ($this->directoryLevel > 0)
+		{
+			for ($i = 0; $i < $this->directoryLevel; ++$i)
+			{
+				if (($prefix = substr($key, $i + $i, 2)) !== false)
+				{
+					$prefix = substr(md5(mt_rand()), 0, 7);
 					$hex .= '/' . $prefix;
 				}
 			}

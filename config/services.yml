@@ -26,7 +26,6 @@ services:
         arguments:
             - '@config'
             - '@template'
-            - '@log'
             - '@user'
             - '@request'
             - '@dbal.conn'
@@ -36,6 +35,7 @@ services:
             - '@filesystem'
             - '@service_container'
             - '@config_text'
+            - '@dmzx.imageupload.core.functions'
             - '%dmzx.imageupload.table.image_upload%'
     dmzx.imageupload.controller.upload:
         class: dmzx\imageupload\controller\imageupload
@@ -78,4 +78,5 @@ services:
             - '%dmzx.imageupload.table.image_upload%'
             - '@controller.helper'
             - '@auth'
+            - '@dmzx.imageupload.core.functions'
             - '%core.root_path%'

@@ -41,7 +41,6 @@ $lang = array_merge($lang, array(
 	'IMAGEUPLOAD_NEW_DOWNLOAD_SIZE'				=> 'The maximum size of the file is <strong>%1$s %2$s</strong>! Due to the upload time you might need, this value can be lower!',
 	'IMAGEUPLOAD_NO_FILENAME'					=> 'You have to enter a file, which belongs to your upload!',
 	'IMAGEUPLOAD_FILE_TOO_BIG'					=> 'The file is bigger, than your host allows!',
-	'IMAGEUPLOAD_NEW_ADDED'						=> 'Your entry was successfully added to the database',
 	'IMAGEUPLOAD_CURRENT_VERSION'				=> 'Version',
 	'IMAGEUPLOAD_NEW_FILENAME'					=> 'File name',
 	'IMAGEUPLOAD_SUCCEEDED'						=> 'Upload Succeeded!',
@@ -63,4 +62,5 @@ $lang = array_merge($lang, array(
 	'IMAGEUPLOAD_UCP_DELETE_IMAGES'				=> 'Delete image',
 	'IMAGEUPLOAD_UCP_DELETED_IMAGES'			=> 'Deleted image',
 	'IMAGEUPLOAD_PAGE_RETURN'					=> 'Returning to uploaded images',
+	'IMAGEUPLOAD_DIRECTORY_FAIL'				=> 'Error: directory <strong>%s</strong> is not writable!',
 ));

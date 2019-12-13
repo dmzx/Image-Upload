@@ -99,8 +99,21 @@ class functions
 		return $allowed_extensions;
 	}
 
-	public function log_message($log_message, $title, $user_message)
+	public function log_message($log_message, $title)
 	{
 		$this->log->add('admin', $this->user->data['user_id'], $this->user->ip, $log_message, time(), array($title));
+	}
+
+	public function remove_dir($selected_dir)
+	{
+		$files = glob($selected_dir. '/*');
+
+		foreach ($files as $file)
+		{
+			is_dir($file) ? $this->remove_dir($file) : unlink($file);
+		}
+		@rmdir($selected_dir);
+
+		return;
 	}
 }
