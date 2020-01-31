@@ -176,22 +176,10 @@ class imageupload
 		{
 			$filecheck = $multiplier = '';
 
-			if ($this->files_factory !== null)
-			{
-				$fileupload = $this->files_factory->get('upload')
-					->set_allowed_extensions($allowed_extensions);
-			}
-			else
-			{
-				if (!class_exists('\fileupload'))
-				{
-					include($this->root_path . 'includes/functions_upload.' . $this->php_ext);
-				}
-				$fileupload = new \fileupload();
-				$fileupload->fileupload('', $allowed_extensions);
-			}
+			$fileupload = $this->files_factory->get('upload')
+				->set_allowed_extensions($allowed_extensions);
 
-			$upload_file = (isset($this->files_factory)) ? $fileupload->handle_upload('files.types.form', 'filename') : $fileupload->form_upload('filename');
+			$upload_file = $fileupload->handle_upload('files.types.form', 'filename');
 
 			if (!$upload_file->get('uploadname'))
 			{
@@ -268,10 +256,15 @@ class imageupload
 			$filesize = @filesize($this->root_path . $upload_dir . '/' . $upload_file->get('realname'));
 
 			$this->template->assign_vars(array(
-				'FILENAME'	=> generate_board_url() . '/' . $upload_dir . $upload_file->get('realname'),
-				'WIDTH'		=> $getimagesize[0],
-				'HEIGHT'	=> $getimagesize[1],
-				'SIZE'		=> get_formatted_filesize($filesize),
+				'FILENAME'							=> generate_board_url() . '/' . $upload_dir . $upload_file->get('realname'),
+				'WIDTH'								=> $getimagesize[0],
+				'HEIGHT'							=> $getimagesize[1],
+				'SIZE'								=> get_formatted_filesize($filesize),
+				'IMAGEUPLOAD_ENABLE_DIRECT_LINK' 	=> $this->config['imageupload_enable_direct_link'],
+				'IMAGEUPLOAD_ENABLE_URL_LINK' 		=> $this->config['imageupload_enable_url_link'],
+				'IMAGEUPLOAD_ENABLE_IMG_LINK' 		=> $this->config['imageupload_enable_img_link'],
+				'IMAGEUPLOAD_ENABLE_URL_IMG_LINK' 	=> $this->config['imageupload_enable_url_img_link'],
+
 			));
 
 			$this->db->sql_query('INSERT INTO ' . $this->image_upload_table .' ' . $this->db->sql_build_array('INSERT', $sql_ary));

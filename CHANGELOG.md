@@ -1,5 +1,10 @@
 # Image Upload Changelog
 
+## Changes in 1.1.0
+- Changed HSIMG to URL-IMG link.
+- Added ACP options for link display.
+- Deleted code for 3.1 uploading files.
+
 ## Changes in 1.0.9
 - Rename "files" dir to "img-files" thanks to g0lang.
 - Code update for 3.3.x

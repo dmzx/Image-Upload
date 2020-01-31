@@ -55,6 +55,45 @@
 		{% endif %}
 	</fieldset>
 	<fieldset>
+		<legend>{{ lang('ACP_IMAGE_UPLOAD_LINK_SETTINGS') }}</legend>
+		<dl>
+			<dt><label for="imageupload_enable_direct_link">{{ lang('ACP_IMAGEUPLOAD_ENABLE_DIRECT_LINK') }}{{ lang('COLON') }}</label><br />
+				<span>{{ lang('ACP_IMAGEUPLOAD_ENABLE_DIRECT_LINK_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				<label><input type="radio" class="radio" name="imageupload_enable_direct_link" value="1"{% if ACP_IMAGEUPLOAD_ENABLE_DIRECT_LINK %} id="imageupload_enable_direct_link" checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="imageupload_enable_direct_link" value="0"{% if not ACP_IMAGEUPLOAD_ENABLE_DIRECT_LINK %} id="imageupload_enable_direct_link" checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="imageupload_enable_url_link">{{ lang('ACP_IMAGEUPLOAD_ENABLE_URL_LINK') }}{{ lang('COLON') }}</label><br />
+				<span>{{ lang('ACP_IMAGEUPLOAD_ENABLE_URL_LINK_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				<label><input type="radio" class="radio" name="imageupload_enable_url_link" value="1"{% if ACP_IMAGEUPLOAD_ENABLE_URL_LINK %} id="imageupload_enable_url_link" checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="imageupload_enable_url_link" value="0"{% if not ACP_IMAGEUPLOAD_ENABLE_URL_LINK %} id="imageupload_enable_url_link" checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="imageupload_enable_img_link">{{ lang('ACP_IMAGEUPLOAD_ENABLE_IMG_LINK') }}{{ lang('COLON') }}</label><br />
+				<span>{{ lang('ACP_IMAGEUPLOAD_ENABLE_IMG_LINK_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				<label><input type="radio" class="radio" name="imageupload_enable_img_link" value="1"{% if ACP_IMAGEUPLOAD_ENABLE_IMG_LINK %} id="imageupload_enable_img_link" checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="imageupload_enable_img_link" value="0"{% if not ACP_IMAGEUPLOAD_ENABLE_IMG_LINK %} id="imageupload_enable_img_link" checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="imageupload_enable_url_img_link">{{ lang('ACP_IMAGEUPLOAD_ENABLE_URL_IMG_LINK') }}{{ lang('COLON') }}</label><br />
+				<span>{{ lang('ACP_IMAGEUPLOAD_ENABLE_URL_IMG_LINK_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				<label><input type="radio" class="radio" name="imageupload_enable_url_img_link" value="1"{% if ACP_IMAGEUPLOAD_ENABLE_URL_IMG_LINK %} id="imageupload_enable_url_img_link" checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="imageupload_enable_url_img_link" value="0"{% if not ACP_IMAGEUPLOAD_ENABLE_URL_IMG_LINK %} id="imageupload_enable_url_img_link" checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+			</dd>
+		</dl>
+	</fieldset>
+	<fieldset>
 		<p class="submit-buttons">
 			<input class="button1" type="submit" id="submit" name="submit" value="{{ lang('SUBMIT') }}" />&nbsp;
 			<input class="button2" type="reset" id="reset" name="reset" value="{{ lang('RESET') }}" />

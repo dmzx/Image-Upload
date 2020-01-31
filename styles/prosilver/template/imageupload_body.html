@@ -28,14 +28,22 @@
 		<fieldset class="fields2">
 			<h4 id="showdiv">{{ lang('IMAGEUPLOAD_SUCCEEDED') }}<br /><br />{{ WIDTH }} {{ lang('PIXEL') }} * {{ HEIGHT }} {{ lang('PIXEL') }} - {{ SIZE }}</h4>
 			<p id="codes">
+				{% if IMAGEUPLOAD_ENABLE_DIRECT_LINK %}
 				<label id="codehtml">{{ lang('IMAGEUPLOAD_DIRECT_LINK') }}{{ lang('COLON') }}</label><br />
 				<input type="text" value="{{ FILENAME }}" id="link" /><i class="buttoncopy" data-copytarget="#link">{{ lang('IMAGEUPLOAD_COPY') }}</i><br />
+				{% endif %}
+				{% if IMAGEUPLOAD_ENABLE_URL_LINK %}
 				<label id="codehtml">{{ lang('IMAGEUPLOAD_URL_LINK') }}{{ lang('COLON') }}</label><br />
 				<input type="text" value="[url={{ FILENAME }}]{{ lang('IMAGEUPLOAD_BY') }} {{ SITENAME }}[/url]" id="url" /><i class="buttoncopy" data-copytarget="#url">{{ lang('IMAGEUPLOAD_COPY') }}</i><br />
+				{% endif %}
+				{% if IMAGEUPLOAD_ENABLE_IMG_LINK %}
 				<label id="codehtml">{{ lang('IMAGEUPLOAD_IMG_LINK') }}{{ lang('COLON') }}</label><br />
 				<input type="text" value="[img]{{ FILENAME }}[/img]" id="img" /><i class="buttoncopy" data-copytarget="#img">{{ lang('IMAGEUPLOAD_COPY') }}</i><br />
-				<label id="codehtml">{{ lang('IMAGEUPLOAD_HSIMG_LINK') }}{{ lang('COLON') }}</label><br />
-				<input type="text" value="[hsimg]{{ FILENAME }}[/hsimg]" id="hsimg" /><i class="buttoncopy" data-copytarget="#hsimg">{{ lang('IMAGEUPLOAD_COPY') }}</i><br /><br />
+				{% endif %}
+				{% if IMAGEUPLOAD_ENABLE_URL_IMG_LINK %}
+				<label id="codehtml">{{ lang('IMAGEUPLOAD_URLIMG_LINK') }}{{ lang('COLON') }}</label><br />
+				<input type="text" value="[url={{ FILENAME }}][img]{{ FILENAME }}[/img][/url]" id="urlimg" /><i class="buttoncopy" data-copytarget="#urlimg">{{ lang('IMAGEUPLOAD_COPY') }}</i><br /><br />
+				{% endif %}
 				<div id="showdiv">
 					<img id="upload" src="{{ FILENAME }}" title="{{ lang('IMAGEUPLOAD_BY') }} {{ SITENAME }}" /><br />
 				</div>

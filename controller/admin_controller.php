@@ -253,18 +253,22 @@ class admin_controller
 		$this->pagination->generate_template_pagination($base_url, 'pagination', 'start', $total_imageupload, $number, $start);
 
 		$this->template->assign_vars(array(
-			'ACP_IMAGEUPLOAD_VERSION'			=> $this->config['imageupload_system_version'],
-			'ACP_IMAGEUPLOAD_ENABLE'			=> $this->config['imageupload_enable'],
-			'ACP_IMAGEUPLOAD_EXT'				=> $imageupload_allowed_extensions,
-			'ACP_IMAGEUPLOAD_INDEX_ENABLE'		=> $this->config['imageupload_index_enable'],
-			'ACP_IMAGEUPLOAD_NUMBER'			=> $this->config['imageupload_number'],
-			'ACP_IMAGEUPLOAD_ALLOWED_SIZE'		=> $this->user->lang('ACP_IMAGEUPLOAD_NEW_DOWNLOAD_SIZE', $max_filesize, $unit),
-			'ACP_TOTAL_IMAGES'					=> $this->user->lang('ACP_MULTI_IMAGES', (int) $total_imageupload),
-			'ACP_IMAGEUPLOAD_CHAT_ENABLE'		=> $this->config['imageupload_chat_enable'],
-			'TOTAL_FILE_SIZE'					=> get_formatted_filesize($total_filesize),
-			'S_SELECT_SORT_DIR'					=> $s_sort_dir,
-			'S_SELECT_SORT_KEY'					=> $s_sort_key,
-			'U_ACTION'							=> $this->u_action,
+			'ACP_IMAGEUPLOAD_VERSION'				=> $this->config['imageupload_system_version'],
+			'ACP_IMAGEUPLOAD_ENABLE'				=> $this->config['imageupload_enable'],
+			'ACP_IMAGEUPLOAD_EXT'					=> $imageupload_allowed_extensions,
+			'ACP_IMAGEUPLOAD_INDEX_ENABLE'			=> $this->config['imageupload_index_enable'],
+			'ACP_IMAGEUPLOAD_NUMBER'				=> $this->config['imageupload_number'],
+			'ACP_IMAGEUPLOAD_ALLOWED_SIZE'			=> $this->user->lang('ACP_IMAGEUPLOAD_NEW_DOWNLOAD_SIZE', $max_filesize, $unit),
+			'ACP_TOTAL_IMAGES'						=> $this->user->lang('ACP_MULTI_IMAGES', (int) $total_imageupload),
+			'ACP_IMAGEUPLOAD_CHAT_ENABLE'			=> $this->config['imageupload_chat_enable'],
+			'ACP_IMAGEUPLOAD_ENABLE_DIRECT_LINK'	=> $this->config['imageupload_enable_direct_link'],
+			'ACP_IMAGEUPLOAD_ENABLE_URL_LINK'		=> $this->config['imageupload_enable_url_link'],
+			'ACP_IMAGEUPLOAD_ENABLE_IMG_LINK'		=> $this->config['imageupload_enable_img_link'],
+			'ACP_IMAGEUPLOAD_ENABLE_URL_IMG_LINK'	=> $this->config['imageupload_enable_url_img_link'],
+			'TOTAL_FILE_SIZE'						=> get_formatted_filesize($total_filesize),
+			'S_SELECT_SORT_DIR'						=> $s_sort_dir,
+			'S_SELECT_SORT_KEY'						=> $s_sort_key,
+			'U_ACTION'								=> $this->u_action,
 
 		));
 
@@ -340,6 +344,10 @@ class admin_controller
 		$this->config->set('imageupload_number', $this->request->variable('imageupload_number', 2));
 		$this->config->set('imageupload_index_enable', $this->request->variable('imageupload_index_enable', 0));
 		$this->config->set('imageupload_chat_enable', $this->request->variable('imageupload_chat_enable', 0));
+		$this->config->set('imageupload_enable_direct_link', $this->request->variable('imageupload_enable_direct_link', 0));
+		$this->config->set('imageupload_enable_url_link', $this->request->variable('imageupload_enable_url_link', 0));
+		$this->config->set('imageupload_enable_img_link', $this->request->variable('imageupload_enable_img_link', 0));
+		$this->config->set('imageupload_enable_url_img_link', $this->request->variable('imageupload_enable_url_img_link', 0));
 
 		$this->config_text->set_array([
 			'imageupload_allowed_extensions' => $imageupload_allowed_extensions,
