@@ -1,5 +1,15 @@
 # Image Upload Changelog
 
+## Changes in 1.1.2
+- Added ACP switches for global on/off index and posting images.
+- Added permission to view tab in UCP.
+- Changed layout of title and delete/insert images.
+- Added pagination for images.
+- Various code updates.
+
+## Changes in 1.1.1
+- Fix deleting images on lower php version.
+
 ## Changes in 1.1.0
 - Changed HSIMG to URL-IMG link.
 - Added ACP options for link display.

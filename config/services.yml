@@ -6,17 +6,14 @@ services:
         arguments:
             - '@config'
             - '@template'
-            - '@log'
             - '@user'
             - '@request'
             - '@dbal.conn'
-            - '@pagination'
-            - '@ext.manager'
-            - '@path_helper'
             - '%dmzx.imageupload.table.image_upload%'
             - '@controller.helper'
             - '@auth'
             - '@service_container'
+            - '@dmzx.imageupload.core.functions'
             - '%core.php_ext%'
             - '@?phpbb.collapsiblecategories.operator'
         tags:
@@ -60,10 +57,17 @@ services:
         arguments:
             - '@template'
             - '@config'
+            - '@pagination'
             - '@ext.manager'
+            - '@path_helper'
             - '@config_text'
             - '@log'
             - '@user'
+            - '@request'
+            - '@dbal.conn'
+            - '%core.root_path%'
+            - '%core.php_ext%'
+            - '%dmzx.imageupload.table.image_upload%'
     dmzx.imageupload.ucp.controller:
         class: dmzx\imageupload\controller\ucp_controller
         arguments:
@@ -78,5 +82,8 @@ services:
             - '%dmzx.imageupload.table.image_upload%'
             - '@controller.helper'
             - '@auth'
+            - '@pagination'
+            - '@config'
             - '@dmzx.imageupload.core.functions'
             - '%core.root_path%'
+            - '%core.php_ext%'

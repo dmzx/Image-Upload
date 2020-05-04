@@ -185,7 +185,7 @@ class admin_controller
 		$total_filesize = $row['total_filesize'];
 		$this->db->sql_freeresult($result);
 
-		$limit_days = array(
+		$limit_days = [
 			0 	=> $this->user->lang['ALL_ENTRIES'],
 			1 	=> $this->user->lang['1_DAY'],
 			7 	=> $this->user->lang['7_DAYS'],
@@ -194,19 +194,19 @@ class admin_controller
 			90 	=> $this->user->lang['3_MONTHS'],
 			180 => $this->user->lang['6_MONTHS'],
 			365 => $this->user->lang['1_YEAR']
-		);
-		$sort_by_text = array(
+		];
+		$sort_by_text = [
 			'd' => $this->user->lang['ACP_IMAGEUPLOAD_SORT_DATE'],
 			't' => $this->user->lang['ACP_IMAGEUPLOAD_TITLE'],
 			'c' => $this->user->lang['ACP_IMAGEUPLOAD_SORT_USERNAME'],
 			's' => $this->user->lang['ACP_IMAGEUPLOAD_SIZE']
-		);
-		$sort_by_sql = array(
+		];
+		$sort_by_sql = [
 			'd' => 'upload_time',
 			't' => 'imageupload_filename',
 			'c' => 'username',
 			's' => 'filesize'
-		);
+		];
 		$s_limit_days = $s_sort_key = $s_sort_dir = $u_sort_param = '';
 		gen_sort_selects($limit_days, $sort_by_text, $sort_days, $sort_key, $sort_dir, $s_limit_days, $s_sort_key, $s_sort_dir, $u_sort_param);
 		$sql_sort_order = $sort_by_sql[$sort_key] . ' ' . (($sort_dir == 'd') ? 'DESC' : 'ASC');
@@ -230,12 +230,12 @@ class admin_controller
 			}
 			else
 			{
-				$getimagesize = array(0, 0);
+				$getimagesize = [0, 0];
 			}
 
 			$filesize = @filesize($file_path);
 
-			$this->template->assign_block_vars('images', array(
+			$this->template->assign_block_vars('images', [
 				'FILENAME'			=> $row['imageupload_filename'],
 				'FILENAME_REAL'		=> $file_name,
 				'IMAGEPATH'			=> $file_path,
@@ -244,7 +244,7 @@ class admin_controller
 				'SIZE'				=> get_formatted_filesize($filesize),
 				'IMAGE_USERNAME'	=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
 				'U_DELETE'			=> $this->u_action . '&amp;action=delete&amp;id=' . $row['imageupload_id']
-			));
+			]);
 		}
 		$this->db->sql_freeresult($result);
 
@@ -252,7 +252,7 @@ class admin_controller
 		//Start pagination
 		$this->pagination->generate_template_pagination($base_url, 'pagination', 'start', $total_imageupload, $number, $start);
 
-		$this->template->assign_vars(array(
+		$this->template->assign_vars([
 			'ACP_IMAGEUPLOAD_VERSION'				=> $this->config['imageupload_system_version'],
 			'ACP_IMAGEUPLOAD_ENABLE'				=> $this->config['imageupload_enable'],
 			'ACP_IMAGEUPLOAD_EXT'					=> $imageupload_allowed_extensions,
@@ -261,6 +261,8 @@ class admin_controller
 			'ACP_IMAGEUPLOAD_ALLOWED_SIZE'			=> $this->user->lang('ACP_IMAGEUPLOAD_NEW_DOWNLOAD_SIZE', $max_filesize, $unit),
 			'ACP_TOTAL_IMAGES'						=> $this->user->lang('ACP_MULTI_IMAGES', (int) $total_imageupload),
 			'ACP_IMAGEUPLOAD_CHAT_ENABLE'			=> $this->config['imageupload_chat_enable'],
+			'ACP_IMAGEUPLOAD_POST_ENABLE'			=> $this->config['imageupload_post_enable'],
+			'ACP_IMAGEUPLOAD_POSTTAB_ENABLE'		=> $this->config['imageupload_posttab_enable'],
 			'ACP_IMAGEUPLOAD_ENABLE_DIRECT_LINK'	=> $this->config['imageupload_enable_direct_link'],
 			'ACP_IMAGEUPLOAD_ENABLE_URL_LINK'		=> $this->config['imageupload_enable_url_link'],
 			'ACP_IMAGEUPLOAD_ENABLE_IMG_LINK'		=> $this->config['imageupload_enable_img_link'],
@@ -270,7 +272,7 @@ class admin_controller
 			'S_SELECT_SORT_KEY'						=> $s_sort_key,
 			'U_ACTION'								=> $this->u_action,
 
-		));
+		]);
 
 		if ($this->phpbb_container->has('dmzx.mchat.settings'))
 		{
@@ -303,7 +305,7 @@ class admin_controller
 					# Delete the image
 					if ($this->filesystem->exists($delete_file))
 					{
-						$dir = dirname($file_name, 2);
+						$dir = dirname(dirname($file_name));
 						$this->filesystem->remove($delete_file);
 						$this->functions->remove_dir($this->ext_path_web . 'img-files' . $dir);
 					}
@@ -317,12 +319,12 @@ class admin_controller
 				}
 				else
 				{
-					confirm_box(false, $this->user->lang['ACP_IMAGEUPLOAD_REALLY_DELETE_IMAGE'], build_hidden_fields(array(
+					confirm_box(false, $this->user->lang['ACP_IMAGEUPLOAD_REALLY_DELETE_IMAGE'], build_hidden_fields([
 							'i'		 => $id,
 							'mode'	 => $mode,
 							'id'	 => $image_id,
 							'action' => 'delete',
-						))
+						])
 					);
 				}
 				redirect($this->u_action);
@@ -344,6 +346,8 @@ class admin_controller
 		$this->config->set('imageupload_number', $this->request->variable('imageupload_number', 2));
 		$this->config->set('imageupload_index_enable', $this->request->variable('imageupload_index_enable', 0));
 		$this->config->set('imageupload_chat_enable', $this->request->variable('imageupload_chat_enable', 0));
+		$this->config->set('imageupload_post_enable', $this->request->variable('imageupload_post_enable', 0));
+		$this->config->set('imageupload_posttab_enable', $this->request->variable('imageupload_posttab_enable', 0));
 		$this->config->set('imageupload_enable_direct_link', $this->request->variable('imageupload_enable_direct_link', 0));
 		$this->config->set('imageupload_enable_url_link', $this->request->variable('imageupload_enable_url_link', 0));
 		$this->config->set('imageupload_enable_img_link', $this->request->variable('imageupload_enable_img_link', 0));

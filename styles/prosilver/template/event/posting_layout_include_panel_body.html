@@ -1,4 +1,4 @@
-{% if IMAGEUPLOAD_USE_UPLOAD and loops.images|length %}
+{% if IMAGEUPLOAD_USE_UPLOAD and loops.images|length and IMAGEUPLOAD_POSTTAB_ENABLE %}
 <div id="imageupload-panel" class="panel bg3">
 	<div class="inner">
 		<fieldset class="fields1">
@@ -10,35 +10,50 @@
 							<div class="imageupload_index-preview">
 								<img class="imageupload_index" id="{{ images.FILENAME_REAL }}" src="{{ images.IMAGEPATH }}" title="{{ images.FILENAME }} - {{ images.WIDTH }} {{ lang('PIXEL') }} * {{ images.HEIGHT }} {{ lang('PIXEL') }} - {{ images.SIZE }}"	/>
 							</div>
-							<div><i class="button" onclick="insert_text(' [img]{{ images.IMAGE_POSTING_BUTTON }}[/img] ');">{{ images.FILENAME }}</i></div>
-							<div id="myModal" class="modal">
-								<span class="imgclose" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
-								<img class="modal-content" id="image_show_id">
+							<div class="imageupload-name">
+								{{ images.FILENAME }}&nbsp;<i onclick="insert_text(' [img]{{ images.IMAGE_POSTING_BUTTON }}[/img] ');"	title="{{ lang('IMAGEUPLOAD_INSERT_IMAGE') }}" class="icon fa-arrow-circle-o-up fa-fw"></i>
+							</div>
+							<div id="myimages" class="myimages">
+								<span class="imgclose" onclick="document.getElementById('myimages').style.display='none'">&times;</span>
+								<img class="myimages-content" id="image_show_id">
 								<div id="caption"></div>
 							</div>
 						</div>
 						<script>
-							var modal = document.getElementById('myModal');
+							var myimages = document.getElementById('myimages');
 
 							var img = document.getElementById('{{ images.FILENAME_REAL }}');
-							var modalImg = document.getElementById("image_show_id");
+							var myimagesImg = document.getElementById("image_show_id");
 							var captionText = document.getElementById("caption");
 							img.onclick = function(){
-								modal.style.display = "block";
-								modalImg.src = this.src;
+								myimages.style.display = "block";
+								myimagesImg.src = this.src;
 								captionText.innerHTML = this.alt;
 							}
 
 							var span = document.getElementsByClassName("imgclose")[0];
 
 							span.onclick = function() {
-								modal.style.display = "none";
+								myimages.style.display = "none";
 							}
 						</script>
 					{% endfor %}
 				</div>
 			</div>
 		</fieldset>
+		<div class="action-bar bar-bottom">
+			{% if loops.pagination|length or IMAGEUPLOAD_PAG_IMAGES %}
+			<div class="pagination">
+				{{ IMAGEUPLOAD_PAG_IMAGES }}
+				{% if loops.pagination|length %}
+					{% INCLUDE 'pagination.html' %}
+				{% else %}
+					&bull; {{ PAGE_NUMBER }}
+				{% endif %}
+			</div>
+			{% endif %}
+		</div>
 	</div>
 </div>
+
 {% endif %}

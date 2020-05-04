@@ -17,7 +17,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -36,7 +36,7 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'ACP_IMAGEUPLOAD_SAVED'									=> 'Image Upload settings saved',
 	'ACP_IMAGEUPLOAD_VERSION'								=> 'Version',
 	'ACP_IMAGE_UPLOAD_CONFIGURATION'						=> 'Image Upload Configuration',
@@ -55,15 +55,19 @@ $lang = array_merge($lang, array(
 	'ACP_IMAGEUPLOAD_FOLDER_SIZE'							=> 'Total folder size',
 	'ACP_IMAGEUPLOAD_USERNAME'								=> 'Uploaded by',
 	'ACP_IMAGEUPLOAD_SIZE'									=> 'Size',
-	'ACP_MULTI_IMAGES'		=>	array(
+	'ACP_MULTI_IMAGES'		=>	[
 		1 => '%s image',
 		2 => '%s images',
-	),
+	],
 	'ACP_IMAGEUPLOAD_SORT_USERNAME'							=> 'Username',
 	'ACP_IMAGEUPLOAD_SORT_DATE'								=> 'Date',
 	'ACP_IMAGEUPLOAD_NOT_SELECTED'							=> 'Not selected any images',
 	'ACP_IMAGEUPLOAD_CHAT_ENABLE'							=> 'Enable mChat image posting',
 	'ACP_IMAGEUPLOAD_CHAT_ENABLE_EXPLAIN'					=> 'Set to yes to insert uploaded images on index with onclick insert.',
+	'ACP_IMAGEUPLOAD_POST_ENABLE'							=> 'Enable image upload button on posting pages',
+	'ACP_IMAGEUPLOAD_POST_ENABLE_EXPLAIN'					=> 'Set to yes to show upload button on posting pages.',
+	'ACP_IMAGEUPLOAD_POSTTAB_ENABLE'						=> 'Enable users images on posting pages',
+	'ACP_IMAGEUPLOAD_POSTTAB_ENABLE_EXPLAIN'				=> 'Global on/off of images on posting pages.',
 	'ACP_IMAGEUPLOAD_EXT'									=> 'Allowed extensions',
 	'ACP_IMAGEUPLOAD_EXT_EXPLAIN'							=> 'Allowed extensions to include, separated by a comma (Example: gif,jpeg,jpg,png)',
 	'ACP_IMAGE_UPLOAD_LINK_SETTINGS'						=> 'Image Upload Link Settings',
@@ -75,4 +79,4 @@ $lang = array_merge($lang, array(
 	'ACP_IMAGEUPLOAD_ENABLE_IMG_LINK_EXPLAIN'				=> '[img]FILENAME[/img]',
 	'ACP_IMAGEUPLOAD_ENABLE_URL_IMG_LINK'					=> 'Enable URL-IMG tags',
 	'ACP_IMAGEUPLOAD_ENABLE_URL_IMG_LINK_EXPLAIN'			=> '[url=FILENAME][img]FILENAME[/img][/url]',
-));
+]);

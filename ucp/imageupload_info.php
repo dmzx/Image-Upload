@@ -15,17 +15,17 @@ class imageupload_info
 	{
 		global $config;
 
-		return array(
+		return [
 			'filename'		=> 'dmzx\imageupload\ucp\imageupload_module',
 			'title'			=> 'UCP_IMAGEUPLOAD_TITLE',
 			'version'		=> $config['imageupload_system_version'],
-			'modes'			=> array(
-				'main'	=> array(
+			'modes'			=> [
+				'main'	=> [
 					'title'	=> 'UCP_IMAGEUPLOAD_TITLE',
-					'auth'	=> 'ext_dmzx/imageupload',
-					'cat'	=> array('UCP_MAIN')
-				),
-			),
-		);
+					'auth'	=> 'ext_dmzx/imageupload && acl_u_image_upload_ucp',
+					'cat'	=> ['UCP_MAIN']
+				],
+			],
+		];
 	}
 }

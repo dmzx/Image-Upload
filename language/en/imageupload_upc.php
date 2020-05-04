@@ -14,7 +14,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -33,9 +33,9 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'IMAGEUPLOAD_UCP'							=> 'Uploaded images',
 	'IMAGEUPLOAD_UCP_UPLOADED_IMAGES'			=> 'Your uploaded images.',
 	'IMAGEUPLOAD_UCP_UPLOADED_NO_IMAGES'		=> 'No images uploaded yet.',
 	'IMAGEUPLOAD_UCP_UPLOADED_IMAGES_DELETE'	=> 'Your uploaded images can be deleted here.',
-));
+]);

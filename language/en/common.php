@@ -14,7 +14,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -33,7 +33,7 @@ if (empty($lang) || !is_array($lang))
 // ’ » “ ” …
 //
 
-$lang = array_merge($lang, array(
+$lang = array_merge($lang, [
 	'IMAGEUPLOAD_UPLOAD'						=> 'Img-Upload',
 	'IMAGEUPLOAD_UPLOAD_SECTION'				=> 'Image Upload section',
 	'IMAGEUPLOAD_UPLOAD_MESSAGE'				=> 'Upload your image here. (Note this folder will get emptied and all uploads are logged)',
@@ -63,4 +63,10 @@ $lang = array_merge($lang, array(
 	'IMAGEUPLOAD_UCP_DELETED_IMAGES'			=> 'Deleted image',
 	'IMAGEUPLOAD_PAGE_RETURN'					=> 'Returning to uploaded images',
 	'IMAGEUPLOAD_DIRECTORY_FAIL'				=> 'Error: directory <strong>%s</strong> is not writable!',
-));
+	'IMAGEUPLOAD_IMAGES_PAGINATION'		=>	[
+		1 => '%s image',
+		2 => '%s images',
+	],
+	'IMAGEUPLOAD_INSERT_IMAGE'					=> 'Insert image',
+	'IMAGEUPLOAD_INSERT_MCHAT_IMAGE'			=> 'Insert image in mChat',
+]);

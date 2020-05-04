@@ -224,17 +224,17 @@ class imageupload
 			}
 			else
 			{
-				$getimagesize = array(0, 0);
+				$getimagesize = [0, 0];
 			}
 
 			// End the upload
-			$sql_ary = array(
+			$sql_ary = [
 				'imageupload_filename'	=> ucfirst(str_replace('_', ' ', preg_replace('#^(.*)\..*$#', '\1', $upload_file->get('uploadname')))),
 				'imageupload_realname'	=> $upload_subdir . "/" . $upload_file->get('realname'),
 				'upload_time'			=> time(),
 				'filesize'				=> $upload_file->get('filesize'),
 				'user_id'				=> $this->user->data['user_id'],
-			);
+			];
 
 			if ($unit == 'MB')
 			{
@@ -255,7 +255,7 @@ class imageupload
 
 			$filesize = @filesize($this->root_path . $upload_dir . '/' . $upload_file->get('realname'));
 
-			$this->template->assign_vars(array(
+			$this->template->assign_vars([
 				'FILENAME'							=> generate_board_url() . '/' . $upload_dir . $upload_file->get('realname'),
 				'WIDTH'								=> $getimagesize[0],
 				'HEIGHT'							=> $getimagesize[1],
@@ -265,7 +265,7 @@ class imageupload
 				'IMAGEUPLOAD_ENABLE_IMG_LINK' 		=> $this->config['imageupload_enable_img_link'],
 				'IMAGEUPLOAD_ENABLE_URL_IMG_LINK' 	=> $this->config['imageupload_enable_url_img_link'],
 
-			));
+			]);
 
 			$this->db->sql_query('INSERT INTO ' . $this->image_upload_table .' ' . $this->db->sql_build_array('INSERT', $sql_ary));
 			// Log message
@@ -284,17 +284,17 @@ class imageupload
 
 		$form_enctype = (@ini_get('file_uploads') == '0' || strtolower(@ini_get('file_uploads')) == 'off') ? '' : ' enctype="multipart/form-data"';
 
-		$this->template->assign_vars(array(
+		$this->template->assign_vars([
 			'IMAGEUPLOAD_ALLOWED_SIZE'		=> sprintf($this->user->lang['IMAGEUPLOAD_NEW_DOWNLOAD_SIZE'], $max_filesize, $unit),
 			'IMAGEUPLOAD_ALLOWED_EXT'		=> $imageupload_allowed_extensions,
 			'S_FORM_ENCTYPE'				=> $form_enctype,
-		));
+		]);
 
 		// Build navigation link
-		$this->template->assign_block_vars('navlinks', array(
+		$this->template->assign_block_vars('navlinks', [
 			'FORUM_NAME'	=> $this->user->lang('IMAGEUPLOAD_UPLOAD_SECTION'),
 			'U_VIEW_FORUM'	=> $this->helper->route('dmzx_imageupload_controller_upload'),
-		));
+		]);
 
 		$this->functions->assign_authors();
 		$this->template->assign_var('IMAGEUPLOAD_FOOTER_VIEW', true);

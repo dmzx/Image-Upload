@@ -53,6 +53,20 @@
 			</dd>
 		</dl>
 		{% endif %}
+				 <dl>
+			<dt><label>{{ lang('ACP_IMAGEUPLOAD_POST_ENABLE') }}{{ lang('COLON') }}</label><br /><span>{{ lang('ACP_IMAGEUPLOAD_POST_ENABLE_EXPLAIN') }}</span></dt>
+			<dd>
+				<label><input name="imageupload_post_enable" type="radio" {% if ACP_IMAGEUPLOAD_POST_ENABLE %} checked="checked"{% endif %} class="radio" value="1" /> {{ lang('YES') }}</label>
+				<label><input name="imageupload_post_enable" type="radio" {% if not ACP_IMAGEUPLOAD_POST_ENABLE %} checked="checked"{% endif %} class="radio" value="0" /> {{ lang('NO') }}</label>
+			</dd>
+		</dl>
+				 <dl>
+			<dt><label>{{ lang('ACP_IMAGEUPLOAD_POSTTAB_ENABLE') }}{{ lang('COLON') }}</label><br /><span>{{ lang('ACP_IMAGEUPLOAD_POSTTAB_ENABLE_EXPLAIN') }}</span></dt>
+			<dd>
+				<label><input name="imageupload_posttab_enable" type="radio" {% if ACP_IMAGEUPLOAD_POSTTAB_ENABLE %} checked="checked"{% endif %} class="radio" value="1" /> {{ lang('YES') }}</label>
+				<label><input name="imageupload_posttab_enable" type="radio" {% if not ACP_IMAGEUPLOAD_POSTTAB_ENABLE %} checked="checked"{% endif %} class="radio" value="0" /> {{ lang('NO') }}</label>
+			</dd>
+		</dl>
 	</fieldset>
 	<fieldset>
 		<legend>{{ lang('ACP_IMAGE_UPLOAD_LINK_SETTINGS') }}</legend>

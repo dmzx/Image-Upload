@@ -13,16 +13,16 @@ class imageupload_info
 {
 	function module()
 	{
-		return array(
+		return [
 			'filename'	=> '\dmzx\imageupload\acp\imageupload_module',
 			'title'		=> 'ACP_IMAGE_UPLOAD',
-			'modes'		=> array(
-				'configuration'	=> array(
+			'modes'		=> [
+				'configuration'	=> [
 					'title' => 'ACP_IMAGE_UPLOAD_CONFIG',
 					'auth' 	=> 'ext_dmzx/imageupload && acl_a_board',
-					'cat' 	=> array('ACP_IMAGE_UPLOAD')
-				),
-			),
-		);
+					'cat' 	=> ['ACP_IMAGE_UPLOAD']
+				],
+			],
+		];
 	}
 }

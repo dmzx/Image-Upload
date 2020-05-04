@@ -20,6 +20,8 @@ use phpbb\path_helper;
 use phpbb\filesystem\filesystem;
 use phpbb\controller\helper;
 use phpbb\auth\auth;
+use phpbb\pagination;
+use phpbb\config\config;
 use dmzx\imageupload\core\functions;
 
 class ucp_controller
@@ -62,11 +64,20 @@ class ucp_controller
 	/** @var auth */
 	protected $auth;
 
+	/** @var pagination */
+	protected $pagination;
+
+	/** @var config */
+	protected $config;
+
 	/** @var functions */
 	protected $functions;
 
 	/** @var string */
 	protected $root_path;
+
+	/** @var string */
+	protected $php_ext;
 
 	/**
 	* Constructor
@@ -82,8 +93,11 @@ class ucp_controller
 	* @param string 			$image_upload_table
 	* @param helper				$helper
 	* @param auth				$auth
+	* @param pagination			$pagination
+	* @param config				$config
 	* @param functions			$functions
 	* @param string 			$root_path
+	* @param string				$php_ext
 	*
 	*/
 	public function __construct(
@@ -98,8 +112,11 @@ class ucp_controller
 		$image_upload_table,
 		helper $helper,
 		auth $auth,
+		pagination $pagination,
+		config $config,
 		functions $functions,
-		$root_path
+		$root_path,
+		$php_ext
 	)
 	{
 		$this->template 			= $template;
@@ -115,8 +132,11 @@ class ucp_controller
 		$this->ext_path_web 		= $this->path_helper->update_web_root_path($this->ext_path);
 		$this->helper 				= $helper;
 		$this->auth 				= $auth;
+		$this->pagination 			= $pagination;
+		$this->config 				= $config;
 		$this->functions 			= $functions;
 		$this->root_path 			= $root_path;
+		$this->php_ext				= $php_ext;
 	}
 
 	public function main()
@@ -141,10 +161,10 @@ class ucp_controller
 
 				$delete_id = $this->request->variable('imageupload_id', 0);
 
-				$s_hidden_fields = build_hidden_fields(array(
+				$s_hidden_fields = build_hidden_fields([
 					'imageupload_id'	=> $delete_id,
 					'mode'				=> 'delete'
-				));
+				]);
 
 				if (confirm_box(true))
 				{
@@ -162,7 +182,7 @@ class ucp_controller
 					# Delete the image
 					if ($this->filesystem->exists($delete_file))
 					{
-						$dir = dirname($file_name, 2);
+						$dir = dirname(dirname($file_name));
 						$this->filesystem->remove($delete_file);
 						$this->functions->remove_dir($this->root_path . 'ext/dmzx/imageupload/img-files' . $dir);
 					}
@@ -172,7 +192,7 @@ class ucp_controller
 					$this->db->sql_query($sql);
 
 					// Add action to the user log
-					$this->log->add('user', $this->user->data['user_id'], $this->user->ip, 'LOG_USER_IMAGE_DELETED', time(), array($image_name, $file_name, 'reportee_id' => $this->user->data['user_id'], $this->user->data['username']));
+					$this->log->add('user', $this->user->data['user_id'], $this->user->ip, 'LOG_USER_IMAGE_DELETED', time(), [$image_name, $file_name, 'reportee_id' => $this->user->data['user_id'], $this->user->data['username']]);
 
 					$meta_info = append_sid("{$this->root_path}ucp.php?i=-dmzx-imageupload-ucp-imageupload_module&mode=main");
 					$message = $this->user->lang['IMAGEUPLOAD_UCP_DELETED_IMAGES'];
@@ -188,22 +208,27 @@ class ucp_controller
 					}
 					else
 					{
-						confirm_box(false, $this->user->lang['IMAGEUPLOAD_UCP_DELETE_IMAGES'], build_hidden_fields(array(
+						confirm_box(false, $this->user->lang['IMAGEUPLOAD_UCP_DELETE_IMAGES'], build_hidden_fields([
 								'imageupload_id'		=> $delete_id,
 								'action'				=> 'delete',
-							))
+							])
 						);
 					}
 				}
 			break;
 			default:
+
+				$base_url 	= append_sid("{$this->root_path }ucp.{$this->php_ext}?i=-dmzx-imageupload-ucp-imageupload_module");
+				$sql_start 	= $this->request->variable('start', 0);
+				$sql_limit 	= $this->config['posts_per_page'];
+
 				// List all images
 				$sql = 'SELECT im.*, u.user_id, u.username, u.user_colour
 					FROM ' . $this->image_upload_table . ' im, ' . USERS_TABLE . ' u
 					WHERE u.user_id = im.user_id
 						AND im.user_id = ' . (int) $this->user->data['user_id'] . '
 					ORDER BY upload_time DESC';
-				$result = $this->db->sql_query($sql);
+				$result = $this->db->sql_query_limit($sql, $sql_limit, $sql_start);
 
 				while ($row = $this->db->sql_fetchrow($result))
 				{
@@ -216,14 +241,14 @@ class ucp_controller
 					}
 					else
 					{
-						$getimagesize = array(0, 0);
+						$getimagesize = [0, 0];
 					}
 
 					$filesize = @filesize($file_path);
 
 					$board_url = generate_board_url();
 
-					$this->template->assign_block_vars('images', array(
+					$this->template->assign_block_vars('images', [
 						'FILENAME'					=> $row['imageupload_filename'],
 						'FILENAME_REAL'				=> $file_name,
 						'IMAGEPATH'					=> $file_path,
@@ -233,10 +258,16 @@ class ucp_controller
 						'SIZE'						=> get_formatted_filesize($filesize),
 						'IMAGE_USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
 						'ID'						=> $row['imageupload_id'],
-						'U_DELETES'					=> $this->helper->route('dmzx_imageupload_controller_ucp_controller', array('mode' => 'delete', 'imageupload_id' => $row['imageupload_id'])),
-					));
+						'U_DELETES'					=> $this->helper->route('dmzx_imageupload_controller_ucp_controller', ['mode' => 'delete', 'imageupload_id' => $row['imageupload_id']]),
+					]);
 				}
 				$this->db->sql_freeresult($result);
+
+				$this->pagination->generate_template_pagination($base_url, 'pagination', 'start', $this->functions->count_image_user_id($this->user->data['user_id']), $sql_limit, $sql_start);
+
+				$this->template->assign_vars([
+					'IMAGEUPLOAD_UCP_IMAGES'	=> $this->user->lang('IMAGEUPLOAD_IMAGES_PAGINATION', (int) $this->functions->count_image_user_id($this->user->data['user_id'])),
+				]);
 
 			break;
 		}

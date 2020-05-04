@@ -14,7 +14,7 @@ if (!defined('IN_PHPBB'))
 
 if (empty($lang) || !is_array($lang))
 {
-	$lang = array();
+	$lang = [];
 }
 
 // DEVELOPERS PLEASE NOTE
@@ -32,8 +32,9 @@ if (empty($lang) || !is_array($lang))
 // Some characters for use
 // ’ » “ ” …
 
-$lang = array_merge($lang, array(
-	'ACL_U_IMAGE_UPLOAD'	=> 'Can upload images in Image Upload',
-	'ACL_U_IMAGEUPLOAD'		=> 'Image Upload',
-	'ACL_U_IMAGE_DELETE'	=> 'Can delete images in UCP',
-));
+$lang = array_merge($lang, [
+	'ACL_U_IMAGE_UPLOAD'		=> 'Can upload images in Image Upload',
+	'ACL_U_IMAGEUPLOAD'			=> 'Image Upload',
+	'ACL_U_IMAGE_DELETE'		=> 'Can delete images in UCP',
+	'ACL_U_IMAGE_UPLOAD_UCP'	=> 'Can see images in UCP profile tab',
+]);

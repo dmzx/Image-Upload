@@ -1,4 +1,4 @@
-{% if IMAGEUPLOAD_USE_UPLOAD and loops.images|length %}
+{% if IMAGEUPLOAD_USE_UPLOAD and loops.images|length and IMAGEUPLOAD_POSTTAB_ENABLE %}
 <li id="imageupload-panel-tab" class="tab">
 	<a aria-controls="imageupload-panel" role="tab" data-subpanel="imageupload-panel" href="#imageupload">{{ lang('IMAGEUPLOAD_UPLOADED_IMAGES') }}</a>
 </li>

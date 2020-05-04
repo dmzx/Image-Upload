@@ -26,26 +26,36 @@
 											<div class="imageupload_index-preview">
 												<img class="imageupload_index" id="{{ images.FILENAME_REAL }}" src="{{ images.IMAGEPATH }}" title="{{ images.FILENAME }} - {{ images.WIDTH }} {{ lang('PIXEL') }} * {{ images.HEIGHT }} {{ lang('PIXEL') }} - {{ images.SIZE }}"	/>
 											</div>
-											<div>{% if S_IMAGEUPLOAD_DELETE_IMAGE %}<a href="{{ images.U_DELETES }}" title="{{ lang('IMAGEUPLOAD_UCP_DELETE_IMAGES') }}"><i class="button button-icon-only">{{ images.FILENAME }}</i></a>{% else %}{{ images.FILENAME }}{% endif %}</div>
-											<div id="myModal" class="modal">
-												<span class="imgclose" onclick="document.getElementById('myModal').style.display='none'">&times;</span>
-												<img class="modal-content" id="image_show_id">
+											<div>
+												{% if S_IMAGEUPLOAD_DELETE_IMAGE %}
+												<div class="imageupload-name">
+													{{ images.FILENAME }}&nbsp;<a href="{{ images.U_DELETES }}" title="{{ lang('IMAGEUPLOAD_UCP_DELETE_IMAGES') }}"><i class="icon fa-trash fa-fw"></i></a>
+												</div>
+												{% else %}
+												<div class="imageupload-name">
+													{{ images.FILENAME }}
+												</div>
+												{% endif %}
+											</div>
+											<div id="myimages" class="myimages">
+												<span class="imgclose" onclick="document.getElementById('myimages').style.display='none'">&times;</span>
+												<img class="myimages-content" id="image_show_id">
 												<div id="caption"></div>
 											</div>
 										</div>
 										<script>
-											var modal = document.getElementById('myModal');
+											var myimages = document.getElementById('myimages');
 											var img = document.getElementById('{{ images.FILENAME_REAL }}');
-											var modalImg = document.getElementById("image_show_id");
+											var myimagesImg = document.getElementById("image_show_id");
 											var captionText = document.getElementById("caption");
 											img.onclick = function(){
-												modal.style.display = "block";
-												modalImg.src = this.src;
+												myimages.style.display = "block";
+												myimagesImg.src = this.src;
 												captionText.innerHTML = this.alt;
 											}
 											var span = document.getElementsByClassName("imgclose")[0];
 											span.onclick = function() {
-												modal.style.display = "none";
+												myimages.style.display = "none";
 											}
 										</script>
 									{% endfor %}
@@ -60,6 +70,18 @@
 		</div>
 	</div>
 </form>
+<div class="action-bar bar-bottom">
+	{% if loops.pagination|length or IMAGEUPLOAD_UCP_IMAGES %}
+	<div class="pagination">
+		{{ IMAGEUPLOAD_UCP_IMAGES }}
+		{% if loops.pagination|length %}
+			{% INCLUDE 'pagination.html' %}
+		{% else %}
+			&bull; {{ PAGE_NUMBER }}
+		{% endif %}
+	</div>
+	{% endif %}
+</div>
 {% else %}
 <div class="panel">
 	<div class="inner">
