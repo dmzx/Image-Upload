@@ -27,7 +27,7 @@
 		</ul>
 		<ul class="forums collapsible" style="max-height:210px; overflow-x:hidden; overflow-y:auto;">
 			<li class="row-items">
-            {% if loops.pagination|length or IMAGEUPLOAD_PAG_IMAGES %}
+			{% if loops.pagination|length or IMAGEUPLOAD_PAG_IMAGES %}
 			<div class="pagination">
 				{{ IMAGEUPLOAD_PAG_IMAGES }}
 				{% if loops.pagination|length %}
@@ -45,8 +45,8 @@
 								<div class="inner">
 								{% for images in loops.images %}
 									<div style="float:left; text-align: center;" class="upload_enabled">
-										<div class="imageupload_index-preview">
-											<img class="imageupload_index" id="{{ images.FILENAME_REAL }}" src="{{ images.IMAGEPATH }}" title="{{ images.FILENAME }} - {{ images.WIDTH }} {{ lang('PIXEL') }} * {{ images.HEIGHT }} {{ lang('PIXEL') }} - {{ images.SIZE }}"	/>
+										<div class="imageupload_index-preview" onclick="imageuploadClick(this)">
+											<img class="imageupload_index" id="{{ images.ID }}" src="{{ images.IMAGEPATH }}" title="{{ images.FILENAME }}" alt="{{ images.WIDTH }} {{ lang('PIXEL') }} * {{ images.HEIGHT }} {{ lang('PIXEL') }} - {{ images.SIZE }}" />
 										</div>
 										<div class="imageupload-name">
 											{% if S_IMAGEUPLOAD_CHAT_INSERT %}
@@ -55,30 +55,7 @@
 											{{ images.FILENAME }}
 											{% endif %}
 										</div>
-										<div id="myimages" class="myimages">
-											<span class="imgclose" onclick="document.getElementById('myimages').style.display='none'">&times;</span>
-											<img class="myimages-content" id="image_show_id">
-											<div id="caption"></div>
-										</div>
 									</div>
-									<script>
-										var myimages = document.getElementById('myimages');
-
-										var img = document.getElementById('{{ images.FILENAME_REAL }}');
-										var myimagesImg = document.getElementById("image_show_id");
-										var captionText = document.getElementById("caption");
-										img.onclick = function(){
-											myimages.style.display = "block";
-											myimagesImg.src = this.src;
-											captionText.innerHTML = this.alt;
-										}
-
-										var span = document.getElementsByClassName("imgclose")[0];
-
-										span.onclick = function() {
-											myimages.style.display = "none";
-										}
-									</script>
 								{% endfor %}
 								</div>
 							</div>

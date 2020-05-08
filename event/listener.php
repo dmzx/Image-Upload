@@ -145,12 +145,16 @@ class listener implements EventSubscriberInterface
 	public function page_header($event)
 	{
 		$this->template->assign_vars([
-			'U_IMAGEUPLOAD_UPLOAD'			=> $this->helper->route('dmzx_imageupload_controller_upload'),
-			'IMAGEUPLOAD_USE_UPLOAD'		=> ($this->auth->acl_get('u_image_upload') && $this->config['imageupload_enable']) ? true : false,
-			'IMAGEUPLOAD_INDEX_ENABLE'		=> $this->config['imageupload_index_enable'],
-			'IMAGEUPLOAD_POST_ENABLE'		=> $this->config['imageupload_post_enable'],
-			'IMAGEUPLOAD_POSTTAB_ENABLE'	=> $this->config['imageupload_posttab_enable'],
-			'UCP_IMAGEUPLOAD_INDEX'			=> $this->user->data['user_imageupload_index_enable'],
+			'U_IMAGEUPLOAD_UPLOAD'				=> $this->helper->route('dmzx_imageupload_controller_upload'),
+			'IMAGEUPLOAD_USE_UPLOAD'			=> ($this->auth->acl_get('u_image_upload') && $this->config['imageupload_enable']) ? true : false,
+			'IMAGEUPLOAD_INDEX_ENABLE'			=> $this->config['imageupload_index_enable'],
+			'IMAGEUPLOAD_POST_ENABLE'			=> $this->config['imageupload_post_enable'],
+			'IMAGEUPLOAD_POSTTAB_ENABLE'		=> $this->config['imageupload_posttab_enable'],
+			'UCP_IMAGEUPLOAD_INDEX'				=> $this->user->data['user_imageupload_index_enable'],
+			'IMAGEUPLOAD_ENABLE_DIRECT_LINK' 	=> $this->config['imageupload_enable_direct_link'],
+			'IMAGEUPLOAD_ENABLE_URL_LINK' 		=> $this->config['imageupload_enable_url_link'],
+			'IMAGEUPLOAD_ENABLE_IMG_LINK' 		=> $this->config['imageupload_enable_img_link'],
+			'IMAGEUPLOAD_ENABLE_URL_IMG_LINK' 	=> $this->config['imageupload_enable_url_img_link'],
 		]);
 	}
 
@@ -165,6 +169,9 @@ class listener implements EventSubscriberInterface
 				'cat'		=> 'Image Upload'
 			],'u_image_upload_ucp'	=> [
 				'lang'		=> 'ACL_U_IMAGE_UPLOAD_UCP',
+				'cat'		=> 'Image Upload'
+			],'u_image_upload_multi'	=> [
+				'lang'		=> 'ACL_U_IMAGE_UPLOAD_MULTI',
 				'cat'		=> 'Image Upload'
 			],
 		]);

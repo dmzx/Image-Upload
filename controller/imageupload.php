@@ -74,8 +74,6 @@ class imageupload
 	/** @var factory */
 	protected $files_factory;
 
-	protected $directoryLevel = 2;
-
 	/**
 	* Constructor
 	*
@@ -156,7 +154,8 @@ class imageupload
 		$title			= $this->request->variable('title', '', true);
 		$filename		= $this->request->variable('filename', '', true);
 		$max_filesize 	= $this->config['imageupload_number'];
-		$unit = 'MB';
+		$unit 			= 'MB';
+		$multiplier 	= '';
 
 		if (!empty($max_filesize))
 		{
@@ -164,6 +163,17 @@ class imageupload
 			$max_filesize = (int) $max_filesize;
 			$unit = ($unit == 'k') ? 'KB' : (($unit == 'g') ? 'GB' : 'MB');
 		}
+
+		if ($unit == 'MB')
+		{
+			$multiplier = 1048576;
+		}
+		else if ($unit == 'KB')
+		{
+			$multiplier = 1024;
+		}
+
+		$set_max_filesize = ($max_filesize * $multiplier);
 
 		add_form_key('add_imageupload');
 
@@ -174,10 +184,10 @@ class imageupload
 
 		if ($this->request->is_set_post('submit'))
 		{
-			$filecheck = $multiplier = '';
-
 			$fileupload = $this->files_factory->get('upload')
-				->set_allowed_extensions($allowed_extensions);
+				->set_allowed_extensions($allowed_extensions)
+				->set_max_filesize($set_max_filesize)
+				->set_disallowed_content((isset($this->config['mime_triggers']) ? explode('|', $this->config['mime_triggers']) : false));
 
 			$upload_file = $fileupload->handle_upload('files.types.form', 'filename');
 
@@ -190,25 +200,8 @@ class imageupload
 			$upload_file->clean_filename('uploadname');
 
 			//prepare the upload dir
-			$upload_subdir = $this->getSubDir(md5($upload_file->get('uploadname')));
+			$upload_subdir = $this->functions->getSubDir(md5($upload_file->get('uploadname')));
 			$upload_dir = 'ext/dmzx/imageupload/img-files' . $upload_subdir . "/";
-			if (!is_dir($this->root_path . "/" . $upload_dir))
-			{
-				try {
-					@mkdir($this->root_path . $upload_dir, 0755, true);
-					if (!is_writable($this->root_path . $upload_dir))
-					{
-						meta_refresh(5, $this->helper->route('dmzx_imageupload_controller_upload'));
-						throw new http_exception(400, $this->user->lang('IMAGEUPLOAD_DIRECTORY_FAIL', $upload_dir));
-					}
-					file_put_contents($this->root_path . $upload_dir . 'index.html', '');
-				} catch (\Exception $e) {
-					throw $e;
-				}
-			}
-
-			$upload_file->move_file(str_replace($this->root_path, '', $upload_dir), true, true, 0755);
-			@chmod($this->root_path . $upload_dir . $upload_file->get('uploadname'), 0755);
 
 			if (sizeof($upload_file->error) && $upload_file->get('uploadname'))
 			{
@@ -216,6 +209,27 @@ class imageupload
 				meta_refresh(3, $this->helper->route('dmzx_imageupload_controller_upload'));
 
 				trigger_error(implode('<br />', $upload_file->error));
+			}
+
+			if ($this->request->is_set_post('submit') && empty($upload_file->error))
+			{
+				if (!is_dir($this->root_path . "/" . $upload_dir))
+				{
+					try {
+						@mkdir($this->root_path . $upload_dir, 0755, true);
+						if (!is_writable($this->root_path . $upload_dir))
+						{
+							meta_refresh(5, $this->helper->route('dmzx_imageupload_controller_upload'));
+							throw new http_exception(400, $this->user->lang('IMAGEUPLOAD_DIRECTORY_FAIL', $upload_dir));
+						}
+						file_put_contents($this->root_path . $upload_dir . 'index.html', '');
+					} catch (\Exception $e) {
+						throw $e;
+					}
+				}
+
+				$upload_file->move_file(str_replace($this->root_path, '', $upload_dir), true, true, 0755);
+				@chmod($this->root_path . $upload_dir . $upload_file->get('uploadname'), 0755);
 			}
 
 			if (function_exists('getimagesize'))
@@ -236,23 +250,6 @@ class imageupload
 				'user_id'				=> $this->user->data['user_id'],
 			];
 
-			if ($unit == 'MB')
-			{
-				$multiplier = 1048576;
-			}
-			else if ($unit == 'KB')
-			{
-				$multiplier = 1024;
-			}
-
-			if ($upload_file->get('filesize') > ($max_filesize * $multiplier))
-			{
-				@unlink($this->root_path . $upload_dir . '/' . $upload_file->get('realname'));
-				meta_refresh(3, $this->helper->route('dmzx_imageupload_controller_upload'));
-
-				throw new http_exception(400, 'IMAGEUPLOAD_FILE_TOO_BIG');
-			}
-
 			$filesize = @filesize($this->root_path . $upload_dir . '/' . $upload_file->get('realname'));
 
 			$this->template->assign_vars([
@@ -260,11 +257,6 @@ class imageupload
 				'WIDTH'								=> $getimagesize[0],
 				'HEIGHT'							=> $getimagesize[1],
 				'SIZE'								=> get_formatted_filesize($filesize),
-				'IMAGEUPLOAD_ENABLE_DIRECT_LINK' 	=> $this->config['imageupload_enable_direct_link'],
-				'IMAGEUPLOAD_ENABLE_URL_LINK' 		=> $this->config['imageupload_enable_url_link'],
-				'IMAGEUPLOAD_ENABLE_IMG_LINK' 		=> $this->config['imageupload_enable_img_link'],
-				'IMAGEUPLOAD_ENABLE_URL_IMG_LINK' 	=> $this->config['imageupload_enable_url_img_link'],
-
 			]);
 
 			$this->db->sql_query('INSERT INTO ' . $this->image_upload_table .' ' . $this->db->sql_build_array('INSERT', $sql_ary));
@@ -288,6 +280,9 @@ class imageupload
 			'IMAGEUPLOAD_ALLOWED_SIZE'		=> sprintf($this->user->lang['IMAGEUPLOAD_NEW_DOWNLOAD_SIZE'], $max_filesize, $unit),
 			'IMAGEUPLOAD_ALLOWED_EXT'		=> $imageupload_allowed_extensions,
 			'S_FORM_ENCTYPE'				=> $form_enctype,
+			'U_UPLOAD_ACTION'		 		=> $this->helper->route('dmzx_imageupload_multi_upload'),
+			'IMAGEUPLOAD_MAX_FILESIZE'		=> $set_max_filesize,
+			'S_IMAGEUPLOAD_ENABLE_MULTI'	=> ($this->auth->acl_get('u_image_upload_multi') && $this->config['imageupload_multiupload_enable']) ? true : false,
 		]);
 
 		// Build navigation link
@@ -301,28 +296,5 @@ class imageupload
 
 		// Send all data to the template file
 		return $this->helper->render('imageupload_body.html', $this->user->lang('IMAGEUPLOAD_UPLOAD_SECTION'));
-	}
-
-	/**
-	 * @param $key
-	 * @return string
-	 * borrow from https://github.com/yiisoft/yii2/blob/4f41d1118c531e009ba1b468949c694e86d2a5f0/framework/caching/FileCache.php#L204
-	 */
-	protected function getSubDir($key)
-	{
-		$hex = '/'. $this->user->data['user_id'];
-		if ($this->directoryLevel > 0)
-		{
-			for ($i = 0; $i < $this->directoryLevel; ++$i)
-			{
-				if (($prefix = substr($key, $i + $i, 2)) !== false)
-				{
-					$prefix = substr(md5(mt_rand()), 0, 7);
-					$hex .= '/' . $prefix;
-				}
-			}
-			return $hex;
-		}
-		return $hex;
 	}
 }

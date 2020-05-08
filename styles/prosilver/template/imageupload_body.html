@@ -53,6 +53,8 @@
 </div>
 {% endif %}
 
-{% INCLUDEJS 'js/copy.js' %}
+{% if S_IMAGEUPLOAD_ENABLE_MULTI %}
+{% INCLUDE 'imageupload_multi_upload.html' %}
+{% endif %}
 
 {% INCLUDE 'overall_footer.html' %}

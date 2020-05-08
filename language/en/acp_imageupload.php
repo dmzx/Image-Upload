@@ -67,7 +67,7 @@ $lang = array_merge($lang, [
 	'ACP_IMAGEUPLOAD_POST_ENABLE'							=> 'Enable image upload button on posting pages',
 	'ACP_IMAGEUPLOAD_POST_ENABLE_EXPLAIN'					=> 'Set to yes to show upload button on posting pages.',
 	'ACP_IMAGEUPLOAD_POSTTAB_ENABLE'						=> 'Enable users images on posting pages',
-	'ACP_IMAGEUPLOAD_POSTTAB_ENABLE_EXPLAIN'				=> 'Global on/off of images on posting pages.',
+	'ACP_IMAGEUPLOAD_POSTTAB_ENABLE_EXPLAIN'				=> 'Global on/off for images on posting pages.',
 	'ACP_IMAGEUPLOAD_EXT'									=> 'Allowed extensions',
 	'ACP_IMAGEUPLOAD_EXT_EXPLAIN'							=> 'Allowed extensions to include, separated by a comma (Example: gif,jpeg,jpg,png)',
 	'ACP_IMAGE_UPLOAD_LINK_SETTINGS'						=> 'Image Upload Link Settings',
@@ -79,4 +79,6 @@ $lang = array_merge($lang, [
 	'ACP_IMAGEUPLOAD_ENABLE_IMG_LINK_EXPLAIN'				=> '[img]FILENAME[/img]',
 	'ACP_IMAGEUPLOAD_ENABLE_URL_IMG_LINK'					=> 'Enable URL-IMG tags',
 	'ACP_IMAGEUPLOAD_ENABLE_URL_IMG_LINK_EXPLAIN'			=> '[url=FILENAME][img]FILENAME[/img][/url]',
+	'ACP_IMAGEUPLOAD_MULTI_ENABLE'							=> 'Enable multiple upload',
+	'ACP_IMAGEUPLOAD_MULTI_ENABLE_EXPLAIN'					=> 'Global on/off for multiple upload images.',
 ]);

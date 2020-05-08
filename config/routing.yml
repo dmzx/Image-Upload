@@ -4,3 +4,6 @@ dmzx_imageupload_controller_upload:
 dmzx_imageupload_controller_ucp_controller:
     path: /ucp_controller
     defaults: { _controller: dmzx.imageupload.ucp.controller:main }
+dmzx_imageupload_multi_upload:
+    path: /imagemultiupload
+    defaults: { _controller: dmzx.imageupload.multi.upload:handle }

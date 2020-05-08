@@ -18,7 +18,6 @@ use phpbb\db\driver\driver_interface as db_interface;
 use phpbb\extension\manager;
 use phpbb\path_helper;
 use phpbb\filesystem\filesystem;
-use phpbb\controller\helper;
 use phpbb\auth\auth;
 use phpbb\pagination;
 use phpbb\config\config;
@@ -58,9 +57,6 @@ class ucp_controller
 	*/
 	protected $image_upload_table;
 
-	/** @var helper */
-	protected $helper;
-
 	/** @var auth */
 	protected $auth;
 
@@ -91,7 +87,6 @@ class ucp_controller
 	* @param path_helper		$path_helper
 	* @param filesystem			$filesystem
 	* @param string 			$image_upload_table
-	* @param helper				$helper
 	* @param auth				$auth
 	* @param pagination			$pagination
 	* @param config				$config
@@ -110,7 +105,6 @@ class ucp_controller
 		path_helper $path_helper,
 		filesystem $filesystem,
 		$image_upload_table,
-		helper $helper,
 		auth $auth,
 		pagination $pagination,
 		config $config,
@@ -130,7 +124,6 @@ class ucp_controller
 		$this->image_upload_table 	= $image_upload_table;
 		$this->ext_path 			= $this->ext_manager->get_extension_path('dmzx/imageupload', true);
 		$this->ext_path_web 		= $this->path_helper->update_web_root_path($this->ext_path);
-		$this->helper 				= $helper;
 		$this->auth 				= $auth;
 		$this->pagination 			= $pagination;
 		$this->config 				= $config;
@@ -218,56 +211,7 @@ class ucp_controller
 			break;
 			default:
 
-				$base_url 	= append_sid("{$this->root_path }ucp.{$this->php_ext}?i=-dmzx-imageupload-ucp-imageupload_module");
-				$sql_start 	= $this->request->variable('start', 0);
-				$sql_limit 	= $this->config['posts_per_page'];
-
-				// List all images
-				$sql = 'SELECT im.*, u.user_id, u.username, u.user_colour
-					FROM ' . $this->image_upload_table . ' im, ' . USERS_TABLE . ' u
-					WHERE u.user_id = im.user_id
-						AND im.user_id = ' . (int) $this->user->data['user_id'] . '
-					ORDER BY upload_time DESC';
-				$result = $this->db->sql_query_limit($sql, $sql_limit, $sql_start);
-
-				while ($row = $this->db->sql_fetchrow($result))
-				{
-					$file_name = $row['imageupload_realname'];
-					$file_path = $this->ext_path_web . 'img-files/' . $file_name;
-
-					if (function_exists('getimagesize') && is_file($file_path))
-					{
-						$getimagesize = getimagesize($file_path);
-					}
-					else
-					{
-						$getimagesize = [0, 0];
-					}
-
-					$filesize = @filesize($file_path);
-
-					$board_url = generate_board_url();
-
-					$this->template->assign_block_vars('images', [
-						'FILENAME'					=> $row['imageupload_filename'],
-						'FILENAME_REAL'				=> $file_name,
-						'IMAGEPATH'					=> $file_path,
-						'IMAGE_POSTING_BUTTON'		=> $board_url . '/ext/dmzx/imageupload/img-files/' . $file_name,
-						'WIDTH'						=> $getimagesize[0],
-						'HEIGHT'					=> $getimagesize[1],
-						'SIZE'						=> get_formatted_filesize($filesize),
-						'IMAGE_USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
-						'ID'						=> $row['imageupload_id'],
-						'U_DELETES'					=> $this->helper->route('dmzx_imageupload_controller_ucp_controller', ['mode' => 'delete', 'imageupload_id' => $row['imageupload_id']]),
-					]);
-				}
-				$this->db->sql_freeresult($result);
-
-				$this->pagination->generate_template_pagination($base_url, 'pagination', 'start', $this->functions->count_image_user_id($this->user->data['user_id']), $sql_limit, $sql_start);
-
-				$this->template->assign_vars([
-					'IMAGEUPLOAD_UCP_IMAGES'	=> $this->user->lang('IMAGEUPLOAD_IMAGES_PAGINATION', (int) $this->functions->count_image_user_id($this->user->data['user_id'])),
-				]);
+				$this->functions->get_uploaded_images($this->user->data['user_id']);
 
 			break;
 		}

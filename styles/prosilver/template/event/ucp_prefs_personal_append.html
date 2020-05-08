@@ -1,5 +1,4 @@
 {% if IMAGEUPLOAD_USE_UPLOAD and IMAGEUPLOAD_INDEX_ENABLE %}
-
 <dl>
 	<dt>
 		<label for="imageupload_ucp_index_enable1">{{ lang('IMAGEUPLOAD_UPC_INDEX') }}{{ lang('COLON') }}</label>
@@ -9,5 +8,4 @@
 		<label for="imageupload_ucp_index_enable0"><input type="radio" name="imageupload_ucp_index_enable" id="imageupload_ucp_index_enable0" value="0"{% if not S_UCP_IMAGEUPLOAD_INDEX %} checked="checked"{% endif %} /> {{ lang('NO') }}</label>
 	</dd>
 </dl>
-
 {% endif %}

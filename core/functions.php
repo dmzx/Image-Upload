@@ -14,6 +14,7 @@ use phpbb\config\config;
 use phpbb\pagination;
 use phpbb\extension\manager;
 use phpbb\path_helper;
+use phpbb\controller\helper;
 use phpbb\config\db_text;
 use phpbb\log\log_interface;
 use phpbb\user;
@@ -36,6 +37,9 @@ class functions
 
 	/** @var path_helper */
 	protected $path_helper;
+
+	/** @var helper */
+	protected $helper;
 
 	/** @var db_text */
 	protected $config_text;
@@ -65,6 +69,8 @@ class functions
 	*/
 	protected $image_upload_table;
 
+	protected $directoryLevel = 2;
+
 	/**
 	* Constructor
 	*
@@ -73,6 +79,7 @@ class functions
 	* @param pagination			$pagination
 	* @param manager 			$ext_manager
 	* @param path_helper		$path_helper
+	* @param helper				$helper
 	* @param db_text			$config_text
 	* @param log_interface		$log
 	* @param user				$user
@@ -89,6 +96,7 @@ class functions
 		pagination $pagination,
 		manager $ext_manager,
 		path_helper $path_helper,
+		helper $helper,
 		db_text $config_text,
 		log_interface $log,
 		user $user,
@@ -106,6 +114,7 @@ class functions
 		$this->path_helper	 		= $path_helper;
 		$this->ext_path 			= $this->ext_manager->get_extension_path('dmzx/imageupload', true);
 		$this->ext_path_web 		= $this->path_helper->update_web_root_path($this->ext_path);
+		$this->helper 				= $helper;
 		$this->config_text 			= $config_text;
 		$this->log 					= $log;
 		$this->user 				= $user;
@@ -196,7 +205,7 @@ class functions
 		while ($row = $this->db->sql_fetchrow($result))
 		{
 			$file_name = $row['imageupload_realname'];
-			$file_path = $this->ext_path_web . 'img-files/' . $file_name;
+			$file_path = $this->ext_path_web . 'img-files' . $file_name;
 
 			if (function_exists('getimagesize') && is_file($file_path))
 			{
@@ -214,13 +223,13 @@ class functions
 			$this->template->assign_block_vars('images', [
 				'FILENAME'					=> $row['imageupload_filename'],
 				'FILENAME_REAL'				=> $file_name,
-				'IMAGEPATH'					=> $file_path,
-				'IMAGE_POSTING_BUTTON'		=> $board_url . '/ext/dmzx/imageupload/img-files/' . $file_name,
+				'IMAGEPATH'					=> $board_url . '/ext/dmzx/imageupload/img-files' . $file_name,
 				'WIDTH'						=> $getimagesize[0],
 				'HEIGHT'					=> $getimagesize[1],
 				'SIZE'						=> get_formatted_filesize($filesize),
 				'IMAGE_USERNAME'			=> get_username_string('full', $row['user_id'], $row['username'], $row['user_colour']),
 				'ID'						=> $row['imageupload_id'],
+				'U_DELETES'					=> $this->helper->route('dmzx_imageupload_controller_ucp_controller', ['mode' => 'delete', 'imageupload_id' => $row['imageupload_id']]),
 			]);
 		}
 		$this->db->sql_freeresult($result);
@@ -254,6 +263,25 @@ class functions
 
 		$this->template->assign_vars([
 			'IMAGEUPLOAD_PAG_IMAGES'	=> $this->user->lang('IMAGEUPLOAD_IMAGES_PAGINATION', (int) $this->count_image_user_id($this->user->data['user_id'])),
+			'IMAGEUPLOAD_INFORMATION'	=> $this->user->lang('IMAGEUPLOAD_BY') . ' ' . htmlspecialchars_decode($this->config['sitename']),
 		]);
+	}
+
+	public function getSubDir($key)
+	{
+		$hex = '/'. $this->user->data['user_id'];
+		if ($this->directoryLevel > 0)
+		{
+			for ($i = 0; $i < $this->directoryLevel; ++$i)
+			{
+				if (($prefix = substr($key, $i + $i, 2)) !== false)
+				{
+					$prefix = substr(md5(mt_rand()), 0, 7);
+					$hex .= '/' . $prefix;
+				}
+			}
+			return $hex;
+		}
+		return $hex;
 	}
 }

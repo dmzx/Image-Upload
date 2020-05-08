@@ -23,7 +23,7 @@
 				<span>{{ lang('ACP_IMAGEUPLOAD_NUMBER_EXPLAIN') }}<br />{{ ACP_IMAGEUPLOAD_ALLOWED_SIZE }}</span>
 			</dt>
 			<dd>
-				<input type="number" name="imageupload_number" id="imageupload_number" size="4" maxlength="4" min="1" max="5000" value="{{ ACP_IMAGEUPLOAD_NUMBER }}" />
+				<input type="number" name="imageupload_number" id="imageupload_number" size="4" maxlength="4" min="1" max="{{ ACP_IMAGEUPLOAD_MAX_NUMBER }}" value="{{ ACP_IMAGEUPLOAD_NUMBER }}" />
 			</dd>
 		</dl>
 		<dl>
@@ -53,18 +53,25 @@
 			</dd>
 		</dl>
 		{% endif %}
-				 <dl>
+		<dl>
 			<dt><label>{{ lang('ACP_IMAGEUPLOAD_POST_ENABLE') }}{{ lang('COLON') }}</label><br /><span>{{ lang('ACP_IMAGEUPLOAD_POST_ENABLE_EXPLAIN') }}</span></dt>
 			<dd>
 				<label><input name="imageupload_post_enable" type="radio" {% if ACP_IMAGEUPLOAD_POST_ENABLE %} checked="checked"{% endif %} class="radio" value="1" /> {{ lang('YES') }}</label>
 				<label><input name="imageupload_post_enable" type="radio" {% if not ACP_IMAGEUPLOAD_POST_ENABLE %} checked="checked"{% endif %} class="radio" value="0" /> {{ lang('NO') }}</label>
 			</dd>
 		</dl>
-				 <dl>
+		<dl>
 			<dt><label>{{ lang('ACP_IMAGEUPLOAD_POSTTAB_ENABLE') }}{{ lang('COLON') }}</label><br /><span>{{ lang('ACP_IMAGEUPLOAD_POSTTAB_ENABLE_EXPLAIN') }}</span></dt>
 			<dd>
 				<label><input name="imageupload_posttab_enable" type="radio" {% if ACP_IMAGEUPLOAD_POSTTAB_ENABLE %} checked="checked"{% endif %} class="radio" value="1" /> {{ lang('YES') }}</label>
 				<label><input name="imageupload_posttab_enable" type="radio" {% if not ACP_IMAGEUPLOAD_POSTTAB_ENABLE %} checked="checked"{% endif %} class="radio" value="0" /> {{ lang('NO') }}</label>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label>{{ lang('ACP_IMAGEUPLOAD_MULTI_ENABLE') }}{{ lang('COLON') }}</label><br /><span>{{ lang('ACP_IMAGEUPLOAD_MULTI_ENABLE_EXPLAIN') }}</span></dt>
+			<dd>
+				<label><input name="imageupload_multiupload_enable" type="radio" {% if ACP_IMAGEUPLOAD_MULTI_ENABLE %} checked="checked"{% endif %} class="radio" value="1" /> {{ lang('YES') }}</label>
+				<label><input name="imageupload_multiupload_enable" type="radio" {% if not ACP_IMAGEUPLOAD_MULTI_ENABLE %} checked="checked"{% endif %} class="radio" value="0" /> {{ lang('NO') }}</label>
 			</dd>
 		</dl>
 	</fieldset>

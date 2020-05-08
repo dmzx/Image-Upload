@@ -1,5 +1,12 @@
 # Image Upload Changelog
 
+## Changes in 1.1.3
+- Added multiple upload section.
+- Added permission for multiupload.
+- Added sweetalert2 js for images.
+- limit php.ini value in ACP.
+- Various code changes.
+
 ## Changes in 1.1.2
 - Added ACP switches for global on/off index and posting images.
 - Added permission to view tab in UCP.

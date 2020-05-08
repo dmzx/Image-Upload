@@ -1,0 +1,25 @@
+{% if IMAGEUPLOAD_USE_UPLOAD %}
+<script>
+var imageUpload = {
+	max_filesize					: '{{ IMAGEUPLOAD_MAX_FILESIZE | escape('js') }}',
+	imageupload_enable_direct_link	: {{ IMAGEUPLOAD_ENABLE_DIRECT_LINK ? 'true' : 'false' }},
+	imageupload_enable_url_link		: {{ IMAGEUPLOAD_ENABLE_URL_LINK ? 'true' : 'false' }},
+	imageupload_enable_img_link		: {{ IMAGEUPLOAD_ENABLE_IMG_LINK ? 'true' : 'false' }},
+	imageupload_enable_url_img_link	: {{ IMAGEUPLOAD_ENABLE_URL_IMG_LINK ? 'true' : 'false' }},
+
+	lang: {
+		uploadBy					: '{{ IMAGEUPLOAD_INFORMATION | replace({" ":"-"}) }}',
+		closed						: '{{ lang('IMAGEUPLOAD_CLOSED') | escape('js') }}',
+		copy						: '{{ lang('IMAGEUPLOAD_COPY') | escape('js') }}',
+	}
+};
+</script>
+
+{% if not definition.INCLUDED_SWEETALERT2ALLMINJS %}
+	{% INCLUDEJS '@dmzx_imageupload/js/sweetalert2.all.min.js' %}
+	{% DEFINE INCLUDED_SWEETALERT2ALLMINJS = true %}
+{% endif %}
+
+{% INCLUDEJS '@dmzx_imageupload/js/copy.js' %}
+{% INCLUDEJS '@dmzx_imageupload/js/scriptinfo.js' %}
+{% endif %}

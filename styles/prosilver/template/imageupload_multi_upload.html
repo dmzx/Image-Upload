@@ -1,0 +1,20 @@
+<link href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow:400,700" rel='stylesheet' />
+<hr />
+<p style="text-align: center;"><em>{{ lang('IMAGEUPLOAD_MULTI_UPLOAD_EXPLAIN') }}</em></p>
+
+<form id="upload" method="post" action="{{ U_UPLOAD_ACTION }}" enctype="multipart/form-data">
+	<div id="drop">
+		{{ lang('IMAGEUPLOAD_MULTI_UPLOAD_DRAG') }}
+		<a>{{ lang('IMAGEUPLOAD_MULTI_UPLOAD_BROWSE') }}</a>
+		<input type="file" name="imageuploadmulti" multiple />
+	</div>
+	<ul>
+		<!-- The file uploads will be shown here -->
+	</ul>
+</form>
+
+{% INCLUDEJS 'js/jquery.knob.js' %}
+{% INCLUDEJS 'js/jquery.ui.widget.js' %}
+{% INCLUDEJS 'js/jquery.iframe-transport.js' %}
+{% INCLUDEJS 'js/jquery.fileupload.js' %}
+{% INCLUDEJS 'js/script.js' %}

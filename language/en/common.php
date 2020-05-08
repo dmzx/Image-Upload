@@ -40,7 +40,6 @@ $lang = array_merge($lang, [
 	'IMAGEUPLOAD_NOT_ENABELD'					=> 'Image Upload is not enabled',
 	'IMAGEUPLOAD_NEW_DOWNLOAD_SIZE'				=> 'The maximum size of the file is <strong>%1$s %2$s</strong>! Due to the upload time you might need, this value can be lower!',
 	'IMAGEUPLOAD_NO_FILENAME'					=> 'You have to enter a file, which belongs to your upload!',
-	'IMAGEUPLOAD_FILE_TOO_BIG'					=> 'The file is bigger, than your host allows!',
 	'IMAGEUPLOAD_CURRENT_VERSION'				=> 'Version',
 	'IMAGEUPLOAD_NEW_FILENAME'					=> 'File name',
 	'IMAGEUPLOAD_SUCCEEDED'						=> 'Upload Succeeded!',
@@ -69,4 +68,8 @@ $lang = array_merge($lang, [
 	],
 	'IMAGEUPLOAD_INSERT_IMAGE'					=> 'Insert image',
 	'IMAGEUPLOAD_INSERT_MCHAT_IMAGE'			=> 'Insert image in mChat',
+	'IMAGEUPLOAD_MULTI_UPLOAD_EXPLAIN' 			=> 'Multiple image upload section.<br>Images uploaded will be added automatic to your uploaded images.<br>Images bigger then maximum size allows are not uploaded.<br>Multi uploaded images will not give a link or preview.',
+	'IMAGEUPLOAD_MULTI_UPLOAD_DRAG' 			=> 'Drag and drop your files here',
+	'IMAGEUPLOAD_MULTI_UPLOAD_BROWSE' 			=> 'Or browse',
+	'IMAGEUPLOAD_CLOSED'						=> 'Close',
 ]);
