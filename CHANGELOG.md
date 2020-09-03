@@ -1,5 +1,9 @@
 # Image Upload Changelog
 
+## Changes in 1.1.4
+- Changed pagination on index/ucp/posting pages.
+- Style update CSS and html.
+
 ## Changes in 1.1.3
 - Added multiple upload section.
 - Added permission for multiupload.

@@ -20,11 +20,11 @@
 			</div>
 		</fieldset>
 		<div class="action-bar bar-bottom">
-			{% if loops.pagination|length or IMAGEUPLOAD_PAG_IMAGES %}
+			{% if loops.imageupload_pagination|length or IMAGEUPLOAD_PAG_IMAGES %}
 			<div class="pagination">
 				{{ IMAGEUPLOAD_PAG_IMAGES }}
-				{% if loops.pagination|length %}
-					{% INCLUDE 'pagination.html' %}
+				{% if loops.imageupload_pagination|length %}
+					{% INCLUDE 'imageupload_pagination.html' %}
 				{% else %}
 					&bull; {{ PAGE_NUMBER }}
 				{% endif %}

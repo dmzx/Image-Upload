@@ -1,0 +1,15 @@
+<ul>
+{% for imageupload_pagination in loops.imageupload_pagination %}
+	{% if imageupload_pagination.S_IS_PREV %}
+		<li class="arrow previous"><a class="button button-icon-only" href="{{ imageupload_pagination.PAGE_URL }}" rel="prev" role="button"><i class="icon fa-chevron-{{ S_CONTENT_FLOW_BEGIN }} fa-fw" aria-hidden="true"></i><span class="sr-only">{{ lang('PREVIOUS') }}</span></a></li>
+	{% elseif imageupload_pagination.S_IS_CURRENT %}
+	<li class="active"><span>{{ imageupload_pagination.PAGE_NUMBER }}</span></li>
+	{% elseif imageupload_pagination.S_IS_ELLIPSIS %}
+	<li class="ellipsis" role="separator"><span>{{ lang('ELLIPSIS') }}</span></li>
+	{% elseif imageupload_pagination.S_IS_NEXT %}
+		<li class="arrow next"><a class="button button-icon-only" href="{{ imageupload_pagination.PAGE_URL }}" rel="next" role="button"><i class="icon fa-chevron-{{ S_CONTENT_FLOW_END }} fa-fw" aria-hidden="true"></i><span class="sr-only">{{ lang('NEXT') }}</span></a></li>
+	{% else %}
+		<li><a class="button" href="{{ imageupload_pagination.PAGE_URL }}" role="button">{{ imageupload_pagination.PAGE_NUMBER }}</a></li>
+	{% endif %}
+{% endfor %}
+</ul>

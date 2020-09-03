@@ -257,9 +257,9 @@ class functions
 			}
 		}
 
-		$pagination_url = append_sid($this->root_path . $this->user->page['page_name'], $append_params);
+		$pagination_urls = append_sid($this->root_path . $this->user->page['page_name'], $append_params);
 
-		$this->pagination->generate_template_pagination($pagination_url, 'pagination', $tpl_loopname . '_start', $this->count_image_user_id($this->user->data['user_id']), $sql_limit, $sql_start);
+		$this->pagination->generate_template_pagination($pagination_urls, 'imageupload_pagination', $tpl_loopname . '_start', (int) $this->count_image_user_id($this->user->data['user_id']), $sql_limit, $sql_start);
 
 		$this->template->assign_vars([
 			'IMAGEUPLOAD_PAG_IMAGES'	=> $this->user->lang('IMAGEUPLOAD_IMAGES_PAGINATION', (int) $this->count_image_user_id($this->user->data['user_id'])),
