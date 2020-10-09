@@ -12,7 +12,7 @@
 								<img class="imageupload_index" id="{{ images.ID }}" src="{{ images.IMAGEPATH }}" title="{{ images.FILENAME }}" alt="{{ images.WIDTH }} {{ lang('PIXEL') }} * {{ images.HEIGHT }} {{ lang('PIXEL') }} - {{ images.SIZE }}" />
 							</div>
 							<div class="imageupload-name">
-								{{ images.FILENAME }}&nbsp;<i onclick="insert_text(' [img]{{ images.IMAGEPATH }}[/img] ');"	title="{{ lang('IMAGEUPLOAD_INSERT_IMAGE') }}" class="icon fa-arrow-circle-o-up fa-fw"></i>
+								<i onclick="insert_text(' [img]{{ images.IMAGEPATH }}[/img] ');"	title="{{ lang('IMAGEUPLOAD_INSERT_IMAGE') }}" class="icon fa-arrow-circle-o-up fa-fw"></i>&nbsp;{{ images.FILENAME }}
 							</div>
 						</div>
 					{% endfor %}

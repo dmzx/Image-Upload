@@ -269,7 +269,7 @@ class functions
 
 	public function getSubDir($key)
 	{
-		$hex = '/'. $this->user->data['user_id'];
+		$hex = '/' . $this->user->data['user_id'];
 		if ($this->directoryLevel > 0)
 		{
 			for ($i = 0; $i < $this->directoryLevel; ++$i)

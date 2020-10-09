@@ -1,8 +1,12 @@
 # Image Upload Changelog
 
+## Changes in 1.1.5
+- Code update to path_helper.
+- Style redo for mobile by martin.
+
 ## Changes in 1.1.4
 - Changed pagination on index/ucp/posting pages.
-- Style update CSS and html.
+- Style update. CSS and html by martin.
 
 ## Changes in 1.1.3
 - Added multiple upload section.

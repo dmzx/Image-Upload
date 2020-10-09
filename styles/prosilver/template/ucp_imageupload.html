@@ -29,7 +29,7 @@
 											<div>
 												{% if S_IMAGEUPLOAD_DELETE_IMAGE %}
 												<div class="imageupload-name">
-													{{ images.FILENAME }}&nbsp;<a href="{{ images.U_DELETES }}" title="{{ lang('IMAGEUPLOAD_UCP_DELETE_IMAGES') }}"><i class="icon fa-trash fa-fw"></i></a>
+													<a href="{{ images.U_DELETES }}" title="{{ lang('IMAGEUPLOAD_UCP_DELETE_IMAGES') }}"><i class="icon fa-trash fa-fw"></i></a>&nbsp;{{ images.FILENAME }}
 												</div>
 												{% else %}
 												<div class="imageupload-name">

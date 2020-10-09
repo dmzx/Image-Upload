@@ -50,7 +50,7 @@
 										</div>
 										<div class="imageupload-name">
 											{% if S_IMAGEUPLOAD_CHAT_INSERT %}
-											{{ images.FILENAME }}&nbsp;<i onclick="insert_text(' [img]{{ images.IMAGEPATH }}[/img] ');" data-mchat-action="add" title="{{ lang('IMAGEUPLOAD_INSERT_MCHAT_IMAGE') }}" class="icon fa-arrow-circle-o-up fa-fw"></i>
+											<i onclick="insert_text(' [img]{{ images.IMAGEPATH }}[/img] ');" data-mchat-action="add" title="{{ lang('IMAGEUPLOAD_INSERT_MCHAT_IMAGE') }}" class="icon fa-arrow-circle-o-up fa-fw"></i>&nbsp;{{ images.FILENAME }}
 											{% else %}
 											{{ images.FILENAME }}
 											{% endif %}

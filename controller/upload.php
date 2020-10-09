@@ -133,7 +133,8 @@ class upload
 			{
 				$upload_subdir = $this->functions->getSubDir(md5($upload_file->get('uploadname')));
 				$upload_dir = 'ext/dmzx/imageupload/img-files' . $upload_subdir . "/";
-				if (!is_dir($this->path_helper->get_phpbb_root_path() . "/" . $upload_dir))
+
+				if (!is_dir($this->path_helper->get_phpbb_root_path() . $upload_dir))
 				{
 					try {
 						@mkdir($this->path_helper->get_phpbb_root_path() . $upload_dir, 0755, true);

@@ -213,28 +213,28 @@ class imageupload
 
 			if ($this->request->is_set_post('submit') && empty($upload_file->error))
 			{
-				if (!is_dir($this->root_path . "/" . $upload_dir))
+				if (!is_dir($this->path_helper->get_phpbb_root_path() . $upload_dir))
 				{
 					try {
-						@mkdir($this->root_path . $upload_dir, 0755, true);
-						if (!is_writable($this->root_path . $upload_dir))
+						@mkdir($this->path_helper->get_phpbb_root_path() . $upload_dir, 0755, true);
+						if (!is_writable($this->path_helper->get_phpbb_root_path() . $upload_dir))
 						{
 							meta_refresh(5, $this->helper->route('dmzx_imageupload_controller_upload'));
 							throw new http_exception(400, $this->user->lang('IMAGEUPLOAD_DIRECTORY_FAIL', $upload_dir));
 						}
-						file_put_contents($this->root_path . $upload_dir . 'index.html', '');
+						file_put_contents($this->path_helper->get_phpbb_root_path() . $upload_dir . 'index.html', '');
 					} catch (\Exception $e) {
 						throw $e;
 					}
 				}
 
-				$upload_file->move_file(str_replace($this->root_path, '', $upload_dir), true, true, 0755);
-				@chmod($this->root_path . $upload_dir . $upload_file->get('uploadname'), 0755);
+				$upload_file->move_file(str_replace($this->path_helper->get_phpbb_root_path(), '', $upload_dir), true, true, 0755);
+				@chmod($this->path_helper->get_phpbb_root_path() . $upload_dir . $upload_file->get('uploadname'), 0755);
 			}
 
 			if (function_exists('getimagesize'))
 			{
-				$getimagesize = getimagesize($this->root_path . $upload_dir . '/' . $upload_file->get('realname'));
+				$getimagesize = getimagesize($this->path_helper->get_phpbb_root_path() . $upload_dir . $upload_file->get('realname'));
 			}
 			else
 			{
@@ -250,13 +250,13 @@ class imageupload
 				'user_id'				=> $this->user->data['user_id'],
 			];
 
-			$filesize = @filesize($this->root_path . $upload_dir . '/' . $upload_file->get('realname'));
+			$filesize = @filesize($this->path_helper->get_phpbb_root_path() . $upload_dir . $upload_file->get('realname'));
 
 			$this->template->assign_vars([
-				'FILENAME'							=> generate_board_url() . '/' . $upload_dir . $upload_file->get('realname'),
-				'WIDTH'								=> $getimagesize[0],
-				'HEIGHT'							=> $getimagesize[1],
-				'SIZE'								=> get_formatted_filesize($filesize),
+				'FILENAME'				=> generate_board_url() . '/' . $upload_dir . $upload_file->get('realname'),
+				'WIDTH'					=> $getimagesize[0],
+				'HEIGHT'				=> $getimagesize[1],
+				'SIZE'					=> get_formatted_filesize($filesize),
 			]);
 
 			$this->db->sql_query('INSERT INTO ' . $this->image_upload_table .' ' . $this->db->sql_build_array('INSERT', $sql_ary));
