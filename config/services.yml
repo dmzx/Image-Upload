@@ -1,8 +1,8 @@
 imports:
-    - { resource: tables.yml }
+    - { resource: 'tables.yml' }
 services:
     dmzx.imageupload.listener:
-        class: dmzx\imageupload\event\listener
+        class: 'dmzx\imageupload\event\listener'
         arguments:
             - '@config'
             - '@template'
@@ -17,9 +17,9 @@ services:
             - '%core.php_ext%'
             - '@?phpbb.collapsiblecategories.operator'
         tags:
-            - { name: event.listener }
+            - { name: 'event.listener' }
     dmzx.imageupload.admin.controller:
-        class: dmzx\imageupload\controller\admin_controller
+        class: 'dmzx\imageupload\controller\admin_controller'
         arguments:
             - '@config'
             - '@template'
@@ -35,7 +35,7 @@ services:
             - '@dmzx.imageupload.core.functions'
             - '%dmzx.imageupload.table.image_upload%'
     dmzx.imageupload.controller.upload:
-        class: dmzx\imageupload\controller\imageupload
+        class: 'dmzx\imageupload\controller\imageupload'
         arguments:
             - '@config'
             - '@dmzx.imageupload.core.functions'
@@ -53,7 +53,7 @@ services:
             - '%dmzx.imageupload.table.image_upload%'
             - '@?files.factory'
     dmzx.imageupload.core.functions:
-        class: dmzx\imageupload\core\functions
+        class: 'dmzx\imageupload\core\functions'
         arguments:
             - '@template'
             - '@config'
@@ -70,7 +70,7 @@ services:
             - '%core.php_ext%'
             - '%dmzx.imageupload.table.image_upload%'
     dmzx.imageupload.ucp.controller:
-        class: dmzx\imageupload\controller\ucp_controller
+        class: 'dmzx\imageupload\controller\ucp_controller'
         arguments:
             - '@template'
             - '@log'
@@ -88,7 +88,7 @@ services:
             - '%core.root_path%'
             - '%core.php_ext%'
     dmzx.imageupload.multi.upload:
-        class: dmzx\imageupload\controller\upload
+        class: 'dmzx\imageupload\controller\upload'
         arguments:
             - '@config'
             - '@dmzx.imageupload.core.functions'

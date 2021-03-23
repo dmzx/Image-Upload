@@ -1,5 +1,8 @@
 # Image Upload Changelog
 
+## Changes in 1.1.6
+- Code update.
+
 ## Changes in 1.1.5
 - Code update to path_helper.
 - Style redo for mobile by martin.

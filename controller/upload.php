@@ -149,7 +149,6 @@ class upload
 				}
 
 				$upload_file->move_file(str_replace($this->path_helper->get_phpbb_root_path(), '', $upload_dir), true, true, 0755);
-				@chmod($this->path_helper->get_phpbb_root_path() . $upload_dir . $upload_file->get('uploadname'), 0755);
 
 				if (sizeof($upload_file->error) && $upload_file->get('uploadname'))
 				{
