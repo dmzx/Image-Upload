@@ -50,7 +50,7 @@ class ucp_controller
 	/** @var filesystem */
 	protected $filesystem;
 
-	/**
+/**
 	* The database table
 	*
 	* @var string
@@ -136,7 +136,7 @@ class ucp_controller
 	{
 		add_form_key('imageupload_ucp');
 
-		$mode = $this->request->variable('mode', '');
+		$mode = $this->request->variable('mode', '', true);
 
 		if ($this->auth->acl_get('u_image_delete'))
 		{
@@ -154,59 +154,61 @@ class ucp_controller
 
 				$delete_id = $this->request->variable('imageupload_id', 0);
 
-				$s_hidden_fields = build_hidden_fields([
-					'imageupload_id'	=> $delete_id,
-					'mode'				=> 'delete'
-				]);
+				$sql = 'SELECT imageupload_realname, imageupload_filename
+					FROM ' . $this->image_upload_table . '
+					WHERE imageupload_id = ' . (int) $delete_id;
+				$result = $this->db->sql_query($sql);
+				$row = $this->db->sql_fetchrow($result);
+				$file_name = $row['imageupload_realname'];
+				$image_name = $row['imageupload_filename'];
+				$this->db->sql_freeresult($result);
 
-				if (confirm_box(true))
+				$delete_file = $this->root_path . 'ext/dmzx/imageupload/img-files' . $file_name;
+
+				if (file_exists($delete_file) && $file_name != '')
 				{
-					$sql = 'SELECT imageupload_realname, imageupload_filename
-						FROM ' . $this->image_upload_table . '
-						WHERE imageupload_id = ' . (int) $delete_id;
-					$result = $this->db->sql_query($sql);
-					$row = $this->db->sql_fetchrow($result);
-					$file_name = $row['imageupload_realname'];
-					$image_name = $row['imageupload_filename'];
-					$this->db->sql_freeresult($result);
-
-					$delete_file = $this->root_path . 'ext/dmzx/imageupload/img-files/' . $file_name;
-
-					# Delete the image
-					if ($this->filesystem->exists($delete_file))
+					if (confirm_box(true))
 					{
-						$dir = dirname(dirname($file_name));
-						$this->filesystem->remove($delete_file);
-						$this->functions->remove_dir($this->root_path . 'ext/dmzx/imageupload/img-files' . $dir);
-					}
+						# Delete the image
+						if ($this->filesystem->exists($delete_file))
+						{
+							$dir = dirname(dirname($file_name));
+							$this->filesystem->remove($delete_file);
+							$this->functions->remove_dir($this->root_path . 'ext/dmzx/imageupload/img-files' . $dir);
+						}
 
-					$sql = 'DELETE FROM ' . $this->image_upload_table . '
-						WHERE imageupload_id = ' . (int) $delete_id;
-					$this->db->sql_query($sql);
+						$sql = 'DELETE FROM ' . $this->image_upload_table . '
+							WHERE imageupload_id = ' . (int) $delete_id;
+						$this->db->sql_query($sql);
 
-					// Add action to the user log
-					$this->log->add('user', $this->user->data['user_id'], $this->user->ip, 'LOG_USER_IMAGE_DELETED', time(), [$image_name, $file_name, 'reportee_id' => $this->user->data['user_id'], $this->user->data['username']]);
+						// Add action to the user log
+						$this->log->add('user', $this->user->data['user_id'], $this->user->ip, 'LOG_USER_IMAGE_DELETED', time(), [$image_name, $file_name, 'reportee_id' => $this->user->data['user_id'], $this->user->data['username']]);
 
-					$meta_info = append_sid("{$this->root_path}ucp.php?i=-dmzx-imageupload-ucp-imageupload_module&mode=main");
-					$message = $this->user->lang['IMAGEUPLOAD_UCP_DELETED_IMAGES'];
-					meta_refresh(1, $meta_info);
-					$message .= '<br /><br />' . $this->user->lang('IMAGEUPLOAD_PAGE_RETURN', '<a href="' . $meta_info . '">', '</a>');
-					trigger_error($message);
-				}
-				else
-				{
-					if ($this->request->is_set_post('cancel'))
-					{
-						redirect(append_sid("{$this->root_path}ucp.php?i=-dmzx-imageupload-ucp-imageupload_module&mode=main"));
+						$meta_info = append_sid("{$this->root_path}ucp.php?i=-dmzx-imageupload-ucp-imageupload_module&mode=main");
+						$message = $this->user->lang['IMAGEUPLOAD_UCP_DELETED_IMAGES'];
+						meta_refresh(1, $meta_info);
+						$message .= '<br /><br />' . $this->user->lang('IMAGEUPLOAD_PAGE_RETURN', '<a href="' . $meta_info . '">', '</a>');
+						trigger_error($message);
 					}
 					else
 					{
-						confirm_box(false, $this->user->lang['IMAGEUPLOAD_UCP_DELETE_IMAGES'], build_hidden_fields([
-								'imageupload_id'		=> $delete_id,
-								'action'				=> 'delete',
-							])
-						);
+						if ($this->request->is_set_post('cancel'))
+						{
+							redirect(append_sid("{$this->root_path}ucp.php?i=-dmzx-imageupload-ucp-imageupload_module&mode=main"));
+						}
+						else
+						{
+							confirm_box(false, $this->user->lang['IMAGEUPLOAD_UCP_DELETE_IMAGES'], build_hidden_fields([
+									'imageupload_id'		=> $delete_id,
+									'action'				=> 'delete',
+								])
+							);
+						}
 					}
+				}
+				else
+				{
+					redirect(append_sid("{$this->root_path}ucp.php?i=-dmzx-imageupload-ucp-imageupload_module&mode=main"));
 				}
 			break;
 			default:

@@ -302,7 +302,7 @@ class admin_controller
 					$image_name = $row['imageupload_filename'];
 					$this->db->sql_freeresult($result);
 
-					$delete_file = $this->ext_path_web . 'img-files/' . $file_name;
+					$delete_file = $this->ext_path_web . 'img-files' . $file_name;
 
 					# Delete the image
 					if ($this->filesystem->exists($delete_file))

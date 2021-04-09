@@ -1,5 +1,8 @@
 # Image Upload Changelog
 
+## Changes in 1.1.7
+- Code update UCP delete images.
+
 ## Changes in 1.1.6
 - Code update.
 
