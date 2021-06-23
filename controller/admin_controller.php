@@ -256,11 +256,14 @@ class admin_controller
 			'ACP_IMAGEUPLOAD_VERSION'				=> $this->config['imageupload_system_version'],
 			'ACP_IMAGEUPLOAD_ENABLE'				=> $this->config['imageupload_enable'],
 			'ACP_IMAGEUPLOAD_EXT'					=> $imageupload_allowed_extensions,
+			'ACP_IMAGEUPLOAD_NAV_ENABLE'			=> $this->config['imageupload_nav_enable'],
 			'ACP_IMAGEUPLOAD_INDEX_ENABLE'			=> $this->config['imageupload_index_enable'],
+			'ACP_IMAGEUPLOAD_CENTER_ENABLE'			=> $this->config['imageupload_center_enable'],
 			'ACP_IMAGEUPLOAD_NUMBER'				=> $this->config['imageupload_number'],
 			'ACP_IMAGEUPLOAD_MAX_NUMBER'			=> $max_filesize,
 			'ACP_IMAGEUPLOAD_ALLOWED_SIZE'			=> $this->user->lang('ACP_IMAGEUPLOAD_NEW_DOWNLOAD_SIZE', $max_filesize, $unit),
 			'ACP_TOTAL_IMAGES'						=> $this->user->lang('ACP_MULTI_IMAGES', (int) $total_imageupload),
+			'ACP_IMAGEUPLOAD_MCHAT_ENABLE'			=> $this->config['imageupload_mchat_enable'],
 			'ACP_IMAGEUPLOAD_CHAT_ENABLE'			=> $this->config['imageupload_chat_enable'],
 			'ACP_IMAGEUPLOAD_POST_ENABLE'			=> $this->config['imageupload_post_enable'],
 			'ACP_IMAGEUPLOAD_POSTTAB_ENABLE'		=> $this->config['imageupload_posttab_enable'],
@@ -346,7 +349,10 @@ class admin_controller
 
 		$this->config->set('imageupload_enable', $this->request->variable('imageupload_enable', 1));
 		$this->config->set('imageupload_number', $this->request->variable('imageupload_number', 2));
+		$this->config->set('imageupload_nav_enable', $this->request->variable('imageupload_nav_enable', 1));
 		$this->config->set('imageupload_index_enable', $this->request->variable('imageupload_index_enable', 0));
+		$this->config->set('imageupload_center_enable', $this->request->variable('imageupload_center_enable', 0));
+		$this->config->set('imageupload_mchat_enable', $this->request->variable('imageupload_mchat_enable', 0));
 		$this->config->set('imageupload_chat_enable', $this->request->variable('imageupload_chat_enable', 0));
 		$this->config->set('imageupload_post_enable', $this->request->variable('imageupload_post_enable', 0));
 		$this->config->set('imageupload_posttab_enable', $this->request->variable('imageupload_posttab_enable', 0));

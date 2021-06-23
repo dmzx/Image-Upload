@@ -1,0 +1,13 @@
+{% if IMAGEUPLOAD_USE_UPLOAD and IMAGEUPLOAD_MCHAT_ENABLE %}
+<script>
+//Open center window
+	function popup_center(e) {
+		var h = 700,
+		w = 700;
+		window.open(e, '', 'scrollbars=1, menubar=no, toolbar=no, location=no, height='+Math.min(h, screen.availHeight)+',width='+Math.min(w, screen.availWidth)+',left='+Math.max(0, (screen.availWidth - w)/2)+',top='+Math.max(0, (screen.availHeight - h)/2));
+	}
+</script>
+<button	class="button" class="button2" onclick="popup_center('{{ U_IMAGEUPLOAD_UPLOAD }}'); return false;" value="{{ lang('IMAGEUPLOAD_UPLOAD_SECTION') }}" title="{{ lang('IMAGEUPLOAD_UPLOAD_SECTION') }}" />
+<i class="icon fa fa-image" aria-hidden="true"></i><span class="sr-only">{{ lang('IMAGEUPLOAD_UPLOAD_SECTION') }}</span>
+</button>
+{% endif %}

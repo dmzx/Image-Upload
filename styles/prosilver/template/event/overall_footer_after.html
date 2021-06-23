@@ -23,3 +23,14 @@ var imageUpload = {
 {% INCLUDEJS '@dmzx_imageupload/js/copy.js' %}
 {% INCLUDEJS '@dmzx_imageupload/js/scriptinfo.js' %}
 {% endif %}
+
+{% if IMAGEUPLOAD_USE_UPLOAD and IMAGEUPLOAD_POST_ENABLE and IMAGEUPLOAD_CENTER_ENABLE %}
+<script>
+//Open center window
+	function popup_center(e) {
+		var h = 700,
+		w = 700;
+		window.open(e, '', 'scrollbars=1, menubar=no, toolbar=no, location=no, height='+Math.min(h, screen.availHeight)+',width='+Math.min(w, screen.availWidth)+',left='+Math.max(0, (screen.availWidth - w)/2)+',top='+Math.max(0, (screen.availHeight - h)/2));
+	}
+</script>
+{% endif %}

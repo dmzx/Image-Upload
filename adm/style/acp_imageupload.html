@@ -36,12 +36,39 @@
 			</dd>
 		</dl>
 		<dl>
+			<dt><label for="imageupload_nav_enable">{{ lang('ACP_IMAGEUPLOAD_NAV_ENABLE') }}{{ lang('COLON') }}</label><br />
+				<span>{{ lang('ACP_IMAGEUPLOAD_NAV_ENABLE_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				<label><input type="radio" class="radio" name="imageupload_nav_enable" value="1"{% if ACP_IMAGEUPLOAD_NAV_ENABLE %} id="imageupload_nav_enable" checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="imageupload_nav_enable" value="0"{% if not ACP_IMAGEUPLOAD_NAV_ENABLE %} id="imageupload_nav_enable" checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+			</dd>
+		</dl>
+		<dl>
 			<dt><label for="imageupload_index_enable">{{ lang('ACP_IMAGEUPLOAD_INDEX_ENABLE') }}{{ lang('COLON') }}</label><br />
 				<span>{{ lang('ACP_IMAGEUPLOAD_INDEX_ENABLE_EXPLAIN') }}</span>
 			</dt>
 			<dd>
 				<label><input type="radio" class="radio" name="imageupload_index_enable" value="1"{% if ACP_IMAGEUPLOAD_INDEX_ENABLE %} id="imageupload_index_enable" checked="checked"{% endif %} /> {{ lang('YES') }}</label>
 				<label><input type="radio" class="radio" name="imageupload_index_enable" value="0"{% if not ACP_IMAGEUPLOAD_INDEX_ENABLE %} id="imageupload_index_enable" checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="imageupload_center_enable">{{ lang('ACP_IMAGEUPLOAD_CENTER_ENABLE') }}{{ lang('COLON') }}</label><br />
+				<span>{{ lang('ACP_IMAGEUPLOAD_CENTER_ENABLE_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				<label><input type="radio" class="radio" name="imageupload_center_enable" value="1"{% if ACP_IMAGEUPLOAD_CENTER_ENABLE %} id="imageupload_center_enable" checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="imageupload_center_enable" value="0"{% if not ACP_IMAGEUPLOAD_CENTER_ENABLE %} id="imageupload_center_enable" checked="checked"{% endif %} /> {{ lang('NO') }}</label>
+			</dd>
+		</dl>
+		<dl>
+			<dt><label for="imageupload_mchat_enable">{{ lang('ACP_IMAGEUPLOAD_MCHAT_ENABLE') }}{{ lang('COLON') }}</label><br />
+				<span>{{ lang('ACP_IMAGEUPLOAD_MCHAT_ENABLE_EXPLAIN') }}</span>
+			</dt>
+			<dd>
+				<label><input type="radio" class="radio" name="imageupload_mchat_enable" value="1"{% if ACP_IMAGEUPLOAD_MCHAT_ENABLE %} id="imageupload_mchat_enable" checked="checked"{% endif %} /> {{ lang('YES') }}</label>
+				<label><input type="radio" class="radio" name="imageupload_mchat_enable" value="0"{% if not ACP_IMAGEUPLOAD_MCHAT_ENABLE %} id="imageupload_mchat_enable" checked="checked"{% endif %} /> {{ lang('NO') }}</label>
 			</dd>
 		</dl>
 		{% if IMAGEUPLOAD_CHAT_VIEW %}

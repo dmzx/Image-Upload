@@ -81,4 +81,10 @@ $lang = array_merge($lang, [
 	'ACP_IMAGEUPLOAD_ENABLE_URL_IMG_LINK_EXPLAIN'			=> '[url=FILENAME][img]FILENAME[/img][/url]',
 	'ACP_IMAGEUPLOAD_MULTI_ENABLE'							=> 'Enable multiple upload',
 	'ACP_IMAGEUPLOAD_MULTI_ENABLE_EXPLAIN'					=> 'Global on/off for multiple upload images.',
+        'ACP_IMAGEUPLOAD_CENTER_ENABLE'                                         => 'Enable popup center',
+        'ACP_IMAGEUPLOAD_CENTER_ENABLE_EXPLAIN'                                 => 'Enables a pop up  on the same page',
+        'ACP_IMAGEUPLOAD_NAV_ENABLE'                                            => 'Enables the navbar icon',
+        'ACP_IMAGEUPLOAD_NAV_ENABLE_EXPLAIN'                                    => 'Turns on/off the navbar link',
+        'ACP_IMAGEUPLOAD_MCHAT_ENABLE'                                          => 'Enable image upload button in mchat',
+        'ACP_IMAGEUPLOAD_MCHAT_ENABLE_EXPLAIN'                                  => 'Enables machats image upload button',
 ]);

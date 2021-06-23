@@ -1,3 +1,5 @@
-{% if IMAGEUPLOAD_USE_UPLOAD and IMAGEUPLOAD_POST_ENABLE %}
-<input type="button" class="button1" onclick="popup('{{ U_IMAGEUPLOAD_UPLOAD }}', 550, 550); return false;" value="{{ lang('IMAGEUPLOAD_UPLOAD') }}" title="{{ lang('IMAGEUPLOAD_UPLOAD') }}" />
+{% if IMAGEUPLOAD_USE_UPLOAD and IMAGEUPLOAD_POST_ENABLE and not IMAGEUPLOAD_CENTER_ENABLE  %}
+<input type="button" class="button1" onclick="popup ('{{ U_IMAGEUPLOAD_UPLOAD }}', 550, 550); return false;" value="{{ lang('IMAGEUPLOAD_UPLOAD') }}" title="{{ lang('IMAGEUPLOAD_UPLOAD') }}" />
+{% elseif IMAGEUPLOAD_USE_UPLOAD and IMAGEUPLOAD_POST_ENABLE and IMAGEUPLOAD_CENTER_ENABLE %}
+<input type="button" class="button1" onclick="popup_center('{{ U_IMAGEUPLOAD_UPLOAD }}'); return false;" value="{{ lang('IMAGEUPLOAD_UPLOAD') }}" title="{{ lang('IMAGEUPLOAD_UPLOAD') }}" />
 {% endif %}

@@ -147,7 +147,10 @@ class listener implements EventSubscriberInterface
 		$this->template->assign_vars([
 			'U_IMAGEUPLOAD_UPLOAD'				=> $this->helper->route('dmzx_imageupload_controller_upload'),
 			'IMAGEUPLOAD_USE_UPLOAD'			=> ($this->auth->acl_get('u_image_upload') && $this->config['imageupload_enable']) ? true : false,
+			'IMAGEUPLOAD_NAV_ENABLE'			=> $this->config['imageupload_nav_enable'],
 			'IMAGEUPLOAD_INDEX_ENABLE'			=> $this->config['imageupload_index_enable'],
+			'IMAGEUPLOAD_MCHAT_ENABLE'			=> $this->config['imageupload_mchat_enable'],
+			'IMAGEUPLOAD_CENTER_ENABLE'			=> $this->config['imageupload_center_enable'],
 			'IMAGEUPLOAD_POST_ENABLE'			=> $this->config['imageupload_post_enable'],
 			'IMAGEUPLOAD_POSTTAB_ENABLE'		=> $this->config['imageupload_posttab_enable'],
 			'UCP_IMAGEUPLOAD_INDEX'				=> $this->user->data['user_imageupload_index_enable'],
