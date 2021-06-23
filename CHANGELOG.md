@@ -1,5 +1,8 @@
 # Image Upload Changelog
 
+## Changes in 1.1.8
+- Added code for popup and extra options in ACP.
+
 ## Changes in 1.1.7
 - Code update UCP delete images.
 
