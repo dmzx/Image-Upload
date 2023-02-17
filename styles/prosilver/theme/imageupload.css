@@ -265,3 +265,7 @@
 #upload ul li.error p{
     color:red;
 }
+
+li:hover {
+    cursor: pointer;
+}

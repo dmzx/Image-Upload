@@ -9,6 +9,7 @@
 
 namespace dmzx\imageupload\controller;
 
+use phpbb\exception\http_exception;
 use phpbb\config\config;
 use dmzx\imageupload\core\functions;
 use phpbb\user;

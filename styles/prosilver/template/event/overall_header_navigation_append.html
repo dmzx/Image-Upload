@@ -1,5 +1,6 @@
 {% if IMAGEUPLOAD_USE_UPLOAD and IMAGEUPLOAD_NAV_ENABLE and not IMAGEUPLOAD_CENTER_ENABLE %}
 <li data-last-responsive="true"><a href="{{ U_IMAGEUPLOAD_UPLOAD }}" target="_blank" title="{{ lang('IMAGEUPLOAD_UPLOAD') }}" role="menuitem"><i class="icon fa-upload" aria-hidden="true"></i><span>{{ lang('IMAGEUPLOAD_UPLOAD') }}</span></a></li>
+
 {% elseif IMAGEUPLOAD_USE_UPLOAD and IMAGEUPLOAD_NAV_ENABLE and IMAGEUPLOAD_CENTER_ENABLE %}
 <li data-last-responsive="true" onclick="popup_center ('{{ U_IMAGEUPLOAD_UPLOAD }}');" role="menuitem"><i class="icon fa-upload" aria-hidden="true"></i><span>{{ lang('IMAGEUPLOAD_UPLOAD') }}</span></li>
 {% endif %}
