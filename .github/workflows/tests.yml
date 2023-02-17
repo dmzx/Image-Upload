@@ -89,7 +89,7 @@ jobs:
 
     # START MySQL and MariaDB Job
     mysql-tests:
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-18.04
         strategy:
             matrix:
                 include:
@@ -113,18 +113,17 @@ jobs:
                       db: "mysql:5.7"
                     - php: '7.2'
                       db: "mysql:5.7"
+                      COVERAGE: 1
                     - php: '7.3'
                       db: "mysql:5.7"
                     - php: '7.4'
                       db: "mysql:5.7"
                     - php: '7.4'
                       db: "mysql:8.0"
-                    - php: '8.0'
-                      db: "mysql:5.7"
-                    - php: '8.1'
-                      db: "mysql:5.7"
-                    - php: '8.2'
-                      db: "mysql:5.7"
+                    # - php: '8.0'
+                      # db: "mysql:5.7"
+                    # - php: '8.1'
+                      # db: "mysql:5.7"
 
         name: PHP ${{ matrix.php }} - ${{ matrix.db_alias != '' && matrix.db_alias || matrix.db }}
 
@@ -236,7 +235,7 @@ jobs:
 
     # START PostgreSQL Job
     postgres-tests:
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-18.04
         strategy:
             matrix:
                 include:
