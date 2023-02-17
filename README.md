@@ -1,6 +1,6 @@
 # Image Upload Extension
 
-[![Build Status](https://travis-ci.org/dmzx/Image-Upload.svg?branch=master)](https://travis-ci.org/dmzx/Image-Upload)
+[![Build Status](https://github.com/dmzx/Image-Upload/workflows/Tests/badge.svg)](https://github.com/phpbb-extensions/dmzx/Image-Upload)
 
 ## Install
 1. Download the latest release.
