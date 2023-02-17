@@ -252,20 +252,6 @@ jobs:
                       db: "postgres:12"
                     - php: '7.1'
                       db: "postgres:13"
-                    - php: '7.2'
-                      db: "postgres:13"
-                    - php: '7.3'
-                      db: "postgres:13"
-                    - php: '7.4'
-                      db: "postgres:13"
-                    - php: '8.0'
-                      db: "postgres:12"
-                    - php: '8.0'
-                      db: "postgres:13"
-                    - php: '8.1'
-                      db: "postgres:14"
-                    - php: '8.2'
-                      db: "postgres:14"
 
         name: PHP ${{ matrix.php }} - ${{ matrix.db }}
 
@@ -348,7 +334,7 @@ jobs:
 
     # START Other Tests Job (SQLite 3 and mssql)
     other-tests:
-        runs-on: ubuntu-20.04
+        runs-on: ubuntu-18.04
         strategy:
             matrix:
                 include:
