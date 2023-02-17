@@ -1,5 +1,12 @@
 # Image Upload Changelog
 
+## Changes in 2.0.0
+- Fixed switch's for mchat pop up or open tab.
+
+## Changes in 1.1.9
+- Fixed options mchat button.
+- Moved js.
+
 ## Changes in 1.1.8
 - Added code for popup and extra options in ACP.
 
